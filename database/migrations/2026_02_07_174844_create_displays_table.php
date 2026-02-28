@@ -10,15 +10,25 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('displays', function (Blueprint $table) {
+        Schema::create('devices', function (Blueprint $table) {
             $table->id();
-            $table->string('name'); // Ex: "Refeitório", "Recepção"
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->string('name');
+            $table->string('type', 20)->comment('tv, rpi'); // tipo de dispositivo
             $table->string('location')->nullable();
-            $table->string('ip_address')->nullable(); // Para auditoria
-            $table->string('status')->default('offline'); // online, offline, maintenance
-            // Um token único para a TV se autenticar/identificar ao ligar (modo kiosk)
-            $table->uuid('device_uuid')->unique();
+            $table->ipAddress('ip_address')->nullable();
+            $table->macAddress('mac_address')->nullable();
+            $table->boolean('is_online')->default(false);
+            $table->timestamp('last_seen')->nullable();
+            $table->string('connection_token', 500)->unique()->comment('Token para conexão WebSocket');
+            $table->json('metadata')->nullable()->comment('Informações extras: resolução, firmware, etc');
             $table->timestamps();
+            $table->softDeletes();
+            
+            $table->index('user_id');
+            $table->index('is_online');
+            $table->index('type');
+            $table->index(['user_id', 'is_online']);
         });
     }
 
@@ -27,6 +37,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('displays');
+        Schema::dropIfExists('devices');
     }
 };

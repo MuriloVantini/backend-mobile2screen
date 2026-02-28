@@ -10,19 +10,21 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('contents', function (Blueprint $table) {
+        Schema::create('alerts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained(); // Quem criou
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->string('title');
-            $table->text('body')->nullable();
-            $table->string('type'); // enum: 'info', 'marketing', 'alert' (emergência tem prioridade)
-            $table->string('media_path')->nullable(); // Para imagens/vídeos
-            $table->string('media_type')->nullable(); // image, video
-            $table->integer('duration_seconds')->default(15); // Tempo de exibição
-            $table->dateTime('start_at')->nullable(); // Agendamento
-            $table->dateTime('end_at')->nullable();
-            $table->boolean('is_active')->default(true);
-            $table->timestamps();
+            $table->text('message');
+            $table->string('type', 20)->comment('info, warning, critical, success');
+            $table->integer('duration_seconds')->nullable()->comment('Tempo de exibição (NULL = indefinido)');
+            $table->integer('priority')->default(0)->comment('Prioridade de exibição');
+            $table->timestamp('sent_at')->useCurrent();
+            $table->timestamp('expires_at')->nullable()->comment('Quando o alerta expira');
+            $table->timestamp('created_at')->useCurrent();
+            
+            $table->index('user_id');
+            $table->index('type');
+            $table->index('sent_at');
         });
     }
 
@@ -31,6 +33,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('contents');
+        Schema::dropIfExists('alerts');
     }
 };

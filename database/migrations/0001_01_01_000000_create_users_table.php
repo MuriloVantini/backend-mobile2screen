@@ -15,10 +15,21 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->rememberToken();
+            $table->string('company')->nullable();
+            $table->string('phone', 50)->nullable();
+            $table->foreignId('plan_id')->constrained('plans')->comment('Plano contratado');
+            $table->string('status', 20)->default('active')->comment('active, suspended, pending');
+            $table->string('role', 20)->default('user')->comment('user, admin');
+            $table->timestamp('last_active')->nullable();
+            $table->timestamp('joined_at')->useCurrent();
             $table->timestamps();
+            $table->softDeletes();
+            
+            // Índices
+            $table->index('email');
+            $table->index('status');
+            $table->index('plan_id');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

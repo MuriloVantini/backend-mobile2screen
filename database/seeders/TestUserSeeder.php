@@ -15,6 +15,7 @@ use App\Models\UserSession;
 use App\Models\UserSetting;
 use App\Models\Webhook;
 use App\Models\WebhookLog;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -22,10 +23,37 @@ class TestUserSeeder extends Seeder
 {
     public function run(): void
     {
-        $plan = Plan::updateOrCreate(
-            ['name' => 'pro'],
-            Plan::factory()->pro()->make()->getAttributes()
-        );
+        $upsertById = function (string $modelClass, int $id, array $payload): Model {
+            /** @var Model|null $model */
+            $model = $modelClass::query()->find($id);
+
+            if (! $model) {
+                $model = new $modelClass();
+                $model->id = $id;
+            }
+
+            $model->fill($payload);
+            $model->save();
+
+            return $model;
+        };
+
+        $ids = [
+            'plan' => 2,
+            'user' => 1,
+            'device' => 1,
+            'tag' => 1,
+            'alert' => 1,
+            'alert_delivery' => 1,
+            'api_key' => 1,
+            'user_session' => 1,
+            'webhook' => 1,
+            'webhook_log' => 1,
+            'activity_log' => 1,
+            'statistic_daily' => 1,
+        ];
+
+        $plan = $upsertById(Plan::class, $ids['plan'], Plan::factory()->pro()->make()->getAttributes());
 
         // 1. Usuario
         $userPayload = User::factory()->make([
@@ -50,10 +78,8 @@ class TestUserSeeder extends Seeder
             'last_active',
         ]);
 
-        $user = User::updateOrCreate(
-            ['email' => 'teste@example.com'],
-            $userPayload
-        );
+        /** @var User $user */
+        $user = $upsertById(User::class, $ids['user'], $userPayload);
 
         // 2. Configuracoes do usuario (1:1)
         $userSettingPayload = UserSetting::factory()->make([
@@ -83,10 +109,8 @@ class TestUserSeeder extends Seeder
             'metadata' => ['resolution' => '1920x1080', 'firmware' => '1.0.0'],
         ])->getAttributes();
 
-        $device = Device::firstOrCreate(
-            ['user_id' => $user->id, 'name' => 'TV Recepcao'],
-            $devicePayload
-        );
+        /** @var Device $device */
+        $device = $upsertById(Device::class, $ids['device'], $devicePayload);
 
         // 4. Tag
         $tagPayload = Tag::factory()->make([
@@ -95,10 +119,8 @@ class TestUserSeeder extends Seeder
             'color' => 'red',
         ])->getAttributes();
 
-        $tag = Tag::firstOrCreate(
-            ['user_id' => $user->id, 'name' => 'Urgente'],
-            $tagPayload
-        );
+        /** @var Tag $tag */
+        $tag = $upsertById(Tag::class, $ids['tag'], $tagPayload);
 
         // 5. Pivot: device_tags
         DB::table('device_tags')->insertOrIgnore([
@@ -110,19 +132,10 @@ class TestUserSeeder extends Seeder
         // 6. Alerta
         $alertPayload = Alert::factory()->make([
             'user_id' => $user->id,
-            'title' => 'Alerta de Teste',
-            'message' => 'Este e um alerta gerado pelo seeder de testes.',
-            'type' => 'info',
-            'duration_seconds' => 30,
-            'priority' => 1,
-            'sent_at' => now(),
-            'expires_at' => now()->addDay(),
         ])->getAttributes();
 
-        $alert = Alert::firstOrCreate(
-            ['user_id' => $user->id, 'title' => 'Alerta de Teste'],
-            $alertPayload
-        );
+        /** @var Alert $alert */
+        $alert = $upsertById(Alert::class, $ids['alert'], $alertPayload);
 
         // 7. Pivot: alert_tags
         DB::table('alert_tags')->insertOrIgnore([
@@ -135,109 +148,62 @@ class TestUserSeeder extends Seeder
         $deliveryPayload = AlertDelivery::factory()->make([
             'alert_id' => $alert->id,
             'device_id' => $device->id,
-            'status' => 'delivered',
-            'delivered_at' => now(),
-            'acknowledged_at' => now()->addMinutes(2),
-            'dismissed_at' => null,
-            'error_message' => null,
-            'retry_count' => 0,
         ])->getAttributes();
 
-        AlertDelivery::firstOrCreate(
-            ['alert_id' => $alert->id, 'device_id' => $device->id],
-            $deliveryPayload
-        );
+        /** @var AlertDelivery $alertDelivery */
+        $alertDelivery = $upsertById(AlertDelivery::class, $ids['alert_delivery'], $deliveryPayload);
 
         // 9. API Key
         $apiKeyPayload = ApiKey::factory()->make([
             'user_id' => $user->id,
-            'name' => 'Chave de Teste',
-            'is_active' => true,
-            'last_used' => now(),
-            'expires_at' => now()->addYear(),
         ])->getAttributes();
 
-        ApiKey::firstOrCreate(
-            ['user_id' => $user->id, 'name' => 'Chave de Teste'],
-            $apiKeyPayload
-        );
+        /** @var ApiKey $apiKey */
+        $apiKey = $upsertById(ApiKey::class, $ids['api_key'], $apiKeyPayload);
 
         // 10. Sessao do usuario
         $userSessionPayload = UserSession::factory()->make([
             'user_id' => $user->id,
-            'token' => hash('sha256', 'test-session-token'),
-            'refresh_token' => hash('sha256', 'test-refresh-token'),
-            'ip_address' => '192.168.1.1',
-            'user_agent' => 'Mozilla/5.0 (Test Seeder)',
-            'expires_at' => now()->addDays(7),
         ])->getAttributes();
 
-        UserSession::firstOrCreate(
-            ['user_id' => $user->id, 'token' => hash('sha256', 'test-session-token')],
-            $userSessionPayload
-        );
+        /** @var UserSession $userSession */
+        $userSession = $upsertById(UserSession::class, $ids['user_session'], $userSessionPayload);
 
         // 11. Webhook
         $webhookPayload = Webhook::factory()->make([
             'user_id' => $user->id,
-            'name' => 'Webhook de Teste',
-            'url' => 'https://example.com/webhook',
-            'events' => ['alert.sent', 'device.offline'],
-            'is_active' => true,
-            'last_triggered' => now(),
         ])->getAttributes();
 
-        $webhook = Webhook::firstOrCreate(
-            ['user_id' => $user->id, 'name' => 'Webhook de Teste'],
-            $webhookPayload
-        );
+        /** @var Webhook $webhook */
+        $webhook = $upsertById(Webhook::class, $ids['webhook'], $webhookPayload);
 
         // 12. Log do webhook
         $webhookLogPayload = WebhookLog::factory()->make([
             'webhook_id' => $webhook->id,
-            'event_type' => 'alert.sent',
-            'payload' => ['alert_id' => $alert->id, 'title' => $alert->title],
-            'response_status' => 200,
-            'response_body' => '{"ok":true}',
-            'error_message' => null,
         ])->getAttributes();
 
-        WebhookLog::firstOrCreate(
-            ['webhook_id' => $webhook->id, 'event_type' => 'alert.sent'],
-            $webhookLogPayload
-        );
+        /** @var WebhookLog $webhookLog */
+        $webhookLog = $upsertById(WebhookLog::class, $ids['webhook_log'], $webhookLogPayload);
 
         // 13. Log de atividade
         $activityLogPayload = ActivityLog::factory()->make([
             'user_id' => $user->id,
-            'action' => 'login',
-            'resource_type' => 'user',
             'resource_id' => $user->id,
-            'ip_address' => '192.168.1.1',
-            'user_agent' => 'Mozilla/5.0 (Test Seeder)',
-            'metadata' => ['source' => 'seeder'],
         ])->getAttributes();
 
-        ActivityLog::firstOrCreate(
-            ['user_id' => $user->id, 'action' => 'login'],
-            $activityLogPayload
-        );
+        /** @var ActivityLog $activityLog */
+        $activityLog = $upsertById(ActivityLog::class, $ids['activity_log'], $activityLogPayload);
 
         // 14. Estatistica diaria
         $statisticDailyPayload = StatisticDaily::factory()->make([
             'user_id' => $user->id,
             'date' => now()->toDateString(),
-            'alerts_sent' => 10,
-            'alerts_delivered' => 9,
-            'alerts_failed' => 1,
-            'devices_online_avg' => 1.00,
-            'delivery_rate' => 90.00,
         ])->getAttributes();
 
-        StatisticDaily::firstOrCreate(
-            ['user_id' => $user->id, 'date' => now()->toDateString()],
-            $statisticDailyPayload
-        );
+        /** @var StatisticDaily $statisticDaily */
+        $statisticDaily = $upsertById(StatisticDaily::class, $ids['statistic_daily'], $statisticDailyPayload);
+
+        unset($alertDelivery, $apiKey, $userSession, $webhookLog, $activityLog, $statisticDaily);
 
         $this->command->info('Usuario teste@example.com criado com factories para todas as entidades.');
     }

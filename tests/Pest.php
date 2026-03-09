@@ -1,5 +1,9 @@
 <?php
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+require_once __DIR__ . '/Support/ApiTestHelpers.php';
+
 /*
 |--------------------------------------------------------------------------
 | Test Case
@@ -12,7 +16,8 @@
 */
 
 pest()->extend(Tests\TestCase::class)
- // ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
+    ->use(RefreshDatabase::class)
+    ->in('Feature/Api')
     ->in('Feature');
 
 /*

@@ -2,8 +2,8 @@
 
 namespace App\Http\Api\Controllers;
 
-use App\Http\Api\Requests\StoreUserRequest;
-use App\Http\Api\Requests\UpdateUserRequest;
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;

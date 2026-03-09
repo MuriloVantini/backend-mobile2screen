@@ -36,7 +36,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"sample_text\",\n    \"email\": \"user32@example.com\",\n    \"password\": \"sample_text\",\n    \"company\": \"sample_text\",\n    \"phone\": \"sample_text\",\n    \"plan_id\": 8,\n    \"status\": \"sample_text\",\n    \"role\": \"sample_text\",\n    \"last_active\": \"sample_text\"\n}",
+                            "raw": "{\n    \"name\": \"Lilian Salazar Lutero\",\n    \"email\": \"ufonseca@example.net\",\n    \"password\": \"fxY0Wr4`/8(Z\",\n    \"company\": \"Meireles-Queir\u00f3s\",\n    \"phone\": \"(73) 98513-3808\",\n    \"plan_id\": 1,\n    \"status\": \"active\",\n    \"role\": \"user\",\n    \"last_active\": \"2026-03-06 02:06:24\"\n}",
                             "options": []
                         }
                     }
@@ -97,7 +97,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"sample_text\",\n    \"email\": \"user19@example.com\",\n    \"password\": \"sample_text\",\n    \"company\": \"sample_text\",\n    \"phone\": \"sample_text\",\n    \"plan_id\": 10,\n    \"status\": \"sample_text\",\n    \"role\": \"sample_text\",\n    \"last_active\": \"sample_text\"\n}",
+                            "raw": "{\n    \"name\": \"Lilian Salazar Lutero\",\n    \"email\": \"ufonseca@example.net\",\n    \"password\": \"fxY0Wr4`/8(Z\",\n    \"company\": \"Meireles-Queir\u00f3s\",\n    \"phone\": \"(73) 98513-3808\",\n    \"plan_id\": 1,\n    \"status\": \"active\",\n    \"role\": \"user\",\n    \"last_active\": \"2026-03-06 02:06:24\"\n}",
                             "options": []
                         }
                     }
@@ -162,7 +162,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"sample_text\",\n    \"email\": \"user51@example.com\",\n    \"password\": \"sample_text\",\n    \"company\": \"sample_text\",\n    \"phone\": \"sample_text\",\n    \"plan_id\": 2,\n    \"status\": \"sample_text\",\n    \"role\": \"sample_text\",\n    \"last_active\": \"sample_text\"\n}",
+                            "raw": "{\n    \"name\": \"Lilian Salazar Lutero\",\n    \"email\": \"ufonseca@example.net\",\n    \"password\": \"fxY0Wr4`/8(Z\",\n    \"company\": \"Meireles-Queir\u00f3s\",\n    \"phone\": \"(73) 98513-3808\",\n    \"plan_id\": 1,\n    \"status\": \"active\",\n    \"role\": \"user\",\n    \"last_active\": \"2026-03-06 02:06:24\"\n}",
                             "options": []
                         }
                     }
@@ -230,7 +230,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"email\": \"user29@example.com\",\n    \"password\": \"sample_text\"\n}",
+                            "raw": "{\n    \"email\": \"ufonseca@example.net\",\n    \"password\": \"fxY0Wr4`/8(Z\"\n}",
                             "options": []
                         }
                     }
@@ -420,7 +420,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"notify_alert_failed\": 1,\n    \"notify_device_offline\": 0,\n    \"notify_weekly_report\": 0,\n    \"notify_device_connected\": 1,\n    \"notify_limit_reached\": 0,\n    \"notification_email\": \"user71@example.com\",\n    \"notification_phone\": \"sample_text\",\n    \"timezone\": \"sample_text\",\n    \"language\": \"sample_text\",\n    \"theme\": \"sample_text\"\n}",
+                            "raw": "{\n    \"notify_alert_failed\": 1,\n    \"notify_device_offline\": 0,\n    \"notify_weekly_report\": 1,\n    \"notify_device_connected\": 0,\n    \"notify_limit_reached\": 0,\n    \"notification_email\": \"maiara.sales@example.com\",\n    \"notification_phone\": \"(37) 3174-0020\",\n    \"timezone\": \"America/North_Dakota/New_Salem\",\n    \"language\": \"pt-BR\",\n    \"theme\": \"auto\"\n}",
                             "options": []
                         }
                     }
@@ -515,7 +515,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"sample_text\",\n    \"type\": \"sample_text\",\n    \"location\": \"sample_text\",\n    \"ip_address\": \"sample_text\",\n    \"mac_address\": \"sample_text\",\n    \"metadata\": [],\n    \"tags\": [\n        []\n    ]\n}",
+                            "raw": "{\n    \"name\": \"Lilian Salazar Lutero\",\n    \"type\": \"info\",\n    \"location\": \"06516-875, Rua Th\u00e9o, 1908\\nSerra do Leste - PR\",\n    \"ip_address\": \"173.200.230.235\",\n    \"mac_address\": \"OQ:OJ:LV:YO:RG:BY\",\n    \"metadata\": {\n        \"source\": \"postman-doc\",\n        \"firmware\": \"1.4.6\"\n    },\n    \"tags\": [\n        1\n    ]\n}",
                             "options": []
                         }
                     }
@@ -580,7 +580,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"sample_text\",\n    \"type\": \"sample_text\",\n    \"location\": \"sample_text\",\n    \"ip_address\": \"sample_text\",\n    \"mac_address\": \"sample_text\",\n    \"metadata\": [],\n    \"tags\": [\n        []\n    ]\n}",
+                            "raw": "{\n    \"name\": \"Lilian Salazar Lutero\",\n    \"type\": \"info\",\n    \"location\": \"06516-875, Rua Th\u00e9o, 1908\\nSerra do Leste - PR\",\n    \"ip_address\": \"173.200.230.235\",\n    \"mac_address\": \"OQ:OJ:LV:YO:RG:BY\",\n    \"metadata\": {\n        \"source\": \"postman-doc\",\n        \"firmware\": \"1.4.6\"\n    },\n    \"tags\": [\n        1\n    ]\n}",
                             "options": []
                         }
                     }
@@ -646,7 +646,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"ip_address\": \"sample_text\",\n    \"metadata\": []\n}",
+                            "raw": "{\n    \"ip_address\": \"173.200.230.235\",\n    \"metadata\": {\n        \"source\": \"postman-doc\",\n        \"firmware\": \"1.4.6\"\n    }\n}",
                             "options": []
                         }
                     }
@@ -743,7 +743,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"sample_text\",\n    \"color\": \"sample_text\"\n}",
+                            "raw": "{\n    \"name\": \"Lilian Salazar Lutero\",\n    \"color\": \"blue\"\n}",
                             "options": []
                         }
                     }
@@ -808,7 +808,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"sample_text\",\n    \"color\": \"sample_text\"\n}",
+                            "raw": "{\n    \"name\": \"Lilian Salazar Lutero\",\n    \"color\": \"blue\"\n}",
                             "options": []
                         }
                     }
@@ -935,7 +935,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"title\": \"sample_text\",\n    \"message\": \"sample_text\",\n    \"type\": \"sample_text\",\n    \"duration_seconds\": 6,\n    \"priority\": 3,\n    \"expires_at\": \"sample_text\",\n    \"tags\": [\n        []\n    ]\n}",
+                            "raw": "{\n    \"title\": \"Et quo.\",\n    \"message\": \"Itaque facilis et et dicta nisi qui. Suscipit deserunt aut corrupti et sed. Fugiat ratione qui sequi aut voluptatem sunt alias.\",\n    \"type\": \"info\",\n    \"duration_seconds\": 51,\n    \"priority\": 6,\n    \"expires_at\": \"2026-03-13 19:33:40\",\n    \"tags\": [\n        1\n    ]\n}",
                             "options": []
                         }
                     }
@@ -1063,7 +1063,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"status\": \"sample_text\"\n}",
+                            "raw": "{\n    \"status\": \"active\"\n}",
                             "options": []
                         }
                     }
@@ -1129,7 +1129,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"sample_text\",\n    \"expires_at\": \"sample_text\"\n}",
+                            "raw": "{\n    \"name\": \"Lilian Salazar Lutero\",\n    \"expires_at\": \"2026-03-13 19:33:40\"\n}",
                             "options": []
                         }
                     }
@@ -1164,7 +1164,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"sample_text\",\n    \"is_active\": 1\n}",
+                            "raw": "{\n    \"name\": \"Lilian Salazar Lutero\",\n    \"is_active\": true\n}",
                             "options": []
                         }
                     }
@@ -1260,7 +1260,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"sample_text\",\n    \"url\": \"sample_text\",\n    \"secret\": \"sample_text\",\n    \"events\": [\n        []\n    ],\n    \"is_active\": 0\n}",
+                            "raw": "{\n    \"name\": \"Lilian Salazar Lutero\",\n    \"url\": \"http://www.paes.net.br/\",\n    \"secret\": \"d732b06c1c29f7c9930f2d3111e222ffbd20382bbbca1e436cb2f6a344742fa7\",\n    \"events\": [\n        \"alert.sent\"\n    ],\n    \"is_active\": true\n}",
                             "options": []
                         }
                     }
@@ -1325,7 +1325,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"sample_text\",\n    \"url\": \"sample_text\",\n    \"secret\": \"sample_text\",\n    \"events\": [\n        []\n    ],\n    \"is_active\": 0\n}",
+                            "raw": "{\n    \"name\": \"Lilian Salazar Lutero\",\n    \"url\": \"http://www.paes.net.br/\",\n    \"secret\": \"d732b06c1c29f7c9930f2d3111e222ffbd20382bbbca1e436cb2f6a344742fa7\",\n    \"events\": [\n        \"alert.sent\"\n    ],\n    \"is_active\": true\n}",
                             "options": []
                         }
                     }
@@ -1485,7 +1485,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"from_date\": \"sample_text\",\n    \"to_date\": \"sample_text\",\n    \"days\": 64\n}",
+                            "raw": "{\n    \"from_date\": \"2026-02-17\",\n    \"to_date\": \"2026-03-04\",\n    \"days\": 15\n}",
                             "options": []
                         }
                     }

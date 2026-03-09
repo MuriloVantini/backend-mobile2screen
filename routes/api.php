@@ -1,13 +1,13 @@
 <?php
 
 use App\Http\Api\Controllers\Auth\AuthController;
-use App\Http\Api\Controllers\Auth\RegisterController;
 use App\Http\Api\Controllers\AlertController;
 use App\Http\Api\Controllers\ApiKeyController;
 use App\Http\Api\Controllers\DeviceController;
 use App\Http\Api\Controllers\PlanController;
 use App\Http\Api\Controllers\StatisticsController;
 use App\Http\Api\Controllers\TagController;
+use App\Http\Api\Controllers\UserController;
 use App\Http\Api\Controllers\UserSettingController;
 use App\Http\Api\Controllers\WebhookController;
 use Illuminate\Http\Request;
@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 // ============================================
 
 // Autenticação
-Route::post('/register', [RegisterController::class, 'store']);
+Route::post('/register', [UserController::class, 'store']);
 Route::post('/login', [AuthController::class, 'store']);
 
 // Planos (visualização pública)
@@ -36,6 +36,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         $user = $request->user()->load('plan');
         return response()->json(['success' => true, 'data' => $user]);
     });
+    Route::apiResource('users', UserController::class);
     Route::post('/logout', [AuthController::class, 'destroy']);
 
     // ========== CONFIGURAÇÕES DO USUÁRIO ==========

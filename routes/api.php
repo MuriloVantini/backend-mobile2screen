@@ -34,7 +34,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     // ========== USUÁRIO ==========
     Route::get('/user', function (Request $request) {
         $user = $request->user()->load('plan');
-        return response()->json(['success' => true, 'data' => $user->toResource()]);
+        return response()->json(['data' => $user->toResource()]);
     });
     Route::apiResource('users', UserController::class);
     Route::post('/logout', [AuthController::class, 'destroy']);

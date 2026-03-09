@@ -107,7 +107,7 @@ class StatisticsController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $statistics
+            'data' => $statistics->map(fn (StatisticDaily $statistic) => $statistic->toResource()),
         ]);
     }
 

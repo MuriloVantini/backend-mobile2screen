@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use App\Http\Resources\UserSettingResource;
+use Illuminate\Database\Eloquent\Attributes\UseResource;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+#[UseResource(UserSettingResource::class)]
 class UserSetting extends Model
 {
     use HasFactory;

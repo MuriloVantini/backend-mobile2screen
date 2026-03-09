@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use App\Http\Resources\UserSessionResource;
+use Illuminate\Database\Eloquent\Attributes\UseResource;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+#[UseResource(UserSessionResource::class)]
 class UserSession extends Model
 {
     use HasFactory;

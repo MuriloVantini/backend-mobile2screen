@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use App\Http\Resources\ActivityLogResource;
+use Illuminate\Database\Eloquent\Attributes\UseResource;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+#[UseResource(ActivityLogResource::class)]
 class ActivityLog extends Model
 {
     use HasFactory;

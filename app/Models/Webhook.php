@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use App\Http\Resources\WebhookResource;
+use Illuminate\Database\Eloquent\Attributes\UseResource;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+#[UseResource(WebhookResource::class)]
 class Webhook extends Model
 {
     use HasFactory;

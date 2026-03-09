@@ -17,7 +17,7 @@ class PlanController extends Controller
         
         return response()->json([
             'success' => true,
-            'data' => $plans
+            'data' => $plans->map(fn (Plan $plan) => $plan->toResource()),
         ]);
     }
 
@@ -28,7 +28,7 @@ class PlanController extends Controller
     {
         return response()->json([
             'success' => true,
-            'data' => $plan
+            'data' => $plan->toResource(),
         ]);
     }
 }

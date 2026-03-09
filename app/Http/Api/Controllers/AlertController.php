@@ -35,6 +35,7 @@ class AlertController extends Controller
         }
 
         $alerts = $query->orderBy('sent_at', 'desc')->paginate(20);
+        $alerts->setCollection($alerts->getCollection()->map(fn (Alert $alert) => $alert->toResource()));
 
         return response()->json([
             'success' => true,
@@ -102,7 +103,7 @@ class AlertController extends Controller
                 'success' => true,
                 'message' => 'Alerta enviado com sucesso',
                 'data' => [
-                    'alert' => $alert,
+                    'alert' => $alert->toResource(),
                     'devices_count' => $devices->count(),
                     'online_devices' => $devices->where('is_online', true)->count(),
                 ]
@@ -145,7 +146,7 @@ class AlertController extends Controller
         return response()->json([
             'success' => true,
             'data' => [
-                'alert' => $alert,
+                'alert' => $alert->toResource(),
                 'stats' => $stats
             ]
         ]);
@@ -168,7 +169,7 @@ class AlertController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $deliveries
+            'data' => $deliveries->map(fn (AlertDelivery $delivery) => $delivery->toResource()),
         ]);
     }
 

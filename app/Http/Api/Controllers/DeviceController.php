@@ -25,7 +25,7 @@ class DeviceController extends Controller
         
         return response()->json([
             'success' => true,
-            'data' => $devices
+            'data' => $devices->map(fn (Device $device) => $device->toResource()),
         ]);
     }
 
@@ -43,7 +43,7 @@ class DeviceController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $devices,
+            'data' => $devices->map(fn (Device $device) => $device->toResource()),
         ]);
     }
 
@@ -70,7 +70,7 @@ class DeviceController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Dispositivo criado com sucesso',
-            'data' => $device
+            'data' => $device->toResource(),
         ], 201);
     }
 
@@ -91,7 +91,7 @@ class DeviceController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $device
+            'data' => $device->toResource(),
         ]);
     }
 
@@ -122,7 +122,7 @@ class DeviceController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Dispositivo atualizado com sucesso',
-            'data' => $device
+            'data' => $device->toResource(),
         ]);
     }
 

@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use App\Http\Resources\ApiKeyResource;
+use Illuminate\Database\Eloquent\Attributes\UseResource;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+#[UseResource(ApiKeyResource::class)]
 class ApiKey extends Model
 {
     use HasFactory;

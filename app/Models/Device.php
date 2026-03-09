@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Http\Resources\DeviceResource;
+use Illuminate\Database\Eloquent\Attributes\UseResource;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+#[UseResource(DeviceResource::class)]
 class Device extends Model
 {
     use HasFactory, SoftDeletes;

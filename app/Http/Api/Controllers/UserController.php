@@ -15,6 +15,7 @@ class UserController extends Controller
     {
         if ($request->user()->role === 'admin') {
             $users = User::with('plan')->orderByDesc('created_at')->paginate(20);
+            $users->setCollection($users->getCollection()->map(fn (User $user) => $user->toResource()));
 
             return response()->json([
                 'success' => true,
@@ -24,7 +25,7 @@ class UserController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => [$request->user()->load('plan')],
+            'data' => [$request->user()->load('plan')->toResource()],
         ]);
     }
 
@@ -58,7 +59,7 @@ class UserController extends Controller
             'message' => $isPublicRegistration
                 ? 'Usuario registrado com sucesso'
                 : 'Usuario criado com sucesso',
-            'data' => $user,
+            'data' => $user->toResource(),
         ], 201);
     }
 
@@ -75,7 +76,7 @@ class UserController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $user,
+            'data' => $user->toResource(),
         ]);
     }
 
@@ -100,7 +101,7 @@ class UserController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Usuario atualizado com sucesso',
-            'data' => $user,
+            'data' => $user->toResource(),
         ]);
     }
 

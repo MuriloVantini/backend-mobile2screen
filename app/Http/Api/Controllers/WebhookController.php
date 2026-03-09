@@ -23,7 +23,7 @@ class WebhookController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $webhooks
+            'data' => $webhooks->map(fn (Webhook $webhook) => $webhook->toResource()),
         ]);
     }
 
@@ -40,7 +40,7 @@ class WebhookController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Webhook criado com sucesso',
-            'data' => $webhook
+            'data' => $webhook->toResource(),
         ], 201);
     }
 
@@ -61,7 +61,7 @@ class WebhookController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $webhook
+            'data' => $webhook->toResource(),
         ]);
     }
 
@@ -85,7 +85,7 @@ class WebhookController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Webhook atualizado com sucesso',
-            'data' => $webhook
+            'data' => $webhook->toResource(),
         ]);
     }
 
@@ -126,6 +126,7 @@ class WebhookController extends Controller
         $logs = $webhook->logs()
             ->orderBy('created_at', 'desc')
             ->paginate(50);
+        $logs->setCollection($logs->getCollection()->map(fn ($log) => $log->toResource()));
 
         return response()->json([
             'success' => true,

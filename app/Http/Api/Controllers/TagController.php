@@ -23,7 +23,7 @@ class TagController extends Controller
         
         return response()->json([
             'success' => true,
-            'data' => $tags
+            'data' => $tags->map(fn (Tag $tag) => $tag->toResource()),
         ]);
     }
 
@@ -53,7 +53,7 @@ class TagController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Tag criada com sucesso',
-            'data' => $tag
+            'data' => $tag->toResource(),
         ], 201);
     }
 
@@ -74,7 +74,7 @@ class TagController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $tag
+            'data' => $tag->toResource(),
         ]);
     }
 
@@ -114,7 +114,7 @@ class TagController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Tag atualizada com sucesso',
-            'data' => $tag
+            'data' => $tag->toResource(),
         ]);
     }
 
@@ -156,7 +156,7 @@ class TagController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $devices
+            'data' => $devices->map(fn ($device) => $device->toResource()),
         ]);
     }
 }

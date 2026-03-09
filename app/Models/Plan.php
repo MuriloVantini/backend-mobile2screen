@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use App\Http\Resources\PlanResource;
+use Illuminate\Database\Eloquent\Attributes\UseResource;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+#[UseResource(PlanResource::class)]
 class Plan extends Model
 {
     use HasFactory;

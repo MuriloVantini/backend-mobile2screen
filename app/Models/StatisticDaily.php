@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use App\Http\Resources\StatisticDailyResource;
+use Illuminate\Database\Eloquent\Attributes\UseResource;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+#[UseResource(StatisticDailyResource::class)]
 class StatisticDaily extends Model
 {
     use HasFactory;

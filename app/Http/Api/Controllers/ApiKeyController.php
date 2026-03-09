@@ -25,7 +25,7 @@ class ApiKeyController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $apiKeys
+            'data' => $apiKeys->map(fn (ApiKey $apiKey) => $apiKey->toResource()),
         ]);
     }
 
@@ -77,7 +77,7 @@ class ApiKeyController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'API Key atualizada com sucesso',
-            'data' => $apiKey->makeHidden('key_hash')
+            'data' => $apiKey->makeHidden('key_hash')->toResource(),
         ]);
     }
 

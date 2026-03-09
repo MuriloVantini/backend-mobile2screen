@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use App\Http\Resources\AlertDeliveryResource;
+use Illuminate\Database\Eloquent\Attributes\UseResource;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+#[UseResource(AlertDeliveryResource::class)]
 class AlertDelivery extends Model
 {
     use HasFactory;

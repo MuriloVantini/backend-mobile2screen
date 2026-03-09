@@ -21,7 +21,6 @@ class Tag extends Model
     {
         return [
             'created_at' => 'datetime',
-            'updated_at'=> 'datetime',
         ];
     }
 
@@ -33,11 +32,11 @@ class Tag extends Model
 
     public function devices()
     {
-        return $this->belongsToMany(Device::class, 'device_tags')->withTimestamps();
+        return $this->belongsToMany(Device::class, 'device_tags')->withPivot('created_at');
     }
 
     public function alerts()
     {
-        return $this->belongsToMany(Alert::class, 'alert_tags')->withTimestamps();
+        return $this->belongsToMany(Alert::class, 'alert_tags')->withPivot('created_at');
     }
 }

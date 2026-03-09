@@ -105,7 +105,7 @@ class GenerateDeliveries extends Seeder
                         'type' => 'info',
                         'duration_seconds' => 30,
                         'priority' => 1,
-                        'sent_at' => now()->subMinutes(5),
+                        'sent_at' => fake()->dateTimeBetween('-1 week', 'now'),
                         'expires_at' => now()->addDays(2),
                     ]
                 );

@@ -27,7 +27,7 @@ class AlertFactory extends Factory
             'type' => fake()->randomElement(['info', 'warning', 'critical', 'success']),
             'duration_seconds' => fake()->optional()->numberBetween(10, 120),
             'priority' => fake()->numberBetween(0, 3),
-            'sent_at' => now(),
+            'sent_at' => fake()->dateTimeBetween('-1 week', 'now'),
             'expires_at' => fake()->optional()->dateTimeBetween('+1 day', '+7 days'),
         ];
     }

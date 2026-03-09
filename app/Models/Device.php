@@ -40,7 +40,7 @@ class Device extends Model
 
     public function tags()
     {
-        return $this->belongsToMany(Tag::class, 'device_tags')->withTimestamps();
+        return $this->belongsToMany(Tag::class, 'device_tags')->withPivot('created_at');
     }
 
     public function alertDeliveries()

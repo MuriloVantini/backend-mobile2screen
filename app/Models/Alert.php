@@ -41,7 +41,7 @@ class Alert extends Model
 
     public function tags()
     {
-        return $this->belongsToMany(Tag::class, 'alert_tags')->withTimestamps();
+        return $this->belongsToMany(Tag::class, 'alert_tags')->withPivot('created_at');
     }
 
     public function deliveries()

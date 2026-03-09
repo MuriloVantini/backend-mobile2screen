@@ -30,6 +30,24 @@ class DeviceController extends Controller
     }
 
     /**
+     * Lista os 5 dispositivos mais recentes do usuário autenticado
+     */
+    public function latest(Request $request): JsonResponse
+    {
+        $devices = $request->user()
+            ->devices()
+            ->with('tags')
+            ->latest('created_at')
+            ->limit(5)
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $devices,
+        ]);
+    }
+
+    /**
      * Cria um novo dispositivo
      */
     public function store(StoreDeviceRequest $request): JsonResponse

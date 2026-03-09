@@ -43,6 +43,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('/settings', [UserSettingController::class, 'update']);
 
     // ========== DISPOSITIVOS ==========
+    Route::get('/devices/latest', [DeviceController::class, 'latest']);
     Route::apiResource('devices', DeviceController::class);
     Route::post('/devices/{device}/heartbeat', [DeviceController::class, 'heartbeat']);
     Route::post('/devices/{device}/regenerate-token', [DeviceController::class, 'regenerateToken']);

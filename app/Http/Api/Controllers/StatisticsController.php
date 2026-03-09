@@ -2,7 +2,7 @@
 
 namespace App\Http\Api\Controllers;
 
-use App\Http\Api\Requests\DailyStatisticsRequest;
+use App\Http\Requests\DailyStatisticsRequest;
 use App\Models\StatisticDaily;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;

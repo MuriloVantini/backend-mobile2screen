@@ -2,8 +2,8 @@
 
 namespace App\Http\Api\Controllers;
 
-use App\Http\Api\Requests\StoreTagRequest;
-use App\Http\Api\Requests\UpdateTagRequest;
+use App\Http\Requests\StoreTagRequest;
+use App\Http\Requests\UpdateTagRequest;
 use App\Models\Tag;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;

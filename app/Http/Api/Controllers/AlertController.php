@@ -2,8 +2,8 @@
 
 namespace App\Http\Api\Controllers;
 
-use App\Http\Api\Requests\StoreAlertRequest;
-use App\Http\Api\Requests\UpdateAlertDeliveryStatusRequest;
+use App\Http\Requests\StoreAlertRequest;
+use App\Http\Requests\UpdateAlertDeliveryStatusRequest;
 use App\Models\Alert;
 use App\Models\AlertDelivery;
 use App\Models\Device;

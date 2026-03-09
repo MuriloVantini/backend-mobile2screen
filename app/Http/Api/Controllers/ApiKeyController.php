@@ -2,8 +2,8 @@
 
 namespace App\Http\Api\Controllers;
 
-use App\Http\Api\Requests\StoreApiKeyRequest;
-use App\Http\Api\Requests\UpdateApiKeyRequest;
+use App\Http\Requests\StoreApiKeyRequest;
+use App\Http\Requests\UpdateApiKeyRequest;
 use App\Models\ApiKey;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;

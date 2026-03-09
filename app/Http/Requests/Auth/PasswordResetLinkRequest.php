@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Api\Requests;
+namespace App\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DeviceHeartbeatRequest extends FormRequest
+class PasswordResetLinkRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -14,8 +14,7 @@ class DeviceHeartbeatRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'ip_address' => 'nullable|ip',
-            'metadata' => 'nullable|array',
+            'email' => ['required', 'email'],
         ];
     }
 }

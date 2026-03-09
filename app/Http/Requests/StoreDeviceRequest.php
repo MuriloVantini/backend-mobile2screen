@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Api\Requests;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class UpdateDeviceRequest extends FormRequest
+class StoreDeviceRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -15,8 +15,8 @@ class UpdateDeviceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'sometimes|string|max:255',
-            'type' => ['sometimes', Rule::in(['tv', 'rpi'])],
+            'name' => 'required|string|max:255',
+            'type' => ['required', Rule::in(['tv', 'rpi'])],
             'location' => 'nullable|string|max:255',
             'ip_address' => 'nullable|ip',
             'mac_address' => 'nullable|string',

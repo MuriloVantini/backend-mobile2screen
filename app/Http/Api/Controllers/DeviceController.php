@@ -2,9 +2,9 @@
 
 namespace App\Http\Api\Controllers;
 
-use App\Http\Api\Requests\DeviceHeartbeatRequest;
-use App\Http\Api\Requests\StoreDeviceRequest;
-use App\Http\Api\Requests\UpdateDeviceRequest;
+use App\Http\Requests\DeviceHeartbeatRequest;
+use App\Http\Requests\StoreDeviceRequest;
+use App\Http\Requests\UpdateDeviceRequest;
 use App\Models\Device;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;

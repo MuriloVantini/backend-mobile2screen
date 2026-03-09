@@ -3,7 +3,7 @@
 namespace App\Http\Api\Controllers\Auth;
 
 use App\Http\Api\Controllers\Controller;
-use App\Http\Api\Requests\Auth\RegisterRequest;
+use App\Http\Requests\Auth\RegisterRequest;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\JsonResponse;

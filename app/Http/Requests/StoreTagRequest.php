@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Api\Requests\Auth;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PasswordResetLinkRequest extends FormRequest
+class StoreTagRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -14,7 +14,8 @@ class PasswordResetLinkRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'email'],
+            'name' => 'required|string|max:100',
+            'color' => 'nullable|string|max:50',
         ];
     }
 }

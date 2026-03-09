@@ -3,7 +3,7 @@
 namespace App\Http\Api\Controllers\Auth;
 
 use App\Http\Api\Controllers\Controller;
-use App\Http\Api\Requests\Auth\PasswordResetLinkRequest;
+use App\Http\Requests\Auth\PasswordResetLinkRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\ValidationException;

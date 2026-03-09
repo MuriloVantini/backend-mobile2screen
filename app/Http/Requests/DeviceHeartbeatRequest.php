@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Api\Requests;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateApiKeyRequest extends FormRequest
+class DeviceHeartbeatRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -14,8 +14,8 @@ class UpdateApiKeyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'sometimes|string|max:100',
-            'is_active' => 'sometimes|boolean',
+            'ip_address' => 'nullable|ip',
+            'metadata' => 'nullable|array',
         ];
     }
 }

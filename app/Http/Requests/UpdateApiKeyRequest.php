@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Api\Requests;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreTagRequest extends FormRequest
+class UpdateApiKeyRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -14,8 +14,8 @@ class StoreTagRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:100',
-            'color' => 'nullable|string|max:50',
+            'name' => 'sometimes|string|max:100',
+            'is_active' => 'sometimes|boolean',
         ];
     }
 }

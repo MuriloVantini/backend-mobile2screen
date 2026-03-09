@@ -2,7 +2,7 @@
 
 namespace App\Http\Api\Controllers;
 
-use App\Http\Api\Requests\UpdateUserSettingRequest;
+use App\Http\Requests\UpdateUserSettingRequest;
 use App\Models\UserSetting;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;

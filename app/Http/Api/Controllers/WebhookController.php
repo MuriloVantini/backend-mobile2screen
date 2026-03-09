@@ -2,8 +2,8 @@
 
 namespace App\Http\Api\Controllers;
 
-use App\Http\Api\Requests\StoreWebhookRequest;
-use App\Http\Api\Requests\UpdateWebhookRequest;
+use App\Http\Requests\StoreWebhookRequest;
+use App\Http\Requests\UpdateWebhookRequest;
 use App\Models\Webhook;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;

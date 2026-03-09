@@ -3,7 +3,7 @@
 namespace App\Http\Api\Controllers\Auth;
 
 use App\Http\Api\Controllers\Controller;
-use App\Http\Api\Requests\Auth\NewPasswordRequest;
+use App\Http\Requests\Auth\NewPasswordRequest;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;

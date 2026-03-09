@@ -2,6 +2,7 @@
 
 namespace App\Http\Api\Controllers;
 
+use App\Http\Api\Requests\UpdateUserSettingRequest;
 use App\Models\UserSetting;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -32,20 +33,9 @@ class UserSettingController extends Controller
     /**
      * Atualiza as configurações do usuário
      */
-    public function update(Request $request): JsonResponse
+    public function update(UpdateUserSettingRequest $request): JsonResponse
     {
-        $validated = $request->validate([
-            'notify_alert_failed' => 'sometimes|boolean',
-            'notify_device_offline' => 'sometimes|boolean',
-            'notify_weekly_report' => 'sometimes|boolean',
-            'notify_device_connected' => 'sometimes|boolean',
-            'notify_limit_reached' => 'sometimes|boolean',
-            'notification_email' => 'nullable|email',
-            'notification_phone' => 'nullable|string|max:50',
-            'timezone' => 'sometimes|string|max:50',
-            'language' => 'sometimes|string|max:10',
-            'theme' => 'sometimes|in:light,dark,auto',
-        ]);
+        $validated = $request->validated();
 
         $settings = $request->user()->settings;
 

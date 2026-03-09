@@ -2,6 +2,8 @@
 
 namespace App\Http\Api\Controllers;
 
+use App\Http\Api\Requests\StoreTagRequest;
+use App\Http\Api\Requests\UpdateTagRequest;
 use App\Models\Tag;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -28,12 +30,9 @@ class TagController extends Controller
     /**
      * Cria uma nova tag
      */
-    public function store(Request $request): JsonResponse
+    public function store(StoreTagRequest $request): JsonResponse
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:100',
-            'color' => 'nullable|string|max:50'
-        ]);
+        $validated = $request->validated();
 
         // Verifica se já existe uma tag com esse nome para o usuário
         $existingTag = $request->user()
@@ -82,7 +81,7 @@ class TagController extends Controller
     /**
      * Atualiza uma tag
      */
-    public function update(Request $request, Tag $tag): JsonResponse
+    public function update(UpdateTagRequest $request, Tag $tag): JsonResponse
     {
         // Verifica se a tag pertence ao usuário
         if ($tag->user_id !== $request->user()->id) {
@@ -92,10 +91,7 @@ class TagController extends Controller
             ], 403);
         }
 
-        $validated = $request->validate([
-            'name' => 'sometimes|string|max:100',
-            'color' => 'nullable|string|max:50'
-        ]);
+        $validated = $request->validated();
 
         // Verifica duplicação de nome se estiver sendo alterado
         if (isset($validated['name']) && $validated['name'] !== $tag->name) {

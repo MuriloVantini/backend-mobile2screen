@@ -2,12 +2,14 @@
 
 namespace App\Http\Api\Controllers;
 
+use App\Http\Api\Requests\DeviceHeartbeatRequest;
+use App\Http\Api\Requests\StoreDeviceRequest;
+use App\Http\Api\Requests\UpdateDeviceRequest;
 use App\Models\Device;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Str;
-use Illuminate\Validation\Rule;
 
 class DeviceController extends Controller
 {
@@ -30,18 +32,9 @@ class DeviceController extends Controller
     /**
      * Cria um novo dispositivo
      */
-    public function store(Request $request): JsonResponse
+    public function store(StoreDeviceRequest $request): JsonResponse
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'type' => ['required', Rule::in(['tv', 'rpi'])],
-            'location' => 'nullable|string|max:255',
-            'ip_address' => 'nullable|ip',
-            'mac_address' => 'nullable|string',
-            'metadata' => 'nullable|array',
-            'tags' => 'nullable|array',
-            'tags.*' => 'exists:tags,id'
-        ]);
+        $validated = $request->validated();
 
         // Gerar token único de conexão
         $validated['connection_token'] = Str::random(64);
@@ -87,7 +80,7 @@ class DeviceController extends Controller
     /**
      * Atualiza um dispositivo
      */
-    public function update(Request $request, Device $device): JsonResponse
+    public function update(UpdateDeviceRequest $request, Device $device): JsonResponse
     {
         // Verifica se o dispositivo pertence ao usuário
         if ($device->user_id !== $request->user()->id) {
@@ -97,16 +90,7 @@ class DeviceController extends Controller
             ], 403);
         }
 
-        $validated = $request->validate([
-            'name' => 'sometimes|string|max:255',
-            'type' => ['sometimes', Rule::in(['tv', 'rpi'])],
-            'location' => 'nullable|string|max:255',
-            'ip_address' => 'nullable|ip',
-            'mac_address' => 'nullable|string',
-            'metadata' => 'nullable|array',
-            'tags' => 'nullable|array',
-            'tags.*' => 'exists:tags,id'
-        ]);
+        $validated = $request->validated();
 
         $device->update($validated);
 
@@ -148,12 +132,9 @@ class DeviceController extends Controller
     /**
      * Marca dispositivo como online (heartbeat)
      */
-    public function heartbeat(Request $request, Device $device): JsonResponse
+    public function heartbeat(DeviceHeartbeatRequest $request, Device $device): JsonResponse
     {
-        $validated = $request->validate([
-            'ip_address' => 'nullable|ip',
-            'metadata' => 'nullable|array'
-        ]);
+        $validated = $request->validated();
 
         $device->update([
             'is_online' => true,

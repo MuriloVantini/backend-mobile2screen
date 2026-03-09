@@ -2,6 +2,7 @@
 
 namespace App\Http\Api\Controllers;
 
+use App\Http\Api\Requests\DailyStatisticsRequest;
 use App\Models\StatisticDaily;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -91,13 +92,9 @@ class StatisticsController extends Controller
     /**
      * Estatísticas diárias
      */
-    public function daily(Request $request): JsonResponse
+    public function daily(DailyStatisticsRequest $request): JsonResponse
     {
-        $validated = $request->validate([
-            'from_date' => 'nullable|date',
-            'to_date' => 'nullable|date|after_or_equal:from_date',
-            'days' => 'nullable|integer|min:1|max:90'
-        ]);
+        $validated = $request->validated();
 
         $days = $validated['days'] ?? 30;
         $fromDate = $validated['from_date'] ?? now()->subDays($days)->format('Y-m-d');

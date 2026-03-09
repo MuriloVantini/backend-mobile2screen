@@ -1,0 +1,21 @@
+<?php
+
+namespace App\Http\Api\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class UpdateApiKeyRequest extends FormRequest
+{
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    public function rules(): array
+    {
+        return [
+            'name' => 'sometimes|string|max:100',
+            'is_active' => 'sometimes|boolean',
+        ];
+    }
+}

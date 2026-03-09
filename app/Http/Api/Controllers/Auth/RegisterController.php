@@ -3,12 +3,11 @@
 namespace App\Http\Api\Controllers\Auth;
 
 use App\Http\Api\Controllers\Controller;
+use App\Http\Api\Requests\Auth\RegisterRequest;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
 
 class RegisterController extends Controller
 {
@@ -17,20 +16,15 @@ class RegisterController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): JsonResponse
+    public function store(RegisterRequest $request): JsonResponse
     {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'plan_id' => ['nullable', 'integer', 'exists:plans,id'],
-        ]);
+        $validated = $request->validated();
 
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
+            'name' => $validated['name'],
+            'email' => $validated['email'],
             'password' => Hash::make($request->string('password')),
-            'plan_id' => $request->plan_id,
+            'plan_id' => $validated['plan_id'] ?? null,
         ]);
 
         event(new Registered($user));

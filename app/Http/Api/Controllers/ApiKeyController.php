@@ -2,6 +2,8 @@
 
 namespace App\Http\Api\Controllers;
 
+use App\Http\Api\Requests\StoreApiKeyRequest;
+use App\Http\Api\Requests\UpdateApiKeyRequest;
 use App\Models\ApiKey;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -30,12 +32,9 @@ class ApiKeyController extends Controller
     /**
      * Cria uma nova API Key
      */
-    public function store(Request $request): JsonResponse
+    public function store(StoreApiKeyRequest $request): JsonResponse
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:100',
-            'expires_at' => 'nullable|date|after:now'
-        ]);
+        $validated = $request->validated();
 
         // Gerar chave única
         $key = 'sk_' . Str::random(48);
@@ -61,7 +60,7 @@ class ApiKeyController extends Controller
     /**
      * Atualiza uma API Key (apenas nome e status)
      */
-    public function update(Request $request, ApiKey $apiKey): JsonResponse
+    public function update(UpdateApiKeyRequest $request, ApiKey $apiKey): JsonResponse
     {
         // Verifica se a API Key pertence ao usuário
         if ($apiKey->user_id !== $request->user()->id) {
@@ -71,10 +70,7 @@ class ApiKeyController extends Controller
             ], 403);
         }
 
-        $validated = $request->validate([
-            'name' => 'sometimes|string|max:100',
-            'is_active' => 'sometimes|boolean'
-        ]);
+        $validated = $request->validated();
 
         $apiKey->update($validated);
 

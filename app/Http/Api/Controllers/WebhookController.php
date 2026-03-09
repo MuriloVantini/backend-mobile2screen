@@ -2,6 +2,8 @@
 
 namespace App\Http\Api\Controllers;
 
+use App\Http\Api\Requests\StoreWebhookRequest;
+use App\Http\Api\Requests\UpdateWebhookRequest;
 use App\Models\Webhook;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -28,16 +30,9 @@ class WebhookController extends Controller
     /**
      * Cria um novo webhook
      */
-    public function store(Request $request): JsonResponse
+    public function store(StoreWebhookRequest $request): JsonResponse
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'url' => 'required|url',
-            'secret' => 'nullable|string|max:255',
-            'events' => 'required|array|min:1',
-            'events.*' => 'string|in:alert.sent,alert.delivered,alert.failed,device.online,device.offline,device.added',
-            'is_active' => 'sometimes|boolean'
-        ]);
+        $validated = $request->validated();
 
         $validated['user_id'] = $request->user()->id;
         $webhook = Webhook::create($validated);
@@ -73,7 +68,7 @@ class WebhookController extends Controller
     /**
      * Atualiza um webhook
      */
-    public function update(Request $request, Webhook $webhook): JsonResponse
+    public function update(UpdateWebhookRequest $request, Webhook $webhook): JsonResponse
     {
         // Verifica se o webhook pertence ao usuário
         if ($webhook->user_id !== $request->user()->id) {
@@ -83,14 +78,7 @@ class WebhookController extends Controller
             ], 403);
         }
 
-        $validated = $request->validate([
-            'name' => 'sometimes|string|max:255',
-            'url' => 'sometimes|url',
-            'secret' => 'nullable|string|max:255',
-            'events' => 'sometimes|array|min:1',
-            'events.*' => 'string|in:alert.sent,alert.delivered,alert.failed,device.online,device.offline,device.added',
-            'is_active' => 'sometimes|boolean'
-        ]);
+        $validated = $request->validated();
 
         $webhook->update($validated);
 

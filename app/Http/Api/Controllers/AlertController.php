@@ -2,6 +2,8 @@
 
 namespace App\Http\Api\Controllers;
 
+use App\Http\Api\Requests\StoreAlertRequest;
+use App\Http\Api\Requests\UpdateAlertDeliveryStatusRequest;
 use App\Models\Alert;
 use App\Models\AlertDelivery;
 use App\Models\Device;
@@ -9,7 +11,6 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Validation\Rule;
 
 class AlertController extends Controller
 {
@@ -44,18 +45,9 @@ class AlertController extends Controller
     /**
      * Cria e envia um novo alerta
      */
-    public function store(Request $request): JsonResponse
+    public function store(StoreAlertRequest $request): JsonResponse
     {
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'message' => 'required|string',
-            'type' => ['required', Rule::in(['info', 'warning', 'critical', 'success'])],
-            'duration_seconds' => 'nullable|integer|min:1',
-            'priority' => 'nullable|integer|min:0|max:10',
-            'expires_at' => 'nullable|date',
-            'tags' => 'required|array|min:1',
-            'tags.*' => 'exists:tags,id',
-        ]);
+        $validated = $request->validated();
 
         DB::beginTransaction();
         
@@ -183,11 +175,9 @@ class AlertController extends Controller
     /**
      * Atualiza status de entrega (usado pelos dispositivos)
      */
-    public function updateDeliveryStatus(Request $request, AlertDelivery $delivery): JsonResponse
+    public function updateDeliveryStatus(UpdateAlertDeliveryStatusRequest $request, AlertDelivery $delivery): JsonResponse
     {
-        $validated = $request->validate([
-            'status' => ['required', Rule::in(['delivered', 'acknowledged', 'dismissed'])],
-        ]);
+        $validated = $request->validated();
 
         $now = now();
         $updateData = ['status' => $validated['status']];

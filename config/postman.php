@@ -22,21 +22,13 @@ return [
     |
     */
     'routes' => [
-        // MUDE ISSO: Deixe vazio para ele não ignorar as rotas da raiz (como login)
         'prefix' => '',
 
         // Routes to explicitly include
         'include' => [
             // MUDE ISSO: Adicione os padrões que você quer capturar
             'patterns' => [
-                'api/*',              // Suas rotas do routes/api.php
-                'login',              // Breeze
-                'register',           // Breeze
-                'logout',             // Breeze
-                'forgot-password',    // Breeze
-                'reset-password',     // Breeze
-                'verify-email*',      // Breeze (opcional)
-                'sanctum/csrf-cookie' // Importante para o React
+                'api/*',
             ],
 
             // Only routes with these middleware
@@ -71,7 +63,7 @@ return [
     'structure' => [
         'folders' => [
             // Grouping strategy: 'prefix', 'nested_path', 'controller'
-            'strategy' => 'nested_path',
+            'strategy' => 'controller',
             'max_depth' => 10, //  when strategy is nested_path
 
             // Custom name mapping for folders
@@ -85,7 +77,7 @@ return [
          * Placeholders: {method}, {uri}, {controller}, {action}
          * Example: '[POST] /users' or 'UserController@store'
          */
-        'naming_format' => '[{method}] {uri}',
+        'naming_format' => '[{action}] {uri}',
 
         /**
          * Request body settings:

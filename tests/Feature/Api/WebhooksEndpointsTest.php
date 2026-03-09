@@ -3,7 +3,7 @@
 use App\Models\Webhook;
 use App\Models\WebhookLog;
 
-test('webhooks endpoints: index store show update logs test and destroy', function () {
+test('endpoints de webhooks: index store show update logs teste e destroy', function () {
     $user = actingAsUser();
 
     $webhook = Webhook::factory()->for($user)->create();

@@ -1,6 +1,6 @@
 <?php
 
-test('settings show creates defaults when missing', function () {
+test('show de configuracoes cria padroes quando ausentes', function () {
     $user = actingAsUser();
 
     $this->getJson('/api/settings')
@@ -9,7 +9,7 @@ test('settings show creates defaults when missing', function () {
         ->assertJsonPath('data.user_id', $user->id);
 });
 
-test('settings update persists data', function () {
+test('update de configuracoes persiste os dados', function () {
     actingAsUser();
 
     $this->putJson('/api/settings', [

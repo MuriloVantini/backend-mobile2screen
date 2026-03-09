@@ -2,7 +2,7 @@
 
 use App\Models\User;
 
-test('users index returns paginated data for admin', function () {
+test('index de usuarios retorna dados paginados para admin', function () {
     actingAsUser(['role' => 'admin']);
 
     foreach (range(1, 3) as $index) {
@@ -15,7 +15,7 @@ test('users index returns paginated data for admin', function () {
         ->assertJsonStructure(['data' => ['data', 'current_page', 'total']]);
 });
 
-test('users index returns only current user for non admin', function () {
+test('index de usuarios retorna apenas o usuario atual para nao admin', function () {
     $user = actingAsUser(['role' => 'user']);
 
     foreach (range(1, 2) as $index) {
@@ -29,7 +29,7 @@ test('users index returns only current user for non admin', function () {
         ->assertJsonPath('data.0.id', $user->id);
 });
 
-test('users store via protected route allows only admin', function () {
+test('store de usuarios em rota protegida permite apenas admin', function () {
     actingAsUser(['role' => 'admin']);
 
     $this->postJson('/api/users', [
@@ -53,7 +53,7 @@ test('users store via protected route allows only admin', function () {
     ])->assertForbidden();
 });
 
-test('users show respects ownership', function () {
+test('show de usuarios respeita propriedade do recurso', function () {
     $owner = actingAsUser();
     $other = createUser();
 
@@ -64,7 +64,7 @@ test('users show respects ownership', function () {
     $this->getJson('/api/users/' . $other->id)->assertForbidden();
 });
 
-test('users update allows self but blocks role change for non admin', function () {
+test('update de usuarios permite autoedicao mas bloqueia troca de perfil para nao admin', function () {
     $user = actingAsUser(['role' => 'user']);
 
     $this->putJson('/api/users/' . $user->id, [
@@ -77,7 +77,7 @@ test('users update allows self but blocks role change for non admin', function (
         ->assertJsonPath('data.name', 'Nome Atualizado');
 });
 
-test('users destroy allows deleting own account', function () {
+test('destroy de usuarios permite excluir a propria conta', function () {
     $user = actingAsUser();
 
     $this->deleteJson('/api/users/' . $user->id)

@@ -3,7 +3,7 @@
 use App\Models\Plan;
 use App\Models\User;
 
-test('public endpoints: register, login and plans are accessible', function () {
+test('endpoints publicos: registro, login e planos estao acessiveis', function () {
     $registerResponse = $this->postJson('/api/register', [
         'name' => 'Novo Usuario',
         'email' => 'novo@example.com',
@@ -43,11 +43,11 @@ test('public endpoints: register, login and plans are accessible', function () {
         ->assertJsonPath('data.id', $plan->id);
 });
 
-test('protected endpoints require authentication', function () {
+test('endpoints protegidos exigem autenticacao', function () {
     $this->getJson('/api/user')->assertUnauthorized();
 });
 
-test('user endpoint returns authenticated user with plan', function () {
+test('endpoint de usuario retorna usuario autenticado com plano', function () {
     $plan = Plan::query()->firstOrFail();
     $user = actingAsUser(['plan_id' => $plan->id]);
 
@@ -58,7 +58,7 @@ test('user endpoint returns authenticated user with plan', function () {
         ->assertJsonPath('data.plan.id', $plan->id);
 });
 
-test('logout revokes current token', function () {
+test('logout revoga o token atual', function () {
     $user = createUser();
     $token = $user->createToken('auth_token')->plainTextToken;
 

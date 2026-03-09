@@ -3,7 +3,7 @@
 use App\Models\Device;
 use App\Models\Tag;
 
-test('devices endpoints: index latest store show update destroy heartbeat and regenerate token', function () {
+test('endpoints de dispositivos: index latest store show update destroy heartbeat e regeneracao de token', function () {
     $user = actingAsUser();
     $tag = Tag::factory()->for($user)->create();
     $device = Device::factory()->for($user)->create(['name' => 'Painel A']);
@@ -67,7 +67,7 @@ test('devices endpoints: index latest store show update destroy heartbeat and re
         ->assertJsonPath('success', true);
 });
 
-test('devices endpoints enforce ownership where expected', function () {
+test('endpoints de dispositivos aplicam regra de propriedade quando esperado', function () {
     $owner = createUser();
     $outsider = actingAsUser();
 

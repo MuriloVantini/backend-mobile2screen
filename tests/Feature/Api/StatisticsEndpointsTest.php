@@ -6,7 +6,7 @@ use App\Models\Device;
 use App\Models\StatisticDaily;
 use App\Models\Tag;
 
-test('statistics endpoints: dashboard daily alerts by type and top devices', function () {
+test('endpoints de estatisticas: dashboard diario alertas por tipo e principais dispositivos', function () {
     $user = actingAsUser();
 
     foreach (range(1, 3) as $offset) {

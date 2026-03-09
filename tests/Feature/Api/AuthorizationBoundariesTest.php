@@ -5,7 +5,7 @@ use App\Models\ApiKey;
 use App\Models\Tag;
 use App\Models\Webhook;
 
-test('cross-owner resources are forbidden for tags alerts api keys and webhooks', function () {
+test('recursos de outro proprietario sao proibidos para tags alertas api keys e webhooks', function () {
     $owner = createUser();
     actingAsUser();
 

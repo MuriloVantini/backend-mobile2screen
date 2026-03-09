@@ -3,7 +3,7 @@
 use App\Models\Device;
 use App\Models\Tag;
 
-test('tags endpoints: index store show update destroy and devices list', function () {
+test('endpoints de tags: index store show update destroy e listagem de dispositivos', function () {
     $user = actingAsUser();
 
     $tag = Tag::factory()->for($user)->create([

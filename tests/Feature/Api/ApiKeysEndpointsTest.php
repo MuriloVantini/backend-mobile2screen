@@ -2,7 +2,7 @@
 
 use App\Models\ApiKey;
 
-test('api keys endpoints: index store update and destroy', function () {
+test('endpoints de api keys: index store update e destroy', function () {
     $user = actingAsUser();
     $apiKey = ApiKey::factory()->for($user)->create();
 

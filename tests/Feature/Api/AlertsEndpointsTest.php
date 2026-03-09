@@ -4,7 +4,7 @@ use App\Models\AlertDelivery;
 use App\Models\Device;
 use App\Models\Tag;
 
-test('alerts endpoints: index store show deliveries retry and delivery status update', function () {
+test('endpoints de alertas: index store show entregas retry e update de status de entrega', function () {
     $user = actingAsUser();
 
     $tag = Tag::factory()->for($user)->create();

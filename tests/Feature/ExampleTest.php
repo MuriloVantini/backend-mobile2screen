@@ -1,6 +1,6 @@
 <?php
 
-test('the application returns a successful response', function () {
+test('a aplicacao retorna uma resposta com sucesso', function () {
     $response = $this->get('/');
 
     $response->assertStatus(200);

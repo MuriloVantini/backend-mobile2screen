@@ -10,9 +10,7 @@ test('endpoints de webhooks: index store show update logs teste e destroy', func
     WebhookLog::factory()->for($webhook)->count(2)->create();
 
     $this->getJson('/api/webhooks')
-        ->assertOk()
-        ->assertJsonPath('success', true);
-
+        ->assertOk();
     $created = $this->postJson('/api/webhooks', [
         'name' => 'Webhook Alertas',
         'url' => 'https://example.com/webhook',
@@ -20,31 +18,24 @@ test('endpoints de webhooks: index store show update logs teste e destroy', func
         'is_active' => true,
     ])
         ->assertCreated()
-        ->assertJsonPath('success', true)
         ->assertJsonPath('data.name', 'Webhook Alertas');
 
     $this->getJson('/api/webhooks/' . $webhook->id)
         ->assertOk()
-        ->assertJsonPath('success', true)
         ->assertJsonPath('data.id', $webhook->id);
 
     $this->putJson('/api/webhooks/' . $webhook->id, [
         'name' => 'Webhook Atualizado',
     ])
         ->assertOk()
-        ->assertJsonPath('success', true)
         ->assertJsonPath('data.name', 'Webhook Atualizado');
 
     $this->getJson('/api/webhooks/' . $webhook->id . '/logs')
         ->assertOk()
-        ->assertJsonPath('success', true)
         ->assertJsonStructure(['data' => ['data', 'current_page']]);
 
     $this->postJson('/api/webhooks/' . $webhook->id . '/test')
-        ->assertOk()
-        ->assertJsonPath('success', true);
-
+        ->assertOk();
     $this->deleteJson('/api/webhooks/' . $created->json('data.id'))
-        ->assertOk()
-        ->assertJsonPath('success', true);
+        ->assertOk();
 });

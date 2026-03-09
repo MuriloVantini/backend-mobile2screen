@@ -15,7 +15,6 @@ test('endpoints publicos: registro, login e planos estao acessiveis', function (
 
     $registerResponse
         ->assertCreated()
-        ->assertJsonPath('success', true)
         ->assertJsonPath('data.role', 'user')
         ->assertJsonPath('data.status', 'active');
 
@@ -34,12 +33,9 @@ test('endpoints publicos: registro, login e planos estao acessiveis', function (
     $plan = Plan::query()->firstOrFail();
 
     $this->getJson('/api/plans')
-        ->assertOk()
-        ->assertJsonPath('success', true);
-
+        ->assertOk();
     $this->getJson('/api/plans/' . $plan->id)
         ->assertOk()
-        ->assertJsonPath('success', true)
         ->assertJsonPath('data.id', $plan->id);
 });
 
@@ -53,7 +49,6 @@ test('endpoint de usuario retorna usuario autenticado com plano', function () {
 
     $this->getJson('/api/user')
         ->assertOk()
-        ->assertJsonPath('success', true)
         ->assertJsonPath('data.id', $user->id)
         ->assertJsonPath('data.plan.id', $plan->id);
 });

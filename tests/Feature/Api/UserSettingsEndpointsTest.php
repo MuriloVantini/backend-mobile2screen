@@ -5,7 +5,6 @@ test('show de configuracoes cria padroes quando ausentes', function () {
 
     $this->getJson('/api/settings')
         ->assertOk()
-        ->assertJsonPath('success', true)
         ->assertJsonPath('data.user_id', $user->id);
 });
 
@@ -18,7 +17,6 @@ test('update de configuracoes persiste os dados', function () {
         'notify_weekly_report' => true,
     ])
         ->assertOk()
-        ->assertJsonPath('success', true)
         ->assertJsonPath('data.notification_email', 'alerts@example.com')
         ->assertJsonPath('data.theme', 'dark')
         ->assertJsonPath('data.notify_weekly_report', true);

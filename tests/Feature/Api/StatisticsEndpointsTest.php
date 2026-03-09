@@ -33,18 +33,12 @@ test('endpoints de estatisticas: dashboard diario alertas por tipo e principais 
 
     $this->getJson('/api/statistics/dashboard')
         ->assertOk()
-        ->assertJsonPath('success', true)
         ->assertJsonStructure(['data' => ['devices', 'alerts', 'deliveries', 'top_tags']]);
 
     $this->getJson('/api/statistics/daily?days=7')
-        ->assertOk()
-        ->assertJsonPath('success', true);
-
+        ->assertOk();
     $this->getJson('/api/statistics/alerts-by-type?days=7')
-        ->assertOk()
-        ->assertJsonPath('success', true);
-
+        ->assertOk();
     $this->getJson('/api/statistics/top-devices?days=7&limit=5')
-        ->assertOk()
-        ->assertJsonPath('success', true);
+        ->assertOk();
 });

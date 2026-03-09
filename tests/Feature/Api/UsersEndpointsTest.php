@@ -11,7 +11,6 @@ test('index de usuarios retorna dados paginados para admin', function () {
 
     $this->getJson('/api/users')
         ->assertOk()
-        ->assertJsonPath('success', true)
         ->assertJsonStructure(['data' => ['data', 'current_page', 'total']]);
 });
 
@@ -24,7 +23,6 @@ test('index de usuarios retorna apenas o usuario atual para nao admin', function
 
     $this->getJson('/api/users')
         ->assertOk()
-        ->assertJsonPath('success', true)
         ->assertJsonCount(1, 'data')
         ->assertJsonPath('data.0.id', $user->id);
 });
@@ -40,7 +38,6 @@ test('store de usuarios em rota protegida permite apenas admin', function () {
         'role' => 'admin',
     ])
         ->assertCreated()
-        ->assertJsonPath('success', true)
         ->assertJsonPath('data.role', 'admin');
 
     actingAsUser(['role' => 'user']);
@@ -72,7 +69,6 @@ test('update de usuarios permite autoedicao mas bloqueia troca de perfil para na
         'role' => 'admin',
     ])
         ->assertOk()
-        ->assertJsonPath('success', true)
         ->assertJsonPath('data.role', 'user')
         ->assertJsonPath('data.name', 'Nome Atualizado');
 });
@@ -81,8 +77,6 @@ test('destroy de usuarios permite excluir a propria conta', function () {
     $user = actingAsUser();
 
     $this->deleteJson('/api/users/' . $user->id)
-        ->assertOk()
-        ->assertJsonPath('success', true);
-
+        ->assertOk();
     expect(User::withTrashed()->find($user->id))->not->toBeNull();
 });

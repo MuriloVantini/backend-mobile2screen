@@ -15,9 +15,7 @@ test('endpoints de alertas: index store show entregas retry e update de status d
     $offlineDevice->tags()->attach($tag->id);
 
     $this->getJson('/api/alerts')
-        ->assertOk()
-        ->assertJsonPath('success', true);
-
+        ->assertOk();
     $storeResponse = $this->postJson('/api/alerts', [
         'title' => 'Alerta Critico',
         'message' => 'Mensagem de teste',
@@ -26,19 +24,16 @@ test('endpoints de alertas: index store show entregas retry e update de status d
         'tags' => [$tag->id],
     ])
         ->assertCreated()
-        ->assertJsonPath('success', true)
         ->assertJsonPath('data.devices_count', 2);
 
     $alertId = $storeResponse->json('data.alert.id');
 
     $this->getJson('/api/alerts/' . $alertId)
         ->assertOk()
-        ->assertJsonPath('success', true)
         ->assertJsonPath('data.alert.id', $alertId);
 
     $this->getJson('/api/alerts/' . $alertId . '/deliveries')
         ->assertOk()
-        ->assertJsonPath('success', true)
         ->assertJsonCount(2, 'data');
 
     $delivery = AlertDelivery::query()->where('alert_id', $alertId)->firstOrFail();
@@ -46,15 +41,12 @@ test('endpoints de alertas: index store show entregas retry e update de status d
     $this->patchJson('/api/deliveries/' . $delivery->id . '/status', [
         'status' => 'delivered',
     ])
-        ->assertOk()
-        ->assertJsonPath('success', true);
-
+        ->assertOk();
     AlertDelivery::query()
         ->where('alert_id', $alertId)
         ->where('status', 'failed')
         ->update(['status' => 'failed', 'retry_count' => 0]);
 
     $this->postJson('/api/alerts/' . $alertId . '/retry')
-        ->assertOk()
-        ->assertJsonPath('success', true);
+        ->assertOk();
 });

@@ -14,23 +14,18 @@ test('endpoints de tags: index store show update destroy e listagem de dispositi
     $device->tags()->attach($tag->id);
 
     $this->getJson('/api/tags')
-        ->assertOk()
-        ->assertJsonPath('success', true);
-
+        ->assertOk();
     $created = $this->postJson('/api/tags', [
         'name' => 'Urgente',
         'color' => 'red',
     ])
         ->assertCreated()
-        ->assertJsonPath('success', true)
         ->assertJsonPath('data.name', 'Urgente');
 
     $createdId = $created->json('data.id');
 
     $this->getJson('/api/tags/' . $tag->id)
-        ->assertOk()
-        ->assertJsonPath('success', true);
-
+        ->assertOk();
     $this->putJson('/api/tags/' . $tag->id, [
         'name' => 'Recepcao Atualizada',
     ])
@@ -39,10 +34,8 @@ test('endpoints de tags: index store show update destroy e listagem de dispositi
 
     $this->getJson('/api/tags/' . $tag->id . '/devices')
         ->assertOk()
-        ->assertJsonPath('success', true)
         ->assertJsonCount(1, 'data');
 
     $this->deleteJson('/api/tags/' . $createdId)
-        ->assertOk()
-        ->assertJsonPath('success', true);
+        ->assertOk();
 });

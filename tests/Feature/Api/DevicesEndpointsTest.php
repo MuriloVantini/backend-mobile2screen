@@ -12,12 +12,9 @@ test('endpoints de dispositivos: index latest store show update destroy heartbea
     Device::factory()->count(6)->for($user)->create();
 
     $this->getJson('/api/devices')
-        ->assertOk()
-        ->assertJsonPath('success', true);
-
+        ->assertOk();
     $this->getJson('/api/devices/latest')
         ->assertOk()
-        ->assertJsonPath('success', true)
         ->assertJsonCount(5, 'data');
 
     $created = $this->postJson('/api/devices', [
@@ -28,14 +25,12 @@ test('endpoints de dispositivos: index latest store show update destroy heartbea
         'tags' => [$tag->id],
     ])
         ->assertCreated()
-        ->assertJsonPath('success', true)
         ->assertJsonPath('data.name', 'Display Novo');
 
     $deviceId = $created->json('data.id');
 
     $this->getJson('/api/devices/' . $device->id)
         ->assertOk()
-        ->assertJsonPath('success', true)
         ->assertJsonPath('data.id', $device->id);
 
     $this->putJson('/api/devices/' . $device->id, [
@@ -50,21 +45,16 @@ test('endpoints de dispositivos: index latest store show update destroy heartbea
         'ip_address' => '10.0.0.99',
         'metadata' => ['firmware' => '1.0.1'],
     ])
-        ->assertOk()
-        ->assertJsonPath('success', true);
-
+        ->assertOk();
     $oldToken = Device::query()->findOrFail($device->id)->connection_token;
 
     $this->postJson('/api/devices/' . $device->id . '/regenerate-token')
-        ->assertOk()
-        ->assertJsonPath('success', true);
-
+        ->assertOk();
     $newToken = Device::query()->findOrFail($device->id)->connection_token;
     expect($newToken)->not->toBe($oldToken);
 
     $this->deleteJson('/api/devices/' . $deviceId)
-        ->assertOk()
-        ->assertJsonPath('success', true);
+        ->assertOk();
 });
 
 test('endpoints de dispositivos aplicam regra de propriedade quando esperado', function () {

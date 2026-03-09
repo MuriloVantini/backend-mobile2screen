@@ -14,6 +14,15 @@ class ApiKeyResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'user_id' => $this->user_id,
+            'name' => $this->name,
+            'last_used' => $this->last_used,
+            'expires_at' => $this->expires_at,
+            'is_active' => $this->is_active,
+            'created_at' => $this->created_at,
+            'user' => new UserResource($this->whenLoaded('user')),
+        ];
     }
 }

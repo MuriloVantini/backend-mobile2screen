@@ -14,6 +14,14 @@ class PlanResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'max_devices' => $this->max_devices,
+            'max_alerts_per_month' => $this->max_alerts_per_month,
+            'features' => $this->features,
+            'price' => $this->price,
+            'created_at' => $this->created_at,
+        ];
     }
 }

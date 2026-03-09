@@ -14,6 +14,20 @@ class AlertResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'user_id' => $this->user_id,
+            'title' => $this->title,
+            'message' => $this->message,
+            'type' => $this->type,
+            'duration_seconds' => $this->duration_seconds,
+            'priority' => $this->priority,
+            'sent_at' => $this->sent_at,
+            'expires_at' => $this->expires_at,
+            'created_at' => $this->created_at,
+            'user' => new UserResource($this->whenLoaded('user')),
+            'tags' => TagResource::collection($this->whenLoaded('tags')),
+            'deliveries' => AlertDeliveryResource::collection($this->whenLoaded('deliveries')),
+        ];
     }
 }

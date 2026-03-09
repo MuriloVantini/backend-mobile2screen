@@ -14,6 +14,16 @@ class WebhookLogResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'webhook_id' => $this->webhook_id,
+            'event_type' => $this->event_type,
+            'payload' => $this->payload,
+            'response_status' => $this->response_status,
+            'response_body' => $this->response_body,
+            'error_message' => $this->error_message,
+            'created_at' => $this->created_at,
+            'webhook' => new WebhookResource($this->whenLoaded('webhook')),
+        ];
     }
 }

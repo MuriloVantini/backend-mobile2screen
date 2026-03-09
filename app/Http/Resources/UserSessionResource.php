@@ -14,6 +14,16 @@ class UserSessionResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'user_id' => $this->user_id,
+            'token' => $this->token,
+            'refresh_token' => $this->refresh_token,
+            'ip_address' => $this->ip_address,
+            'user_agent' => $this->user_agent,
+            'expires_at' => $this->expires_at,
+            'created_at' => $this->created_at,
+            'user' => new UserResource($this->whenLoaded('user')),
+        ];
     }
 }

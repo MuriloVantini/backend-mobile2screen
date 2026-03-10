@@ -38,7 +38,6 @@ class AlertController extends Controller
         $alerts->setCollection($alerts->getCollection()->map(fn (Alert $alert) => $alert->toResource()));
 
         return response()->json([
-            'success' => true,
             'data' => $alerts
         ]);
     }
@@ -100,7 +99,6 @@ class AlertController extends Controller
             // event(new AlertSent($alert));
 
             return response()->json([
-                'success' => true,
                 'message' => 'Alerta enviado com sucesso',
                 'data' => [
                     'alert' => $alert->toResource(),
@@ -144,7 +142,6 @@ class AlertController extends Controller
         ];
 
         return response()->json([
-            'success' => true,
             'data' => [
                 'alert' => $alert->toResource(),
                 'stats' => $stats
@@ -168,7 +165,6 @@ class AlertController extends Controller
         $deliveries = $alert->deliveries()->with('device')->get();
 
         return response()->json([
-            'success' => true,
             'data' => $deliveries->map(fn (AlertDelivery $delivery) => $delivery->toResource()),
         ]);
     }
@@ -198,7 +194,6 @@ class AlertController extends Controller
         $delivery->update($updateData);
 
         return response()->json([
-            'success' => true,
             'message' => 'Status atualizado com sucesso'
         ]);
     }
@@ -237,7 +232,6 @@ class AlertController extends Controller
         }
 
         return response()->json([
-            'success' => true,
             'message' => "Reenvio iniciado para {$retried} dispositivos"
         ]);
     }

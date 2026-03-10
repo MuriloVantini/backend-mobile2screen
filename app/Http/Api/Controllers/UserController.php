@@ -18,13 +18,11 @@ class UserController extends Controller
             $users->setCollection($users->getCollection()->map(fn (User $user) => $user->toResource()));
 
             return response()->json([
-                'success' => true,
                 'data' => $users,
             ]);
         }
 
         return response()->json([
-            'success' => true,
             'data' => [$request->user()->load('plan')->toResource()],
         ]);
     }
@@ -55,7 +53,6 @@ class UserController extends Controller
         $user->load('plan');
         
         return response()->json([
-            'success' => true,
             'message' => $isPublicRegistration
                 ? 'Usuario registrado com sucesso'
                 : 'Usuario criado com sucesso',
@@ -75,7 +72,6 @@ class UserController extends Controller
         $user->load('plan');
 
         return response()->json([
-            'success' => true,
             'data' => $user->toResource(),
         ]);
     }
@@ -99,7 +95,6 @@ class UserController extends Controller
         $user->load('plan');
 
         return response()->json([
-            'success' => true,
             'message' => 'Usuario atualizado com sucesso',
             'data' => $user->toResource(),
         ]);
@@ -117,7 +112,6 @@ class UserController extends Controller
         $user->delete();
 
         return response()->json([
-            'success' => true,
             'message' => 'Usuario removido com sucesso',
         ]);
     }

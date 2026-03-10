@@ -25,7 +25,6 @@ class UserSettingController extends Controller
         }
 
         return response()->json([
-            'success' => true,
             'data' => $settings->toResource(),
         ]);
     }
@@ -47,7 +46,6 @@ class UserSettingController extends Controller
         }
 
         return response()->json([
-            'success' => true,
             'message' => 'Configurações atualizadas com sucesso',
             'data' => $settings->toResource(),
         ]);

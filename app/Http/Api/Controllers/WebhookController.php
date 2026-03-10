@@ -22,7 +22,6 @@ class WebhookController extends Controller
             ->get();
 
         return response()->json([
-            'success' => true,
             'data' => $webhooks->map(fn (Webhook $webhook) => $webhook->toResource()),
         ]);
     }
@@ -38,7 +37,6 @@ class WebhookController extends Controller
         $webhook = Webhook::create($validated);
 
         return response()->json([
-            'success' => true,
             'message' => 'Webhook criado com sucesso',
             'data' => $webhook->toResource(),
         ], 201);
@@ -60,7 +58,6 @@ class WebhookController extends Controller
         $webhook->loadCount('logs');
 
         return response()->json([
-            'success' => true,
             'data' => $webhook->toResource(),
         ]);
     }
@@ -83,7 +80,6 @@ class WebhookController extends Controller
         $webhook->update($validated);
 
         return response()->json([
-            'success' => true,
             'message' => 'Webhook atualizado com sucesso',
             'data' => $webhook->toResource(),
         ]);
@@ -105,7 +101,6 @@ class WebhookController extends Controller
         $webhook->delete();
 
         return response()->json([
-            'success' => true,
             'message' => 'Webhook removido com sucesso'
         ]);
     }
@@ -129,7 +124,6 @@ class WebhookController extends Controller
         $logs->setCollection($logs->getCollection()->map(fn ($log) => $log->toResource()));
 
         return response()->json([
-            'success' => true,
             'data' => $logs
         ]);
     }
@@ -151,7 +145,6 @@ class WebhookController extends Controller
         // Por enquanto, apenas retorna sucesso
         
         return response()->json([
-            'success' => true,
             'message' => 'Webhook de teste enviado'
         ]);
     }

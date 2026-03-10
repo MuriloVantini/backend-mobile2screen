@@ -65,7 +65,6 @@ class StatisticsController extends Controller
             ->get();
 
         return response()->json([
-            'success' => true,
             'data' => [
                 'devices' => [
                     'total' => $totalDevices,
@@ -106,7 +105,6 @@ class StatisticsController extends Controller
             ->get();
 
         return response()->json([
-            'success' => true,
             'data' => $statistics->map(fn (StatisticDaily $statistic) => $statistic->toResource()),
         ]);
     }
@@ -127,7 +125,6 @@ class StatisticsController extends Controller
             ->get();
 
         return response()->json([
-            'success' => true,
             'data' => $stats
         ]);
     }
@@ -161,7 +158,6 @@ class StatisticsController extends Controller
             ->get();
 
         return response()->json([
-            'success' => true,
             'data' => $topDevices
         ]);
     }

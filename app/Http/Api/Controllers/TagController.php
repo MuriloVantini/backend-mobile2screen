@@ -22,7 +22,6 @@ class TagController extends Controller
             ->get();
         
         return response()->json([
-            'success' => true,
             'data' => $tags->map(fn (Tag $tag) => $tag->toResource()),
         ]);
     }
@@ -51,7 +50,6 @@ class TagController extends Controller
         $tag = Tag::create($validated);
 
         return response()->json([
-            'success' => true,
             'message' => 'Tag criada com sucesso',
             'data' => $tag->toResource(),
         ], 201);
@@ -73,7 +71,6 @@ class TagController extends Controller
         $tag->loadCount('devices', 'alerts');
 
         return response()->json([
-            'success' => true,
             'data' => $tag->toResource(),
         ]);
     }
@@ -112,7 +109,6 @@ class TagController extends Controller
         $tag->update($validated);
 
         return response()->json([
-            'success' => true,
             'message' => 'Tag atualizada com sucesso',
             'data' => $tag->toResource(),
         ]);
@@ -134,7 +130,6 @@ class TagController extends Controller
         $tag->delete();
 
         return response()->json([
-            'success' => true,
             'message' => 'Tag removida com sucesso'
         ]);
     }
@@ -155,7 +150,6 @@ class TagController extends Controller
         $devices = $tag->devices()->get();
 
         return response()->json([
-            'success' => true,
             'data' => $devices->map(fn ($device) => $device->toResource()),
         ]);
     }

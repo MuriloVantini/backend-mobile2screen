@@ -24,7 +24,6 @@ class ApiKeyController extends Controller
             ->makeHidden('key_hash');
 
         return response()->json([
-            'success' => true,
             'data' => $apiKeys->map(fn (ApiKey $apiKey) => $apiKey->toResource()),
         ]);
     }
@@ -45,7 +44,6 @@ class ApiKeyController extends Controller
 
         // Retornar a chave apenas nesta resposta (nunca mais será exibida)
         return response()->json([
-            'success' => true,
             'message' => 'API Key criada com sucesso. Guarde-a em local seguro, ela não será exibida novamente.',
             'data' => [
                 'id' => $apiKey->id,
@@ -75,7 +73,6 @@ class ApiKeyController extends Controller
         $apiKey->update($validated);
 
         return response()->json([
-            'success' => true,
             'message' => 'API Key atualizada com sucesso',
             'data' => $apiKey->makeHidden('key_hash')->toResource(),
         ]);
@@ -97,7 +94,6 @@ class ApiKeyController extends Controller
         $apiKey->delete();
 
         return response()->json([
-            'success' => true,
             'message' => 'API Key removida com sucesso'
         ]);
     }

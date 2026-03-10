@@ -16,7 +16,6 @@ class PlanController extends Controller
         $plans = Plan::all();
         
         return response()->json([
-            'success' => true,
             'data' => $plans->map(fn (Plan $plan) => $plan->toResource()),
         ]);
     }
@@ -27,7 +26,6 @@ class PlanController extends Controller
     public function show(Plan $plan): JsonResponse
     {
         return response()->json([
-            'success' => true,
             'data' => $plan->toResource(),
         ]);
     }

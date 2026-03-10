@@ -24,7 +24,6 @@ class DeviceController extends Controller
             ->get();
         
         return response()->json([
-            'success' => true,
             'data' => $devices->map(fn (Device $device) => $device->toResource()),
         ]);
     }
@@ -42,7 +41,6 @@ class DeviceController extends Controller
             ->get();
 
         return response()->json([
-            'success' => true,
             'data' => $devices->map(fn (Device $device) => $device->toResource()),
         ]);
     }
@@ -68,7 +66,6 @@ class DeviceController extends Controller
         $device->load('tags');
 
         return response()->json([
-            'success' => true,
             'message' => 'Dispositivo criado com sucesso',
             'data' => $device->toResource(),
         ], 201);
@@ -82,7 +79,6 @@ class DeviceController extends Controller
         // Verifica se o dispositivo pertence ao usuário
         if ($device->user_id !== $request->user()->id) {
             return response()->json([
-                'success' => false,
                 'message' => 'Não autorizado'
             ], 403);
         }
@@ -90,7 +86,6 @@ class DeviceController extends Controller
         $device->load('tags');
 
         return response()->json([
-            'success' => true,
             'data' => $device->toResource(),
         ]);
     }
@@ -103,7 +98,6 @@ class DeviceController extends Controller
         // Verifica se o dispositivo pertence ao usuário
         if ($device->user_id !== $request->user()->id) {
             return response()->json([
-                'success' => false,
                 'message' => 'Não autorizado'
             ], 403);
         }
@@ -120,7 +114,6 @@ class DeviceController extends Controller
         $device->load('tags');
 
         return response()->json([
-            'success' => true,
             'message' => 'Dispositivo atualizado com sucesso',
             'data' => $device->toResource(),
         ]);
@@ -134,7 +127,6 @@ class DeviceController extends Controller
         // Verifica se o dispositivo pertence ao usuário
         if ($device->user_id !== $request->user()->id) {
             return response()->json([
-                'success' => false,
                 'message' => 'Não autorizado'
             ], 403);
         }
@@ -142,7 +134,6 @@ class DeviceController extends Controller
         $device->delete();
 
         return response()->json([
-            'success' => true,
             'message' => 'Dispositivo removido com sucesso'
         ]);
     }
@@ -162,7 +153,6 @@ class DeviceController extends Controller
         ]);
 
         return response()->json([
-            'success' => true,
             'message' => 'Heartbeat registrado'
         ]);
     }
@@ -175,7 +165,6 @@ class DeviceController extends Controller
         // Verifica se o dispositivo pertence ao usuário
         if ($device->user_id !== $request->user()->id) {
             return response()->json([
-                'success' => false,
                 'message' => 'Não autorizado'
             ], 403);
         }
@@ -185,7 +174,6 @@ class DeviceController extends Controller
         ]);
 
         return response()->json([
-            'success' => true,
             'message' => 'Token regenerado com sucesso',
             'data' => [
                 'connection_token' => $device->connection_token

@@ -41,7 +41,6 @@ class TagController extends Controller
 
         if ($existingTag) {
             return response()->json([
-                'success' => false,
                 'message' => 'Já existe uma tag com esse nome'
             ], 422);
         }
@@ -63,7 +62,6 @@ class TagController extends Controller
         // Verifica se a tag pertence ao usuário
         if ($tag->user_id !== $request->user()->id) {
             return response()->json([
-                'success' => false,
                 'message' => 'Não autorizado'
             ], 403);
         }
@@ -83,7 +81,6 @@ class TagController extends Controller
         // Verifica se a tag pertence ao usuário
         if ($tag->user_id !== $request->user()->id) {
             return response()->json([
-                'success' => false,
                 'message' => 'Não autorizado'
             ], 403);
         }
@@ -100,7 +97,6 @@ class TagController extends Controller
 
             if ($existingTag) {
                 return response()->json([
-                    'success' => false,
                     'message' => 'Já existe uma tag com esse nome'
                 ], 422);
             }
@@ -122,7 +118,6 @@ class TagController extends Controller
         // Verifica se a tag pertence ao usuário
         if ($tag->user_id !== $request->user()->id) {
             return response()->json([
-                'success' => false,
                 'message' => 'Não autorizado'
             ], 403);
         }
@@ -142,7 +137,6 @@ class TagController extends Controller
         // Verifica se a tag pertence ao usuário
         if ($tag->user_id !== $request->user()->id) {
             return response()->json([
-                'success' => false,
                 'message' => 'Não autorizado'
             ], 403);
         }

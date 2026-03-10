@@ -63,7 +63,6 @@ class ApiKeyController extends Controller
         // Verifica se a API Key pertence ao usuário
         if ($apiKey->user_id !== $request->user()->id) {
             return response()->json([
-                'success' => false,
                 'message' => 'Não autorizado'
             ], 403);
         }
@@ -86,7 +85,6 @@ class ApiKeyController extends Controller
         // Verifica se a API Key pertence ao usuário
         if ($apiKey->user_id !== $request->user()->id) {
             return response()->json([
-                'success' => false,
                 'message' => 'Não autorizado'
             ], 403);
         }

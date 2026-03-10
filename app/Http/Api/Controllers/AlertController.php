@@ -76,7 +76,6 @@ class AlertController extends Controller
             if ($devices->isEmpty()) {
                 DB::rollback();
                 return response()->json([
-                    'success' => false,
                     'message' => 'Nenhum dispositivo encontrado com as tags fornecidas'
                 ], 422);
             }
@@ -110,7 +109,6 @@ class AlertController extends Controller
         } catch (\Exception $e) {
             DB::rollback();
             return response()->json([
-                'success' => false,
                 'message' => 'Erro ao enviar alerta: ' . $e->getMessage()
             ], 500);
         }
@@ -124,7 +122,6 @@ class AlertController extends Controller
         // Verifica se o alerta pertence ao usuário
         if ($alert->user_id !== $request->user()->id) {
             return response()->json([
-                'success' => false,
                 'message' => 'Não autorizado'
             ], 403);
         }
@@ -157,7 +154,6 @@ class AlertController extends Controller
         // Verifica se o alerta pertence ao usuário
         if ($alert->user_id !== $request->user()->id) {
             return response()->json([
-                'success' => false,
                 'message' => 'Não autorizado'
             ], 403);
         }
@@ -206,7 +202,6 @@ class AlertController extends Controller
         // Verifica se o alerta pertence ao usuário
         if ($alert->user_id !== $request->user()->id) {
             return response()->json([
-                'success' => false,
                 'message' => 'Não autorizado'
             ], 403);
         }

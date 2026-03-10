@@ -50,7 +50,6 @@ class WebhookController extends Controller
         // Verifica se o webhook pertence ao usuário
         if ($webhook->user_id !== $request->user()->id) {
             return response()->json([
-                'success' => false,
                 'message' => 'Não autorizado'
             ], 403);
         }
@@ -70,7 +69,6 @@ class WebhookController extends Controller
         // Verifica se o webhook pertence ao usuário
         if ($webhook->user_id !== $request->user()->id) {
             return response()->json([
-                'success' => false,
                 'message' => 'Não autorizado'
             ], 403);
         }
@@ -93,7 +91,6 @@ class WebhookController extends Controller
         // Verifica se o webhook pertence ao usuário
         if ($webhook->user_id !== $request->user()->id) {
             return response()->json([
-                'success' => false,
                 'message' => 'Não autorizado'
             ], 403);
         }
@@ -113,7 +110,6 @@ class WebhookController extends Controller
         // Verifica se o webhook pertence ao usuário
         if ($webhook->user_id !== $request->user()->id) {
             return response()->json([
-                'success' => false,
                 'message' => 'Não autorizado'
             ], 403);
         }
@@ -136,7 +132,6 @@ class WebhookController extends Controller
         // Verifica se o webhook pertence ao usuário
         if ($webhook->user_id !== $request->user()->id) {
             return response()->json([
-                'success' => false,
                 'message' => 'Não autorizado'
             ], 403);
         }

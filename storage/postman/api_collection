@@ -36,7 +36,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"Lilian Salazar Lutero\",\n    \"email\": \"ufonseca@example.net\",\n    \"password\": \"fxY0Wr4`/8(Z\",\n    \"company\": \"Meireles-Queir\u00f3s\",\n    \"phone\": \"(73) 98513-3808\",\n    \"plan_id\": 1,\n    \"status\": \"active\",\n    \"role\": \"user\",\n    \"last_active\": \"2026-03-06 02:06:24\"\n}",
+                            "raw": "{\n    \"name\": \"Dr. Melissa Tainara Teles\",\n    \"email\": \"richard.delvalle@example.com\",\n    \"password\": \"4K_w\\\"sPVj\\\"\",\n    \"company\": \"Carvalho Ltda.\",\n    \"phone\": \"(28) 99785-0106\",\n    \"plan_id\": 1,\n    \"status\": \"active\",\n    \"role\": \"user\",\n    \"last_active\": \"2026-03-31 03:24:12\"\n}",
                             "options": []
                         }
                     }
@@ -97,7 +97,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"Lilian Salazar Lutero\",\n    \"email\": \"ufonseca@example.net\",\n    \"password\": \"fxY0Wr4`/8(Z\",\n    \"company\": \"Meireles-Queir\u00f3s\",\n    \"phone\": \"(73) 98513-3808\",\n    \"plan_id\": 1,\n    \"status\": \"active\",\n    \"role\": \"user\",\n    \"last_active\": \"2026-03-06 02:06:24\"\n}",
+                            "raw": "{\n    \"name\": \"Dr. Melissa Tainara Teles\",\n    \"email\": \"richard.delvalle@example.com\",\n    \"password\": \"4K_w\\\"sPVj\\\"\",\n    \"company\": \"Carvalho Ltda.\",\n    \"phone\": \"(28) 99785-0106\",\n    \"plan_id\": 1,\n    \"status\": \"active\",\n    \"role\": \"user\",\n    \"last_active\": \"2026-03-31 03:24:12\"\n}",
                             "options": []
                         }
                     }
@@ -162,7 +162,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"Lilian Salazar Lutero\",\n    \"email\": \"ufonseca@example.net\",\n    \"password\": \"fxY0Wr4`/8(Z\",\n    \"company\": \"Meireles-Queir\u00f3s\",\n    \"phone\": \"(73) 98513-3808\",\n    \"plan_id\": 1,\n    \"status\": \"active\",\n    \"role\": \"user\",\n    \"last_active\": \"2026-03-06 02:06:24\"\n}",
+                            "raw": "{\n    \"name\": \"Dr. Melissa Tainara Teles\",\n    \"email\": \"richard.delvalle@example.com\",\n    \"password\": \"4K_w\\\"sPVj\\\"\",\n    \"company\": \"Carvalho Ltda.\",\n    \"phone\": \"(28) 99785-0106\",\n    \"plan_id\": 1,\n    \"status\": \"active\",\n    \"role\": \"user\",\n    \"last_active\": \"2026-03-31 03:24:12\"\n}",
                             "options": []
                         }
                     }
@@ -230,7 +230,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"email\": \"ufonseca@example.net\",\n    \"password\": \"fxY0Wr4`/8(Z\"\n}",
+                            "raw": "{\n    \"email\": \"richard.delvalle@example.com\",\n    \"password\": \"4K_w\\\"sPVj\\\"\"\n}",
                             "options": []
                         }
                     }
@@ -260,6 +260,115 @@
                                 "api",
                                 "logout"
                             ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "PasswordResetLink",
+            "item": [
+                {
+                    "name": "[store] api/forgot-password",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/forgot-password",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "forgot-password"
+                            ]
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"email\": \"richard.delvalle@example.com\"\n}",
+                            "options": []
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "NewPassword",
+            "item": [
+                {
+                    "name": "[validatePin] api/validate-reset-pin",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/validate-reset-pin",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "validate-reset-pin"
+                            ]
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"email\": \"richard.delvalle@example.com\",\n    \"pin_code\": \"sample_text\"\n}",
+                            "options": []
+                        }
+                    }
+                },
+                {
+                    "name": "[store] api/reset-password",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/reset-password",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "reset-password"
+                            ]
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"pin_code\": \"sample_text\",\n    \"email\": \"richard.delvalle@example.com\",\n    \"password\": \"4K_w\\\"sPVj\\\"\"\n}",
+                            "options": []
                         }
                     }
                 }
@@ -420,7 +529,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"notify_alert_failed\": 1,\n    \"notify_device_offline\": 0,\n    \"notify_weekly_report\": 1,\n    \"notify_device_connected\": 0,\n    \"notify_limit_reached\": 0,\n    \"notification_email\": \"maiara.sales@example.com\",\n    \"notification_phone\": \"(37) 3174-0020\",\n    \"timezone\": \"America/North_Dakota/New_Salem\",\n    \"language\": \"pt-BR\",\n    \"theme\": \"auto\"\n}",
+                            "raw": "{\n    \"notify_alert_failed\": 0,\n    \"notify_device_offline\": 0,\n    \"notify_weekly_report\": 0,\n    \"notify_device_connected\": 0,\n    \"notify_limit_reached\": 0,\n    \"notification_email\": \"pietra79@example.com\",\n    \"notification_phone\": \"(81) 98641-8823\",\n    \"timezone\": \"Asia/Tashkent\",\n    \"language\": \"pt-BR\",\n    \"theme\": \"dark\"\n}",
                             "options": []
                         }
                     }
@@ -515,7 +624,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"Lilian Salazar Lutero\",\n    \"type\": \"info\",\n    \"location\": \"06516-875, Rua Th\u00e9o, 1908\\nSerra do Leste - PR\",\n    \"ip_address\": \"173.200.230.235\",\n    \"mac_address\": \"OQ:OJ:LV:YO:RG:BY\",\n    \"metadata\": {\n        \"source\": \"postman-doc\",\n        \"firmware\": \"1.4.6\"\n    },\n    \"tags\": [\n        1\n    ]\n}",
+                            "raw": "{\n    \"name\": \"Dr. Melissa Tainara Teles\",\n    \"type\": \"info\",\n    \"location\": \"97942-180, Rua Stephany, 37. 0\u00ba Andar\\nNayara do Leste - SE\",\n    \"ip_address\": \"141.129.64.157\",\n    \"mac_address\": \"LJ:LY:KK:WR:YG:OY\",\n    \"metadata\": {\n        \"source\": \"postman-doc\",\n        \"firmware\": \"1.8.5\"\n    },\n    \"tags\": [\n        1\n    ]\n}",
                             "options": []
                         }
                     }
@@ -580,7 +689,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"Lilian Salazar Lutero\",\n    \"type\": \"info\",\n    \"location\": \"06516-875, Rua Th\u00e9o, 1908\\nSerra do Leste - PR\",\n    \"ip_address\": \"173.200.230.235\",\n    \"mac_address\": \"OQ:OJ:LV:YO:RG:BY\",\n    \"metadata\": {\n        \"source\": \"postman-doc\",\n        \"firmware\": \"1.4.6\"\n    },\n    \"tags\": [\n        1\n    ]\n}",
+                            "raw": "{\n    \"name\": \"Dr. Melissa Tainara Teles\",\n    \"type\": \"info\",\n    \"location\": \"97942-180, Rua Stephany, 37. 0\u00ba Andar\\nNayara do Leste - SE\",\n    \"ip_address\": \"141.129.64.157\",\n    \"mac_address\": \"LJ:LY:KK:WR:YG:OY\",\n    \"metadata\": {\n        \"source\": \"postman-doc\",\n        \"firmware\": \"1.8.5\"\n    },\n    \"tags\": [\n        1\n    ]\n}",
                             "options": []
                         }
                     }
@@ -646,7 +755,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"ip_address\": \"173.200.230.235\",\n    \"metadata\": {\n        \"source\": \"postman-doc\",\n        \"firmware\": \"1.4.6\"\n    }\n}",
+                            "raw": "{\n    \"ip_address\": \"141.129.64.157\",\n    \"metadata\": {\n        \"source\": \"postman-doc\",\n        \"firmware\": \"1.8.5\"\n    }\n}",
                             "options": []
                         }
                     }
@@ -743,7 +852,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"Lilian Salazar Lutero\",\n    \"color\": \"blue\"\n}",
+                            "raw": "{\n    \"name\": \"Dr. Melissa Tainara Teles\",\n    \"color\": \"teal\"\n}",
                             "options": []
                         }
                     }
@@ -808,7 +917,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"Lilian Salazar Lutero\",\n    \"color\": \"blue\"\n}",
+                            "raw": "{\n    \"name\": \"Dr. Melissa Tainara Teles\",\n    \"color\": \"teal\"\n}",
                             "options": []
                         }
                     }
@@ -935,7 +1044,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"title\": \"Et quo.\",\n    \"message\": \"Itaque facilis et et dicta nisi qui. Suscipit deserunt aut corrupti et sed. Fugiat ratione qui sequi aut voluptatem sunt alias.\",\n    \"type\": \"info\",\n    \"duration_seconds\": 51,\n    \"priority\": 6,\n    \"expires_at\": \"2026-03-13 19:33:40\",\n    \"tags\": [\n        1\n    ]\n}",
+                            "raw": "{\n    \"title\": \"Autem necessitatibus dolores.\",\n    \"message\": \"Dolorem voluptas doloribus numquam neque velit illo. Quam reprehenderit rerum minus earum. Rem tenetur nam omnis dolorem omnis. Est nihil iste amet id quam autem magni.\",\n    \"type\": \"info\",\n    \"duration_seconds\": 27,\n    \"priority\": 5,\n    \"expires_at\": \"2026-04-13 01:15:15\",\n    \"tags\": [\n        1\n    ]\n}",
                             "options": []
                         }
                     }
@@ -1129,7 +1238,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"Lilian Salazar Lutero\",\n    \"expires_at\": \"2026-03-13 19:33:40\"\n}",
+                            "raw": "{\n    \"name\": \"Dr. Melissa Tainara Teles\",\n    \"expires_at\": \"2026-04-13 01:15:15\"\n}",
                             "options": []
                         }
                     }
@@ -1164,7 +1273,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"Lilian Salazar Lutero\",\n    \"is_active\": true\n}",
+                            "raw": "{\n    \"name\": \"Dr. Melissa Tainara Teles\",\n    \"is_active\": true\n}",
                             "options": []
                         }
                     }
@@ -1260,7 +1369,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"Lilian Salazar Lutero\",\n    \"url\": \"http://www.paes.net.br/\",\n    \"secret\": \"d732b06c1c29f7c9930f2d3111e222ffbd20382bbbca1e436cb2f6a344742fa7\",\n    \"events\": [\n        \"alert.sent\"\n    ],\n    \"is_active\": true\n}",
+                            "raw": "{\n    \"name\": \"Dr. Melissa Tainara Teles\",\n    \"url\": \"http://www.bonilha.br/veniam-eveniet-et-ipsum\",\n    \"secret\": \"777d94b2cd4a3fa65b406f1a2f643d49e318e8136b4cbea08838bb2e8a8fed5c\",\n    \"events\": [\n        \"alert.sent\"\n    ],\n    \"is_active\": true\n}",
                             "options": []
                         }
                     }
@@ -1325,7 +1434,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"Lilian Salazar Lutero\",\n    \"url\": \"http://www.paes.net.br/\",\n    \"secret\": \"d732b06c1c29f7c9930f2d3111e222ffbd20382bbbca1e436cb2f6a344742fa7\",\n    \"events\": [\n        \"alert.sent\"\n    ],\n    \"is_active\": true\n}",
+                            "raw": "{\n    \"name\": \"Dr. Melissa Tainara Teles\",\n    \"url\": \"http://www.bonilha.br/veniam-eveniet-et-ipsum\",\n    \"secret\": \"777d94b2cd4a3fa65b406f1a2f643d49e318e8136b4cbea08838bb2e8a8fed5c\",\n    \"events\": [\n        \"alert.sent\"\n    ],\n    \"is_active\": true\n}",
                             "options": []
                         }
                     }
@@ -1485,7 +1594,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"from_date\": \"2026-02-17\",\n    \"to_date\": \"2026-03-04\",\n    \"days\": 15\n}",
+                            "raw": "{\n    \"from_date\": \"2026-03-21\",\n    \"to_date\": \"2026-03-30\",\n    \"days\": 8\n}",
                             "options": []
                         }
                     }

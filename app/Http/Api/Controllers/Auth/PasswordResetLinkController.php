@@ -4,34 +4,46 @@ namespace App\Http\Api\Controllers\Auth;
 
 use App\Http\Api\Controllers\Controller;
 use App\Http\Requests\Auth\PasswordResetLinkRequest;
+use App\Models\User;
+use App\Notifications\Auth\PasswordResetPinNotification;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Password;
-use Illuminate\Validation\ValidationException;
 
 class PasswordResetLinkController extends Controller
 {
     /**
-     * Handle an incoming password reset link request.
-     *
-     * @throws \Illuminate\Validation\ValidationException
+     * Handle an incoming password reset PIN request.
      */
     public function store(PasswordResetLinkRequest $request): JsonResponse
     {
         $validated = $request->validated();
+        Cache::forget('password-reset-pin-validated:' . mb_strtolower($validated['email']));
 
-        // We will send the password reset link to this user. Once we have attempted
-        // to send the link, we will examine the response then see the message we
-        // need to show to the user. Finally, we'll send out a proper response.
-        $status = Password::sendResetLink(
-            ['email' => $validated['email']]
-        );
+        $user = User::query()->where('email', $validated['email'])->first();
 
-        if ($status != Password::RESET_LINK_SENT) {
-            throw ValidationException::withMessages([
-                'email' => [__($status)],
+        if (! $user) {
+            return response()->json([
+                'status' => 'PIN de redefinição enviado para o e-mail.',
             ]);
         }
 
-        return response()->json(['status' => __($status)]);
+        $pin = str_pad((string) random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+
+        DB::table(config('auth.passwords.users.table', 'password_reset_tokens'))
+            ->updateOrInsert(
+                ['email' => $validated['email']],
+                [
+                    'token' => Hash::make($pin),
+                    'created_at' => now(),
+                ]
+            );
+
+        $user->notify(new PasswordResetPinNotification($pin));
+
+        return response()->json([
+            'status' => 'PIN de redefinição enviado para o e-mail.',
+        ]);
     }
 }

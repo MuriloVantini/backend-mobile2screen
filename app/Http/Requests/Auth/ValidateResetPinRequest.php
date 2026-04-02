@@ -3,9 +3,8 @@
 namespace App\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rules;
 
-class NewPasswordRequest extends FormRequest
+class ValidateResetPinRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -15,9 +14,8 @@ class NewPasswordRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'pin_code' => ['required', 'digits:6'],
             'email' => ['required', 'email'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'pin_code' => ['required', 'digits:6'],
         ];
     }
 }

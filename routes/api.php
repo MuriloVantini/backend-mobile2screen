@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Api\Controllers\Auth\AuthController;
+use App\Http\Api\Controllers\Auth\NewPasswordController;
+use App\Http\Api\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Api\Controllers\AlertController;
 use App\Http\Api\Controllers\ApiKeyController;
 use App\Http\Api\Controllers\DeviceController;
@@ -20,6 +22,9 @@ use Illuminate\Support\Facades\Route;
 // Autenticação
 Route::post('/register', [UserController::class, 'store']);
 Route::post('/login', [AuthController::class, 'store']);
+Route::post('/forgot-password', [PasswordResetLinkController::class, 'store']);
+Route::post('/validate-reset-pin', [NewPasswordController::class, 'validatePin']);
+Route::post('/reset-password', [NewPasswordController::class, 'store']);
 
 // Planos (visualização pública)
 Route::get('/plans', [PlanController::class, 'index']);

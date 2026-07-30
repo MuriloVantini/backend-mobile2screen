@@ -6,6 +6,7 @@ use App\Http\Api\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Api\Controllers\AlertController;
 use App\Http\Api\Controllers\ApiKeyController;
 use App\Http\Api\Controllers\DeviceController;
+use App\Http\Api\Controllers\KioskDeviceController;
 use App\Http\Api\Controllers\PlanController;
 use App\Http\Api\Controllers\StatisticsController;
 use App\Http\Api\Controllers\TagController;
@@ -25,6 +26,14 @@ Route::post('/login', [AuthController::class, 'store']);
 Route::post('/forgot-password', [PasswordResetLinkController::class, 'store']);
 Route::post('/validate-reset-pin', [NewPasswordController::class, 'validatePin']);
 Route::post('/reset-password', [NewPasswordController::class, 'store']);
+
+// Player de TV/Raspberry Pi. O token do dispositivo é enviado no cabeçalho
+Route::prefix('kiosk/devices/{device}')->group(function () {
+    Route::post('/connect', [KioskDeviceController::class, 'connect']);
+    Route::post('/heartbeat', [KioskDeviceController::class, 'heartbeat']);
+    Route::get('/deliveries', [KioskDeviceController::class, 'pendingDeliveries']);
+    Route::patch('/deliveries/{delivery}/status', [KioskDeviceController::class, 'updateDeliveryStatus']);
+});
 
 // Planos (visualização pública)
 Route::get('/plans', [PlanController::class, 'index']);

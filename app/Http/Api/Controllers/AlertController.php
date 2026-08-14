@@ -2,6 +2,7 @@
 
 namespace App\Http\Api\Controllers;
 
+use App\Events\AlertAvailable;
 use App\Http\Requests\StoreAlertRequest;
 use App\Http\Requests\UpdateAlertDeliveryStatusRequest;
 use App\Models\Alert;
@@ -11,6 +12,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class AlertController extends Controller
 {
@@ -19,7 +21,19 @@ class AlertController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        $query = $request->user()->alerts()->with('tags');
+        $query = $request->user()->alerts()
+            ->with('tags')
+            ->withCount([
+                'deliveries',
+                'deliveries as received_devices_count' => fn ($query) => $query
+                    ->where(function ($receivedQuery) {
+                        $receivedQuery
+                            ->whereNotNull('delivered_at')
+                            ->orWhereIn('status', ['delivered', 'acknowledged', 'dismissed']);
+                    }),
+                'deliveries as failed_devices_count' => fn ($query) => $query->where('status', 'failed'),
+                'deliveries as pending_devices_count' => fn ($query) => $query->where('status', 'pending'),
+            ]);
 
         // Filtros opcionais
         if ($request->has('type')) {
@@ -81,21 +95,27 @@ class AlertController extends Controller
             }
 
             // Criar registros de entrega para cada dispositivo
+            $pendingDeliveries = collect();
             foreach ($devices as $device) {
-                AlertDelivery::create([
+                $delivery = AlertDelivery::create([
                     'alert_id' => $alert->id,
                     'device_id' => $device->id,
                     'status' => $device->is_online ? 'pending' : 'failed',
                     'error_message' => !$device->is_online ? 'Dispositivo offline' : null,
                 ]);
+
+                if ($delivery->status === 'pending') {
+                    $pendingDeliveries->push($delivery);
+                }
             }
 
             DB::commit();
 
             $alert->load(['tags', 'deliveries.device']);
 
-            // Aqui você pode disparar um evento/job para enviar via WebSocket
-            // event(new AlertSent($alert));
+            foreach ($pendingDeliveries as $delivery) {
+                $this->broadcastDelivery($delivery);
+            }
 
             return response()->json([
                 'message' => 'Alerta enviado com sucesso',
@@ -131,7 +151,10 @@ class AlertController extends Controller
         // Estatísticas de entrega
         $stats = [
             'total_deliveries' => $alert->deliveries->count(),
-            'delivered' => $alert->deliveries->where('status', 'delivered')->count(),
+            'delivered' => $alert->deliveries
+                ->filter(fn (AlertDelivery $delivery) => $delivery->delivered_at !== null
+                    || in_array($delivery->status, ['delivered', 'acknowledged', 'dismissed'], true))
+                ->count(),
             'pending' => $alert->deliveries->where('status', 'pending')->count(),
             'failed' => $alert->deliveries->where('status', 'failed')->count(),
             'acknowledged' => $alert->deliveries->where('status', 'acknowledged')->count(),
@@ -195,7 +218,7 @@ class AlertController extends Controller
     }
 
     /**
-     * Reenvia alerta para dispositivos que falharam
+     * Reenvia o alerta para todos os dispositivos originalmente associados.
      */
     public function retry(Request $request, Alert $alert): JsonResponse
     {
@@ -206,28 +229,55 @@ class AlertController extends Controller
             ], 403);
         }
 
-        $failedDeliveries = $alert->deliveries()
-            ->where('status', 'failed')
+        $deliveries = $alert->deliveries()
             ->with('device')
             ->get();
 
         $retried = 0;
-        foreach ($failedDeliveries as $delivery) {
-            if ($delivery->device->is_online) {
+        $offline = 0;
+
+        foreach ($deliveries as $delivery) {
+            if (! $delivery->device?->is_online) {
                 $delivery->update([
-                    'status' => 'pending',
-                    'retry_count' => $delivery->retry_count + 1,
-                    'error_message' => null
+                    'status' => 'failed',
+                    'error_message' => 'Dispositivo offline',
                 ]);
-                $retried++;
-                
-                // Disparar evento para reenvio
-                // event(new AlertRetry($delivery));
+                $offline++;
+
+                continue;
             }
+
+            $delivery->update([
+                'status' => 'pending',
+                'acknowledged_at' => null,
+                'dismissed_at' => null,
+                'retry_count' => $delivery->retry_count + 1,
+                'error_message' => null,
+            ]);
+
+            $retried++;
+            $this->broadcastDelivery($delivery);
         }
 
         return response()->json([
-            'message' => "Reenvio iniciado para {$retried} dispositivos"
+            'message' => "Reenvio iniciado para {$retried} dispositivos",
+            'data' => [
+                'retried_devices' => $retried,
+                'offline_devices' => $offline,
+            ],
         ]);
+    }
+
+    private function broadcastDelivery(AlertDelivery $delivery): void
+    {
+        try {
+            AlertAvailable::dispatch($delivery);
+        } catch (\Throwable $exception) {
+            Log::warning('Não foi possível notificar o kiosk pelo Reverb.', [
+                'delivery_id' => $delivery->id,
+                'device_id' => $delivery->device_id,
+                'exception' => $exception->getMessage(),
+            ]);
+        }
     }
 }

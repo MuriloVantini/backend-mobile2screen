@@ -27,10 +27,51 @@ class KioskDeviceController extends Controller
         return response()->json([
             'message' => 'Dispositivo conectado',
             'data' => [
+                'id' => $device->id,
                 'device_id' => $device->id,
                 'name' => $device->name,
                 'connected_at' => now(),
+                'websocket' => [
+                    'key' => config('broadcasting.connections.reverb.key'),
+                    'host' => config('broadcasting.connections.reverb.options.host'),
+                    'port' => (int) config('broadcasting.connections.reverb.options.port'),
+                    'scheme' => config('broadcasting.connections.reverb.options.scheme'),
+                    'channel' => "private-device.{$device->id}",
+                ],
             ],
+        ]);
+    }
+
+    public function authorizeBroadcasting(Request $request, Device $device): JsonResponse
+    {
+        if (! $this->hasValidToken($request, $device)) {
+            return $this->unauthorized();
+        }
+
+        $validated = $request->validate([
+            'socket_id' => ['required', 'string', 'regex:/^\d+\.\d+$/'],
+            'channel_name' => ['required', 'string'],
+        ]);
+
+        $expectedChannel = "private-device.{$device->id}";
+        if (! hash_equals($expectedChannel, $validated['channel_name'])) {
+            return response()->json(['message' => 'Canal WebSocket não autorizado'], 403);
+        }
+
+        $key = config('broadcasting.connections.reverb.key');
+        $secret = config('broadcasting.connections.reverb.secret');
+        if (! is_string($key) || $key === '' || ! is_string($secret) || $secret === '') {
+            return response()->json(['message' => 'Reverb não configurado'], 503);
+        }
+
+        $signature = hash_hmac(
+            'sha256',
+            "{$validated['socket_id']}:{$validated['channel_name']}",
+            $secret,
+        );
+
+        return response()->json([
+            'auth' => "{$key}:{$signature}",
         ]);
     }
 

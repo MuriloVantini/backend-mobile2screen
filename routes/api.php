@@ -30,6 +30,7 @@ Route::post('/reset-password', [NewPasswordController::class, 'store']);
 // Player de TV/Raspberry Pi. O token do dispositivo é enviado no cabeçalho
 Route::prefix('kiosk/devices/{device}')->group(function () {
     Route::post('/connect', [KioskDeviceController::class, 'connect']);
+    Route::post('/broadcasting/auth', [KioskDeviceController::class, 'authorizeBroadcasting']);
     Route::post('/heartbeat', [KioskDeviceController::class, 'heartbeat']);
     Route::get('/deliveries', [KioskDeviceController::class, 'pendingDeliveries']);
     Route::patch('/deliveries/{delivery}/status', [KioskDeviceController::class, 'updateDeliveryStatus']);

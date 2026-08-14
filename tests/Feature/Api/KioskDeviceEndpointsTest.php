@@ -43,3 +43,28 @@ test('simulador kiosk rejeita token inválido', function () {
         'X-Device-Token' => 'token-incorreto',
     ])->assertUnauthorized();
 });
+
+test('simulador kiosk autentica somente o proprio canal privado do Reverb', function () {
+    config()->set('broadcasting.connections.reverb.key', 'reverb-test-key');
+    config()->set('broadcasting.connections.reverb.secret', 'reverb-test-secret');
+
+    $device = Device::factory()->for(createUser())->create([
+        'connection_token' => 'token-do-dispositivo',
+    ]);
+    $headers = ['X-Device-Token' => 'token-do-dispositivo'];
+    $socketId = '1234.5678';
+    $channel = 'private-device.' . $device->id;
+    $expectedSignature = hash_hmac('sha256', "{$socketId}:{$channel}", 'reverb-test-secret');
+
+    $this->postJson('/api/kiosk/devices/' . $device->id . '/broadcasting/auth', [
+        'socket_id' => $socketId,
+        'channel_name' => $channel,
+    ], $headers)
+        ->assertOk()
+        ->assertJsonPath('auth', 'reverb-test-key:' . $expectedSignature);
+
+    $this->postJson('/api/kiosk/devices/' . $device->id . '/broadcasting/auth', [
+        'socket_id' => $socketId,
+        'channel_name' => 'private-device.999999',
+    ], $headers)->assertForbidden();
+});

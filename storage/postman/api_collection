@@ -1,7 +1,7 @@
 {
     "info": {
         "name": "mobile2screen",
-        "description": "API para o projeto Mobile2Screen",
+        "description": "API HTTP do projeto Mobile2Screen. Para testar o Laravel Reverb no Postman, importe também o arquivo reverb_websocket.asyncapi.json desta pasta.",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
     },
     "item": [
@@ -36,7 +36,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"Dr. Melissa Tainara Teles\",\n    \"email\": \"richard.delvalle@example.com\",\n    \"password\": \"4K_w\\\"sPVj\\\"\",\n    \"company\": \"Carvalho Ltda.\",\n    \"phone\": \"(28) 99785-0106\",\n    \"plan_id\": 1,\n    \"status\": \"active\",\n    \"role\": \"user\",\n    \"last_active\": \"2026-03-31 03:24:12\"\n}",
+                            "raw": "{\n    \"name\": \"Sra. Lara Benez Rezende\",\n    \"email\": \"yuri.espinoza@example.com\",\n    \"password\": \"(0w!~.#ca5\\\"I^HDy\",\n    \"company\": \"Rangel-Bezerra\",\n    \"phone\": \"(45) 96052-1442\",\n    \"plan_id\": 1,\n    \"status\": \"active\",\n    \"role\": \"user\",\n    \"last_active\": \"2026-08-11 09:13:00\"\n}",
                             "options": []
                         }
                     }
@@ -65,6 +65,15 @@
                             "path": [
                                 "api",
                                 "users"
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
                             ]
                         }
                     }
@@ -97,8 +106,17 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"Dr. Melissa Tainara Teles\",\n    \"email\": \"richard.delvalle@example.com\",\n    \"password\": \"4K_w\\\"sPVj\\\"\",\n    \"company\": \"Carvalho Ltda.\",\n    \"phone\": \"(28) 99785-0106\",\n    \"plan_id\": 1,\n    \"status\": \"active\",\n    \"role\": \"user\",\n    \"last_active\": \"2026-03-31 03:24:12\"\n}",
+                            "raw": "{\n    \"name\": \"Sra. Lara Benez Rezende\",\n    \"email\": \"yuri.espinoza@example.com\",\n    \"password\": \"(0w!~.#ca5\\\"I^HDy\",\n    \"company\": \"Rangel-Bezerra\",\n    \"phone\": \"(45) 96052-1442\",\n    \"plan_id\": 1,\n    \"status\": \"active\",\n    \"role\": \"user\",\n    \"last_active\": \"2026-08-11 09:13:00\"\n}",
                             "options": []
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
                         }
                     }
                 },
@@ -128,7 +146,21 @@
                                 "users",
                                 ":user"
                             ],
-                            "variable": []
+                            "variable": [
+                                {
+                                    "key": "user",
+                                    "value": 1
+                                }
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
                         }
                     }
                 },
@@ -158,12 +190,26 @@
                                 "users",
                                 ":user"
                             ],
-                            "variable": []
+                            "variable": [
+                                {
+                                    "key": "user",
+                                    "value": 1
+                                }
+                            ]
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"Dr. Melissa Tainara Teles\",\n    \"email\": \"richard.delvalle@example.com\",\n    \"password\": \"4K_w\\\"sPVj\\\"\",\n    \"company\": \"Carvalho Ltda.\",\n    \"phone\": \"(28) 99785-0106\",\n    \"plan_id\": 1,\n    \"status\": \"active\",\n    \"role\": \"user\",\n    \"last_active\": \"2026-03-31 03:24:12\"\n}",
+                            "raw": "{\n    \"name\": \"Sra. Lara Benez Rezende\",\n    \"email\": \"yuri.espinoza@example.com\",\n    \"password\": \"(0w!~.#ca5\\\"I^HDy\",\n    \"company\": \"Rangel-Bezerra\",\n    \"phone\": \"(45) 96052-1442\",\n    \"plan_id\": 1,\n    \"status\": \"active\",\n    \"role\": \"user\",\n    \"last_active\": \"2026-08-11 09:13:00\"\n}",
                             "options": []
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
                         }
                     }
                 },
@@ -193,7 +239,21 @@
                                 "users",
                                 ":user"
                             ],
-                            "variable": []
+                            "variable": [
+                                {
+                                    "key": "user",
+                                    "value": 1
+                                }
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
                         }
                     }
                 }
@@ -230,7 +290,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"email\": \"richard.delvalle@example.com\",\n    \"password\": \"4K_w\\\"sPVj\\\"\"\n}",
+                            "raw": "{\n    \"email\": \"yuri.espinoza@example.com\",\n    \"password\": \"(0w!~.#ca5\\\"I^HDy\"\n}",
                             "options": []
                         }
                     }
@@ -259,6 +319,15 @@
                             "path": [
                                 "api",
                                 "logout"
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
                             ]
                         }
                     }
@@ -296,7 +365,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"email\": \"richard.delvalle@example.com\"\n}",
+                            "raw": "{\n    \"email\": \"yuri.espinoza@example.com\"\n}",
                             "options": []
                         }
                     }
@@ -334,7 +403,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"email\": \"richard.delvalle@example.com\",\n    \"pin_code\": \"sample_text\"\n}",
+                            "raw": "{\n    \"email\": \"yuri.espinoza@example.com\",\n    \"pin_code\": \"sample_text\"\n}",
                             "options": []
                         }
                     }
@@ -367,12 +436,239 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"pin_code\": \"sample_text\",\n    \"email\": \"richard.delvalle@example.com\",\n    \"password\": \"4K_w\\\"sPVj\\\"\"\n}",
+                            "raw": "{\n    \"pin_code\": \"sample_text\",\n    \"email\": \"yuri.espinoza@example.com\",\n    \"password\": \"(0w!~.#ca5\\\"I^HDy\"\n}",
                             "options": []
                         }
                     }
                 }
             ]
+        },
+        {
+            "name": "KioskDevice",
+            "item": [
+                {
+                    "name": "[connect] api/kiosk/devices/{device}/connect",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/kiosk/devices/:device/connect",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "kiosk",
+                                "devices",
+                                ":device",
+                                "connect"
+                            ],
+                            "variable": [
+                                {
+                                    "key": "device",
+                                    "value": 1
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "[authorizeBroadcasting] api/kiosk/devices/{device}/broadcasting/auth",
+                    "request": {
+                        "description": "Autoriza a assinatura do canal privado do dispositivo no Laravel Reverb. O canal deve seguir o formato private-device.{device} e a requisição usa X-Device-Token.",
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/kiosk/devices/:device/broadcasting/auth",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "kiosk",
+                                "devices",
+                                ":device",
+                                "broadcasting",
+                                "auth"
+                            ],
+                            "variable": [
+                                {
+                                    "key": "device",
+                                    "value": 1
+                                }
+                            ]
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"socket_id\": \"123456.789012\",\n    \"channel_name\": \"private-device.1\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "[heartbeat] api/kiosk/devices/{device}/heartbeat",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/kiosk/devices/:device/heartbeat",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "kiosk",
+                                "devices",
+                                ":device",
+                                "heartbeat"
+                            ],
+                            "variable": [
+                                {
+                                    "key": "device",
+                                    "value": 1
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "[pendingDeliveries] api/kiosk/devices/{device}/deliveries",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/kiosk/devices/:device/deliveries",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "kiosk",
+                                "devices",
+                                ":device",
+                                "deliveries"
+                            ],
+                            "variable": [
+                                {
+                                    "key": "device",
+                                    "value": 1
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "[updateDeliveryStatus] api/kiosk/devices/{device}/deliveries/{delivery}/status",
+                    "request": {
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/kiosk/devices/:device/deliveries/:delivery/status",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "kiosk",
+                                "devices",
+                                ":device",
+                                "deliveries",
+                                ":delivery",
+                                "status"
+                            ],
+                            "variable": [
+                                {
+                                    "key": "device",
+                                    "value": 1
+                                },
+                                {
+                                    "key": "delivery",
+                                    "value": 1
+                                }
+                            ]
+                        }
+                    }
+                }
+            ],
+            "auth": {
+                "type": "apikey",
+                "apikey": [
+                    {
+                        "key": "key",
+                        "value": "X-Device-Token",
+                        "type": "string"
+                    },
+                    {
+                        "key": "value",
+                        "value": "{{device_token}}",
+                        "type": "string"
+                    },
+                    {
+                        "key": "in",
+                        "value": "header",
+                        "type": "string"
+                    }
+                ]
+            }
         },
         {
             "name": "Plan",
@@ -431,7 +727,12 @@
                                 "plans",
                                 ":plan"
                             ],
-                            "variable": []
+                            "variable": [
+                                {
+                                    "key": "plan",
+                                    "value": 1
+                                }
+                            ]
                         }
                     }
                 }
@@ -464,6 +765,15 @@
                             "path": [
                                 "api",
                                 "user"
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
                             ]
                         }
                     }
@@ -498,6 +808,15 @@
                                 "api",
                                 "settings"
                             ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
                         }
                     }
                 },
@@ -529,8 +848,17 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"notify_alert_failed\": 0,\n    \"notify_device_offline\": 0,\n    \"notify_weekly_report\": 0,\n    \"notify_device_connected\": 0,\n    \"notify_limit_reached\": 0,\n    \"notification_email\": \"pietra79@example.com\",\n    \"notification_phone\": \"(81) 98641-8823\",\n    \"timezone\": \"Asia/Tashkent\",\n    \"language\": \"pt-BR\",\n    \"theme\": \"dark\"\n}",
+                            "raw": "{\n    \"notify_alert_failed\": 0,\n    \"notify_device_offline\": 0,\n    \"notify_weekly_report\": 0,\n    \"notify_device_connected\": 1,\n    \"notify_limit_reached\": 0,\n    \"notification_email\": \"jpadilha@example.com\",\n    \"notification_phone\": \"(46) 97980-4169\",\n    \"timezone\": \"Asia/Thimphu\",\n    \"language\": \"pt-BR\",\n    \"theme\": \"dark\"\n}",
                             "options": []
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
                         }
                     }
                 }
@@ -565,6 +893,15 @@
                                 "devices",
                                 "latest"
                             ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
                         }
                     }
                 },
@@ -592,6 +929,15 @@
                             "path": [
                                 "api",
                                 "devices"
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
                             ]
                         }
                     }
@@ -624,8 +970,17 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"Dr. Melissa Tainara Teles\",\n    \"type\": \"info\",\n    \"location\": \"97942-180, Rua Stephany, 37. 0\u00ba Andar\\nNayara do Leste - SE\",\n    \"ip_address\": \"141.129.64.157\",\n    \"mac_address\": \"LJ:LY:KK:WR:YG:OY\",\n    \"metadata\": {\n        \"source\": \"postman-doc\",\n        \"firmware\": \"1.8.5\"\n    },\n    \"tags\": [\n        1\n    ]\n}",
+                            "raw": "{\n    \"name\": \"Sra. Lara Benez Rezende\",\n    \"type\": \"info\",\n    \"location\": \"71795-497, R. Stella, 1\\nS\u00e3o Norma - BA\",\n    \"ip_address\": \"34.130.243.117\",\n    \"mac_address\": \"HB:AV:ZE:JN:HK:VX\",\n    \"metadata\": {\n        \"source\": \"postman-doc\",\n        \"firmware\": \"1.1.7\"\n    },\n    \"tags\": [\n        1\n    ]\n}",
                             "options": []
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
                         }
                     }
                 },
@@ -655,7 +1010,21 @@
                                 "devices",
                                 ":device"
                             ],
-                            "variable": []
+                            "variable": [
+                                {
+                                    "key": "device",
+                                    "value": 1
+                                }
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
                         }
                     }
                 },
@@ -685,12 +1054,26 @@
                                 "devices",
                                 ":device"
                             ],
-                            "variable": []
+                            "variable": [
+                                {
+                                    "key": "device",
+                                    "value": 1
+                                }
+                            ]
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"Dr. Melissa Tainara Teles\",\n    \"type\": \"info\",\n    \"location\": \"97942-180, Rua Stephany, 37. 0\u00ba Andar\\nNayara do Leste - SE\",\n    \"ip_address\": \"141.129.64.157\",\n    \"mac_address\": \"LJ:LY:KK:WR:YG:OY\",\n    \"metadata\": {\n        \"source\": \"postman-doc\",\n        \"firmware\": \"1.8.5\"\n    },\n    \"tags\": [\n        1\n    ]\n}",
+                            "raw": "{\n    \"name\": \"Sra. Lara Benez Rezende\",\n    \"type\": \"info\",\n    \"location\": \"71795-497, R. Stella, 1\\nS\u00e3o Norma - BA\",\n    \"ip_address\": \"34.130.243.117\",\n    \"mac_address\": \"HB:AV:ZE:JN:HK:VX\",\n    \"metadata\": {\n        \"source\": \"postman-doc\",\n        \"firmware\": \"1.1.7\"\n    },\n    \"tags\": [\n        1\n    ]\n}",
                             "options": []
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
                         }
                     }
                 },
@@ -720,7 +1103,21 @@
                                 "devices",
                                 ":device"
                             ],
-                            "variable": []
+                            "variable": [
+                                {
+                                    "key": "device",
+                                    "value": 1
+                                }
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
                         }
                     }
                 },
@@ -751,12 +1148,26 @@
                                 ":device",
                                 "heartbeat"
                             ],
-                            "variable": []
+                            "variable": [
+                                {
+                                    "key": "device",
+                                    "value": 1
+                                }
+                            ]
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"ip_address\": \"141.129.64.157\",\n    \"metadata\": {\n        \"source\": \"postman-doc\",\n        \"firmware\": \"1.8.5\"\n    }\n}",
+                            "raw": "{\n    \"ip_address\": \"34.130.243.117\",\n    \"metadata\": {\n        \"source\": \"postman-doc\",\n        \"firmware\": \"1.1.7\"\n    }\n}",
                             "options": []
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
                         }
                     }
                 },
@@ -787,7 +1198,21 @@
                                 ":device",
                                 "regenerate-token"
                             ],
-                            "variable": []
+                            "variable": [
+                                {
+                                    "key": "device",
+                                    "value": 1
+                                }
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
                         }
                     }
                 }
@@ -821,6 +1246,15 @@
                                 "api",
                                 "tags"
                             ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
                         }
                     }
                 },
@@ -852,8 +1286,17 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"Dr. Melissa Tainara Teles\",\n    \"color\": \"teal\"\n}",
+                            "raw": "{\n    \"name\": \"Sra. Lara Benez Rezende\",\n    \"color\": \"maroon\"\n}",
                             "options": []
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
                         }
                     }
                 },
@@ -883,7 +1326,21 @@
                                 "tags",
                                 ":tag"
                             ],
-                            "variable": []
+                            "variable": [
+                                {
+                                    "key": "tag",
+                                    "value": 1
+                                }
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
                         }
                     }
                 },
@@ -913,12 +1370,26 @@
                                 "tags",
                                 ":tag"
                             ],
-                            "variable": []
+                            "variable": [
+                                {
+                                    "key": "tag",
+                                    "value": 1
+                                }
+                            ]
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"Dr. Melissa Tainara Teles\",\n    \"color\": \"teal\"\n}",
+                            "raw": "{\n    \"name\": \"Sra. Lara Benez Rezende\",\n    \"color\": \"maroon\"\n}",
                             "options": []
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
                         }
                     }
                 },
@@ -948,7 +1419,21 @@
                                 "tags",
                                 ":tag"
                             ],
-                            "variable": []
+                            "variable": [
+                                {
+                                    "key": "tag",
+                                    "value": 1
+                                }
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
                         }
                     }
                 },
@@ -979,7 +1464,21 @@
                                 ":tag",
                                 "devices"
                             ],
-                            "variable": []
+                            "variable": [
+                                {
+                                    "key": "tag",
+                                    "value": 1
+                                }
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
                         }
                     }
                 }
@@ -1013,6 +1512,15 @@
                                 "api",
                                 "alerts"
                             ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
                         }
                     }
                 },
@@ -1044,8 +1552,17 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"title\": \"Autem necessitatibus dolores.\",\n    \"message\": \"Dolorem voluptas doloribus numquam neque velit illo. Quam reprehenderit rerum minus earum. Rem tenetur nam omnis dolorem omnis. Est nihil iste amet id quam autem magni.\",\n    \"type\": \"info\",\n    \"duration_seconds\": 27,\n    \"priority\": 5,\n    \"expires_at\": \"2026-04-13 01:15:15\",\n    \"tags\": [\n        1\n    ]\n}",
+                            "raw": "{\n    \"title\": \"Praesentium hic iste.\",\n    \"message\": \"Quidem laborum ducimus fugit eaque. Autem praesentium voluptatem libero et totam. Architecto accusantium placeat voluptas dolor ducimus alias. Perspiciatis est alias id.\",\n    \"type\": \"info\",\n    \"duration_seconds\": 106,\n    \"priority\": 1,\n    \"expires_at\": \"2026-08-28 17:53:00\",\n    \"tags\": [\n        1\n    ]\n}",
                             "options": []
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
                         }
                     }
                 },
@@ -1075,7 +1592,21 @@
                                 "alerts",
                                 ":alert"
                             ],
-                            "variable": []
+                            "variable": [
+                                {
+                                    "key": "alert",
+                                    "value": 1
+                                }
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
                         }
                     }
                 },
@@ -1106,13 +1637,28 @@
                                 ":alert",
                                 "deliveries"
                             ],
-                            "variable": []
+                            "variable": [
+                                {
+                                    "key": "alert",
+                                    "value": 1
+                                }
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
                         }
                     }
                 },
                 {
                     "name": "[retry] api/alerts/{alert}/retry",
                     "request": {
+                        "description": "Reenvia o alerta para todos os dispositivos originalmente associados que estejam online. As entregas voltam para pending e recebem uma nova notificação pelo Laravel Reverb. A resposta informa retried_devices e offline_devices.",
                         "method": "POST",
                         "header": [
                             {
@@ -1137,7 +1683,21 @@
                                 ":alert",
                                 "retry"
                             ],
-                            "variable": []
+                            "variable": [
+                                {
+                                    "key": "alert",
+                                    "value": 1
+                                }
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
                         }
                     }
                 },
@@ -1168,12 +1728,26 @@
                                 ":delivery",
                                 "status"
                             ],
-                            "variable": []
+                            "variable": [
+                                {
+                                    "key": "delivery",
+                                    "value": 1
+                                }
+                            ]
                         },
                         "body": {
                             "mode": "raw",
                             "raw": "{\n    \"status\": \"active\"\n}",
                             "options": []
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
                         }
                     }
                 }
@@ -1207,6 +1781,15 @@
                                 "api",
                                 "api-keys"
                             ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
                         }
                     }
                 },
@@ -1238,8 +1821,17 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"Dr. Melissa Tainara Teles\",\n    \"expires_at\": \"2026-04-13 01:15:15\"\n}",
+                            "raw": "{\n    \"name\": \"Sra. Lara Benez Rezende\",\n    \"expires_at\": \"2026-08-28 17:53:00\"\n}",
                             "options": []
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
                         }
                     }
                 },
@@ -1269,12 +1861,26 @@
                                 "api-keys",
                                 ":api_key"
                             ],
-                            "variable": []
+                            "variable": [
+                                {
+                                    "key": "api_key",
+                                    "value": 1
+                                }
+                            ]
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"Dr. Melissa Tainara Teles\",\n    \"is_active\": true\n}",
+                            "raw": "{\n    \"name\": \"Sra. Lara Benez Rezende\",\n    \"is_active\": true\n}",
                             "options": []
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
                         }
                     }
                 },
@@ -1304,7 +1910,21 @@
                                 "api-keys",
                                 ":api_key"
                             ],
-                            "variable": []
+                            "variable": [
+                                {
+                                    "key": "api_key",
+                                    "value": 1
+                                }
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
                         }
                     }
                 }
@@ -1338,6 +1958,15 @@
                                 "api",
                                 "webhooks"
                             ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
                         }
                     }
                 },
@@ -1369,8 +1998,17 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"Dr. Melissa Tainara Teles\",\n    \"url\": \"http://www.bonilha.br/veniam-eveniet-et-ipsum\",\n    \"secret\": \"777d94b2cd4a3fa65b406f1a2f643d49e318e8136b4cbea08838bb2e8a8fed5c\",\n    \"events\": [\n        \"alert.sent\"\n    ],\n    \"is_active\": true\n}",
+                            "raw": "{\n    \"name\": \"Sra. Lara Benez Rezende\",\n    \"url\": \"http://www.lira.com.br/officiis-in-dolorum-ut-doloremque-quo\",\n    \"secret\": \"a4bb6e15a5348b57f4768d2a12de75e5051021797b3f4e4152664a1bb4f77795\",\n    \"events\": [\n        \"alert.sent\"\n    ],\n    \"is_active\": true\n}",
                             "options": []
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
                         }
                     }
                 },
@@ -1400,7 +2038,21 @@
                                 "webhooks",
                                 ":webhook"
                             ],
-                            "variable": []
+                            "variable": [
+                                {
+                                    "key": "webhook",
+                                    "value": 1
+                                }
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
                         }
                     }
                 },
@@ -1430,12 +2082,26 @@
                                 "webhooks",
                                 ":webhook"
                             ],
-                            "variable": []
+                            "variable": [
+                                {
+                                    "key": "webhook",
+                                    "value": 1
+                                }
+                            ]
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"Dr. Melissa Tainara Teles\",\n    \"url\": \"http://www.bonilha.br/veniam-eveniet-et-ipsum\",\n    \"secret\": \"777d94b2cd4a3fa65b406f1a2f643d49e318e8136b4cbea08838bb2e8a8fed5c\",\n    \"events\": [\n        \"alert.sent\"\n    ],\n    \"is_active\": true\n}",
+                            "raw": "{\n    \"name\": \"Sra. Lara Benez Rezende\",\n    \"url\": \"http://www.lira.com.br/officiis-in-dolorum-ut-doloremque-quo\",\n    \"secret\": \"a4bb6e15a5348b57f4768d2a12de75e5051021797b3f4e4152664a1bb4f77795\",\n    \"events\": [\n        \"alert.sent\"\n    ],\n    \"is_active\": true\n}",
                             "options": []
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
                         }
                     }
                 },
@@ -1465,7 +2131,21 @@
                                 "webhooks",
                                 ":webhook"
                             ],
-                            "variable": []
+                            "variable": [
+                                {
+                                    "key": "webhook",
+                                    "value": 1
+                                }
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
                         }
                     }
                 },
@@ -1496,7 +2176,21 @@
                                 ":webhook",
                                 "logs"
                             ],
-                            "variable": []
+                            "variable": [
+                                {
+                                    "key": "webhook",
+                                    "value": 1
+                                }
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
                         }
                     }
                 },
@@ -1527,7 +2221,21 @@
                                 ":webhook",
                                 "test"
                             ],
-                            "variable": []
+                            "variable": [
+                                {
+                                    "key": "webhook",
+                                    "value": 1
+                                }
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
                         }
                     }
                 }
@@ -1562,6 +2270,15 @@
                                 "statistics",
                                 "dashboard"
                             ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
                         }
                     }
                 },
@@ -1594,8 +2311,17 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"from_date\": \"2026-03-21\",\n    \"to_date\": \"2026-03-30\",\n    \"days\": 8\n}",
+                            "raw": "{\n    \"from_date\": \"2026-07-16\",\n    \"to_date\": \"2026-08-07\",\n    \"days\": 5\n}",
                             "options": []
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
                         }
                     }
                 },
@@ -1624,6 +2350,15 @@
                                 "api",
                                 "statistics",
                                 "alerts-by-type"
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
                             ]
                         }
                     }
@@ -1654,6 +2389,15 @@
                                 "statistics",
                                 "top-devices"
                             ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
                         }
                     }
                 }
@@ -1664,6 +2408,28 @@
         {
             "key": "base_url",
             "value": "http://localhost:8000"
+        },
+        {
+            "key": "auth_token",
+            "value": "your-access-token",
+            "type": "string",
+            "description": "Bearer token for API authentication"
+        },
+        {
+            "key": "device_token",
+            "value": "your-device-connection-token",
+            "type": "string",
+            "description": "Token de conexão enviado no cabeçalho X-Device-Token pelos players kiosk"
         }
-    ]
+    ],
+    "auth": {
+        "type": "bearer",
+        "bearer": [
+            {
+                "key": "token",
+                "value": "{{auth_token}}",
+                "type": "string"
+            }
+        ]
+    }
 }

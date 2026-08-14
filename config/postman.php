@@ -10,8 +10,8 @@ return [
     |
     */
     'name' => env('APP_NAME', 'Laravel API'),
-    'description' => env('API_DESCRIPTION', 'API Documentation'),
-    'base_url' => env('APP_URL', 'http://localhost'),
+    'description' => env('API_DESCRIPTION', 'API do Mobile2Screen para gerenciamento de alertas, dispositivos e kiosks em tempo real.'),
+    'base_url' => env('APP_URL', 'http://localhost:8000'),
 
     /*
     |--------------------------------------------------------------------------
@@ -121,6 +121,20 @@ return [
                 'tag_id' => 1,
                 'alert_id' => 1,
                 'webhook_id' => 1,
+                // Parâmetros usados diretamente nas URLs das rotas.
+                'user' => 1,
+                'device' => 1,
+                'tag' => 1,
+                'alert' => 1,
+                'delivery' => 1,
+                'plan' => 1,
+                'api_key' => 1,
+                'webhook' => 1,
+                // Autorização do canal privado do Laravel Reverb.
+                'socket_id' => '123456.789012',
+                'channel_name' => 'private-device.1',
+                'simulator' => true,
+                'screen' => 'kiosk',
                 'token' => fake()->sha1(),
                 'events' => ['alert.sent'],
                 'events.*' => 'alert.sent',
@@ -149,7 +163,7 @@ return [
     */
     'auth' => [
         // Enable authentication documentation
-        'enabled' => false,
+        'enabled' => true,
 
         // Supported: 'bearer', 'basic', 'api_key'
         'type' => 'bearer',
@@ -167,7 +181,7 @@ return [
         ],
 
         // Middleware that indicate protected routes
-        'protected_middleware' => ['auth:api'],
+        'protected_middleware' => ['auth:sanctum'],
     ],
 
     /*
@@ -181,6 +195,27 @@ return [
     'headers' => [
         'Accept' => 'application/json',
         'Content-Type' => 'application/json',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | WebSocket / Laravel Reverb Documentation
+    |--------------------------------------------------------------------------
+    |
+    | Postman Collection v2.1 não exporta coleções multiprotocolo. A conexão
+    | WebSocket é documentada em um arquivo AsyncAPI separado, importável no
+    | Postman, enquanto esta configuração continua gerando as rotas HTTP.
+    |
+    */
+    'websocket' => [
+        'specification' => storage_path('postman/reverb_websocket.asyncapi.json'),
+        'host' => env('REVERB_HOST', 'localhost'),
+        'port' => (int) env('REVERB_PORT', 8080),
+        'scheme' => env('REVERB_SCHEME', 'http') === 'https' ? 'wss' : 'ws',
+        'app_key' => env('REVERB_APP_KEY', 'your-reverb-app-key'),
+        'protocol' => 7,
+        'channel' => 'private-device.{deviceId}',
+        'event' => 'alert.available',
     ],
 
     /*

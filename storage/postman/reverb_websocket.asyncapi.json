@@ -1,0 +1,193 @@
+{
+    "asyncapi": "2.6.0",
+    "info": {
+        "title": "Mobile2Screen - Laravel Reverb",
+        "version": "1.0.0",
+        "description": "Conexão WebSocket privada usada pelos players kiosk. Importe este arquivo no Postman para gerar uma coleção WebSocket separada da coleção HTTP."
+    },
+    "defaultContentType": "application/json",
+    "servers": {
+        "local": {
+            "url": "ws://localhost:8080/app/{appKey}?protocol=7&client=js&version=8.4.0&flash=false",
+            "protocol": "ws",
+            "description": "Servidor local do Laravel Reverb iniciado com php artisan reverb:start.",
+            "variables": {
+                "appKey": {
+                    "description": "Valor público de REVERB_APP_KEY.",
+                    "default": "your-reverb-app-key"
+                }
+            }
+        },
+        "localTls": {
+            "url": "wss://localhost:8080/app/{appKey}?protocol=7&client=js&version=8.4.0&flash=false",
+            "protocol": "wss",
+            "description": "Use somente quando REVERB_SCHEME=https e o servidor estiver configurado com TLS.",
+            "variables": {
+                "appKey": {
+                    "description": "Valor público de REVERB_APP_KEY.",
+                    "default": "your-reverb-app-key"
+                }
+            }
+        }
+    },
+    "channels": {
+        "private-device.{deviceId}": {
+            "description": "Canal privado e exclusivo de um dispositivo kiosk.",
+            "parameters": {
+                "deviceId": {
+                    "description": "ID do dispositivo selecionado no pareamento.",
+                    "schema": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "default": 1
+                    }
+                }
+            },
+            "publish": {
+                "operationId": "subscribePrivateDeviceChannel",
+                "summary": "Assinar o canal privado do dispositivo",
+                "description": "Depois de receber o socket_id em pusher:connection_established, chame POST /api/kiosk/devices/{deviceId}/broadcasting/auth com X-Device-Token. Copie o campo auth da resposta para esta mensagem.",
+                "message": {
+                    "$ref": "#/components/messages/PusherSubscribe"
+                }
+            },
+            "subscribe": {
+                "operationId": "receiveAlertAvailable",
+                "summary": "Receber aviso de nova entrega",
+                "description": "Ao receber alert.available, consulte GET /api/kiosk/devices/{deviceId}/deliveries usando X-Device-Token para obter o conteúdo protegido.",
+                "message": {
+                    "oneOf": [
+                        {
+                            "$ref": "#/components/messages/PusherSubscriptionSucceeded"
+                        },
+                        {
+                            "$ref": "#/components/messages/AlertAvailable"
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "components": {
+        "messages": {
+            "PusherSubscribe": {
+                "name": "pusher:subscribe",
+                "title": "Mensagem de assinatura do canal",
+                "summary": "Mensagem enviada pelo kiosk depois da autorização HTTP.",
+                "payload": {
+                    "type": "object",
+                    "required": [
+                        "event",
+                        "data"
+                    ],
+                    "properties": {
+                        "event": {
+                            "type": "string",
+                            "const": "pusher:subscribe"
+                        },
+                        "data": {
+                            "type": "object",
+                            "required": [
+                                "auth",
+                                "channel"
+                            ],
+                            "properties": {
+                                "auth": {
+                                    "type": "string",
+                                    "description": "Assinatura devolvida pelo endpoint HTTP de autorização.",
+                                    "example": "your-reverb-app-key:generated-hmac-signature"
+                                },
+                                "channel": {
+                                    "type": "string",
+                                    "pattern": "^private-device\\.[1-9][0-9]*$",
+                                    "example": "private-device.1"
+                                }
+                            }
+                        }
+                    }
+                },
+                "examples": [
+                    {
+                        "payload": {
+                            "event": "pusher:subscribe",
+                            "data": {
+                                "auth": "your-reverb-app-key:generated-hmac-signature",
+                                "channel": "private-device.1"
+                            }
+                        }
+                    }
+                ]
+            },
+            "PusherSubscriptionSucceeded": {
+                "name": "pusher_internal:subscription_succeeded",
+                "title": "Canal privado assinado",
+                "payload": {
+                    "type": "object",
+                    "required": [
+                        "event",
+                        "channel",
+                        "data"
+                    ],
+                    "properties": {
+                        "event": {
+                            "type": "string",
+                            "const": "pusher_internal:subscription_succeeded"
+                        },
+                        "channel": {
+                            "type": "string",
+                            "example": "private-device.1"
+                        },
+                        "data": {
+                            "type": "string",
+                            "example": "{}"
+                        }
+                    }
+                }
+            },
+            "AlertAvailable": {
+                "name": "alert.available",
+                "title": "Nova entrega disponível",
+                "summary": "O Laravel publicou uma nova entrega para o dispositivo.",
+                "payload": {
+                    "type": "object",
+                    "required": [
+                        "event",
+                        "channel",
+                        "data"
+                    ],
+                    "properties": {
+                        "event": {
+                            "type": "string",
+                            "const": "alert.available"
+                        },
+                        "channel": {
+                            "type": "string",
+                            "example": "private-device.1"
+                        },
+                        "data": {
+                            "type": "string",
+                            "description": "No protocolo Pusher, o payload do evento chega serializado como JSON.",
+                            "example": "{\"delivery_id\":123}"
+                        }
+                    }
+                },
+                "examples": [
+                    {
+                        "payload": {
+                            "event": "alert.available",
+                            "channel": "private-device.1",
+                            "data": "{\"delivery_id\":123}"
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    "x-mobile2screen-connection-flow": [
+        "Conecte na URL ws://localhost:8080/app/{REVERB_APP_KEY}?protocol=7&client=js&version=8.4.0&flash=false.",
+        "Leia socket_id na mensagem pusher:connection_established.",
+        "Faça POST /api/kiosk/devices/{deviceId}/broadcasting/auth com socket_id, channel_name e X-Device-Token.",
+        "Envie pusher:subscribe usando o auth retornado e o canal private-device.{deviceId}.",
+        "Aguarde alert.available e então busque a entrega pela API HTTP autenticada do kiosk."
+    ]
+}

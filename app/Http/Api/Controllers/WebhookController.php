@@ -4,10 +4,13 @@ namespace App\Http\Api\Controllers;
 
 use App\Http\Requests\StoreWebhookRequest;
 use App\Http\Requests\UpdateWebhookRequest;
+use App\Jobs\DeliverWebhook;
 use App\Models\Webhook;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Str;
+use Throwable;
 
 class WebhookController extends Controller
 {
@@ -18,6 +21,7 @@ class WebhookController extends Controller
     {
         $webhooks = $request->user()
             ->webhooks()
+            ->withCount('logs')
             ->orderBy('created_at', 'desc')
             ->get();
 
@@ -33,8 +37,22 @@ class WebhookController extends Controller
     {
         $validated = $request->validated();
 
+        $shouldBeActive = $validated['is_active'] ?? true;
         $validated['user_id'] = $request->user()->id;
+        $validated['is_active'] = false;
         $webhook = Webhook::create($validated);
+
+        try {
+            $this->deliverTest($webhook);
+        } catch (Throwable) {
+            $webhook->delete();
+
+            return response()->json([
+                'message' => 'A URL do webhook não respondeu com sucesso. O cadastro não foi realizado.',
+            ], 422);
+        }
+
+        $webhook->update(['is_active' => $shouldBeActive]);
 
         return response()->json([
             'message' => 'Webhook criado com sucesso',
@@ -75,7 +93,23 @@ class WebhookController extends Controller
 
         $validated = $request->validated();
 
+        $mustValidateEndpoint = array_key_exists('url', $validated)
+            || array_key_exists('secret', $validated);
+        $originalEndpoint = $webhook->only(['url', 'secret']);
+
         $webhook->update($validated);
+
+        if ($mustValidateEndpoint) {
+            try {
+                $this->deliverTest($webhook);
+            } catch (Throwable) {
+                $webhook->update($originalEndpoint);
+
+                return response()->json([
+                    'message' => 'A nova URL do webhook não respondeu com sucesso. A configuração anterior foi mantida.',
+                ], 422);
+            }
+        }
 
         return response()->json([
             'message' => 'Webhook atualizado com sucesso',
@@ -136,11 +170,29 @@ class WebhookController extends Controller
             ], 403);
         }
 
-        // Aqui você implementaria a lógica de envio de teste
-        // Por enquanto, apenas retorna sucesso
-        
+        try {
+            $this->deliverTest($webhook);
+        } catch (Throwable) {
+            return response()->json([
+                'message' => 'A URL do webhook não respondeu com sucesso.',
+            ], 422);
+        }
+
         return response()->json([
-            'message' => 'Webhook de teste enviado'
+            'message' => 'Webhook de teste enviado com sucesso',
         ]);
+    }
+
+    private function deliverTest(Webhook $webhook): void
+    {
+        DeliverWebhook::dispatchSync($webhook->id, [
+            'id' => (string) Str::uuid(),
+            'event' => 'webhook.test',
+            'occurred_at' => now()->toIso8601String(),
+            'data' => [
+                'message' => 'Teste de conectividade do Mobile2Screen',
+                'webhook_id' => $webhook->id,
+            ],
+        ], true);
     }
 }

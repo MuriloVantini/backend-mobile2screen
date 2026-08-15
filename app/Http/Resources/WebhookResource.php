@@ -19,7 +19,7 @@ class WebhookResource extends JsonResource
             'user_id' => $this->user_id,
             'name' => $this->name,
             'url' => $this->url,
-            'secret' => $this->secret,
+            'has_secret' => filled($this->secret),
             'events' => $this->events,
             'is_active' => $this->is_active,
             'last_triggered' => $this->last_triggered,

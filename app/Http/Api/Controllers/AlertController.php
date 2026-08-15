@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateAlertDeliveryStatusRequest;
 use App\Models\Alert;
 use App\Models\AlertDelivery;
 use App\Models\Device;
+use App\Services\WebhookDispatcher;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -16,6 +17,8 @@ use Illuminate\Support\Facades\Log;
 
 class AlertController extends Controller
 {
+    public function __construct(private WebhookDispatcher $webhooks) {}
+
     /**
      * Lista todos os alertas do usuário
      */
@@ -117,6 +120,24 @@ class AlertController extends Controller
                 $this->broadcastDelivery($delivery);
             }
 
+            $this->webhooks->dispatch($alert->user_id, 'alert.sent', [
+                'alert_id' => $alert->id,
+                'title' => $alert->title,
+                'type' => $alert->type,
+                'devices_count' => $devices->count(),
+                'online_devices' => $pendingDeliveries->count(),
+            ]);
+
+            $failedDevices = $devices->where('is_online', false)->count();
+            if ($failedDevices > 0) {
+                $this->webhooks->dispatch($alert->user_id, 'alert.failed', [
+                    'alert_id' => $alert->id,
+                    'title' => $alert->title,
+                    'failed_devices' => $failedDevices,
+                    'reason' => 'Dispositivo offline',
+                ]);
+            }
+
             return response()->json([
                 'message' => 'Alerta enviado com sucesso',
                 'data' => [
@@ -194,6 +215,7 @@ class AlertController extends Controller
     public function updateDeliveryStatus(UpdateAlertDeliveryStatusRequest $request, AlertDelivery $delivery): JsonResponse
     {
         $validated = $request->validated();
+        $wasDelivered = $delivery->delivered_at !== null || $delivery->status === 'delivered';
 
         $now = now();
         $updateData = ['status' => $validated['status']];
@@ -211,6 +233,17 @@ class AlertController extends Controller
         }
 
         $delivery->update($updateData);
+
+        if ($validated['status'] === 'delivered' && ! $wasDelivered) {
+            $delivery->loadMissing(['alert', 'device']);
+            $this->webhooks->dispatch($delivery->alert->user_id, 'alert.delivered', [
+                'alert_id' => $delivery->alert_id,
+                'delivery_id' => $delivery->id,
+                'device_id' => $delivery->device_id,
+                'device_name' => $delivery->device?->name,
+                'delivered_at' => $delivery->delivered_at?->toIso8601String(),
+            ]);
+        }
 
         return response()->json([
             'message' => 'Status atualizado com sucesso'
@@ -257,6 +290,15 @@ class AlertController extends Controller
 
             $retried++;
             $this->broadcastDelivery($delivery);
+        }
+
+        if ($offline > 0) {
+            $this->webhooks->dispatch($alert->user_id, 'alert.failed', [
+                'alert_id' => $alert->id,
+                'title' => $alert->title,
+                'failed_devices' => $offline,
+                'reason' => 'Dispositivo offline durante reenvio',
+            ]);
         }
 
         return response()->json([

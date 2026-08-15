@@ -166,7 +166,7 @@ test('contrato de resposta de webhooks usa webhook resource', function () {
         'user_id',
         'name',
         'url',
-        'secret',
+        'has_secret',
         'events',
         'is_active',
         'last_triggered',
@@ -174,6 +174,7 @@ test('contrato de resposta de webhooks usa webhook resource', function () {
         'updated_at',
         'logs_count',
     ]);
+    expect($data)->not->toHaveKey('secret');
 });
 
 test('contrato de resposta de estatisticas diarias usa statistic daily resource', function () {

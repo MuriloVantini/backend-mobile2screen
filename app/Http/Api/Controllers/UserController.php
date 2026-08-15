@@ -34,7 +34,7 @@ class UserController extends Controller
 
         if (! $isPublicRegistration && $actor->role !== 'admin') {
             return response()->json([
-                'message' => 'Nao autorizado',
+                'message' => 'Não autorizado',
             ], 403);
         }
 
@@ -53,8 +53,8 @@ class UserController extends Controller
         
         return response()->json([
             'message' => $isPublicRegistration
-                ? 'Usuario registrado com sucesso'
-                : 'Usuario criado com sucesso',
+                ? 'Usuário registrado com sucesso'
+                : 'Usuário criado com sucesso',
             'data' => $user->toResource(),
         ], 201);
     }
@@ -63,7 +63,7 @@ class UserController extends Controller
     {
         if ($request->user()->role !== 'admin' && $request->user()->id !== $user->id) {
             return response()->json([
-                'message' => 'Nao autorizado',
+                'message' => 'Não autorizado',
             ], 403);
         }
 
@@ -78,7 +78,7 @@ class UserController extends Controller
     {
         if ($request->user()->role !== 'admin' && $request->user()->id !== $user->id) {
             return response()->json([
-                'message' => 'Nao autorizado',
+                'message' => 'Não autorizado',
             ], 403);
         }
 
@@ -101,14 +101,14 @@ class UserController extends Controller
     {
         if ($request->user()->role !== 'admin' && $request->user()->id !== $user->id) {
             return response()->json([
-                'message' => 'Nao autorizado',
+                'message' => 'Não autorizado',
             ], 403);
         }
 
         $user->delete();
 
         return response()->json([
-            'message' => 'Usuario removido com sucesso',
+            'message' => 'Usuário removido com sucesso',
         ]);
     }
 }

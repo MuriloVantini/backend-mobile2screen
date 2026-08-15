@@ -64,7 +64,7 @@ class TestUserSeeder extends Seeder
             'phone' => '+55 11 99999-0000',
             'plan_id' => $plan->id,
             'status' => 'active',
-            'role' => 'user',
+            'role' => 'admin',
             'last_active' => now(),
         ])->only([
             'name',

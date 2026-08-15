@@ -84,6 +84,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     // ========== ESTATÍSTICAS ==========
     Route::prefix('statistics')->group(function () {
+        Route::get('/admin-dashboard', [StatisticsController::class, 'adminDashboard']);
         Route::get('/dashboard', [StatisticsController::class, 'dashboard']);
         Route::get('/daily', [StatisticsController::class, 'daily']);
         Route::get('/alerts-by-type', [StatisticsController::class, 'alertsByType']);

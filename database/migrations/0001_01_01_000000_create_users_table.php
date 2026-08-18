@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('company')->nullable();
             $table->string('phone', 50)->nullable();
+            $table->string('profile_image_path')->nullable();
             $table->foreignId('plan_id')->nullable()->constrained('plans')->comment('Plano contratado');
             $table->string('status', 20)->default('active')->comment('active, suspended, pending');
             $table->string('role', 20)->default('user')->comment('user, admin');

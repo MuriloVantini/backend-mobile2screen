@@ -3,11 +3,13 @@
 namespace App\Http\Api\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateProfileImageRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -97,6 +99,44 @@ class UserController extends Controller
         ]);
     }
 
+    public function updateProfileImage(UpdateProfileImageRequest $request, User $user): JsonResponse
+    {
+        if (! $this->canManage($request, $user)) {
+            return response()->json(['message' => 'Não autorizado'], 403);
+        }
+
+        $oldPath = $user->profile_image_path;
+        $newPath = $request->file('image')->store("profile-images/{$user->id}", 'public');
+
+        $user->forceFill(['profile_image_path' => $newPath])->save();
+
+        if ($oldPath) {
+            Storage::disk('public')->delete($oldPath);
+        }
+
+        return response()->json([
+            'message' => 'Foto de perfil atualizada com sucesso',
+            'data' => $user->load('plan')->toResource(),
+        ]);
+    }
+
+    public function destroyProfileImage(Request $request, User $user): JsonResponse
+    {
+        if (! $this->canManage($request, $user)) {
+            return response()->json(['message' => 'Não autorizado'], 403);
+        }
+
+        if ($user->profile_image_path) {
+            Storage::disk('public')->delete($user->profile_image_path);
+            $user->forceFill(['profile_image_path' => null])->save();
+        }
+
+        return response()->json([
+            'message' => 'Foto de perfil removida com sucesso',
+            'data' => $user->load('plan')->toResource(),
+        ]);
+    }
+
     public function destroy(Request $request, User $user): JsonResponse
     {
         if ($request->user()->role !== 'admin' && $request->user()->id !== $user->id) {
@@ -105,10 +145,19 @@ class UserController extends Controller
             ], 403);
         }
 
+        if ($user->profile_image_path) {
+            Storage::disk('public')->delete($user->profile_image_path);
+        }
+
         $user->delete();
 
         return response()->json([
             'message' => 'Usuário removido com sucesso',
         ]);
+    }
+
+    private function canManage(Request $request, User $user): bool
+    {
+        return $request->user()->role === 'admin' || $request->user()->id === $user->id;
     }
 }

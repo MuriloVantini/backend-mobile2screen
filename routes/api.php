@@ -51,6 +51,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         $user = $request->user()->load('plan');
         return response()->json(['data' => $user->toResource()]);
     });
+    Route::post('/users/{user}/profile-image', [UserController::class, 'updateProfileImage']);
+    Route::delete('/users/{user}/profile-image', [UserController::class, 'destroyProfileImage']);
     Route::apiResource('users', UserController::class);
     Route::post('/logout', [AuthController::class, 'destroy']);
 

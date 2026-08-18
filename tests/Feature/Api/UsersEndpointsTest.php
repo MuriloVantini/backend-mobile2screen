@@ -1,6 +1,8 @@
 <?php
 
 use App\Models\User;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 test('index de usuarios retorna dados paginados para admin', function () {
     actingAsUser(['role' => 'admin']);
@@ -79,4 +81,38 @@ test('destroy de usuarios permite excluir a propria conta', function () {
     $this->deleteJson('/api/users/' . $user->id)
         ->assertOk();
     expect(User::withTrashed()->find($user->id))->not->toBeNull();
+});
+
+test('usuario pode enviar e remover a propria foto de perfil', function () {
+    Storage::fake('public');
+    $user = actingAsUser();
+
+    $response = $this->post('/api/users/' . $user->id . '/profile-image', [
+        'image' => UploadedFile::fake()->image('perfil.png', 320, 320),
+    ], ['Accept' => 'application/json']);
+
+    $response
+        ->assertOk()
+        ->assertJsonPath('data.id', $user->id)
+        ->assertJsonPath('data.profile_image_url', fn ($url) => str_contains($url, '/storage/profile-images/'));
+
+    $storedPath = $user->fresh()->profile_image_path;
+    expect($storedPath)->not->toBeNull();
+    Storage::disk('public')->assertExists($storedPath);
+
+    $this->deleteJson('/api/users/' . $user->id . '/profile-image')
+        ->assertOk()
+        ->assertJsonPath('data.profile_image_url', null);
+
+    Storage::disk('public')->assertMissing($storedPath);
+});
+
+test('usuario nao pode alterar a foto de perfil de outra conta', function () {
+    Storage::fake('public');
+    actingAsUser();
+    $other = createUser();
+
+    $this->post('/api/users/' . $other->id . '/profile-image', [
+        'image' => UploadedFile::fake()->image('perfil.png'),
+    ], ['Accept' => 'application/json'])->assertForbidden();
 });

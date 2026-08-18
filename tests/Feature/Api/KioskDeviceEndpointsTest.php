@@ -3,6 +3,7 @@
 use App\Models\Alert;
 use App\Models\AlertDelivery;
 use App\Models\Device;
+use Illuminate\Support\Facades\Storage;
 
 test('simulador kiosk conecta, recebe entregas e atualiza o status usando apenas o token do dispositivo', function () {
     $user = createUser();
@@ -42,6 +43,28 @@ test('simulador kiosk rejeita token inválido', function () {
     $this->postJson('/api/kiosk/devices/' . $device->id . '/connect', [], [
         'X-Device-Token' => 'token-incorreto',
     ])->assertUnauthorized();
+});
+
+test('simulador kiosk recebe a foto de perfil do proprietario ao conectar e no heartbeat', function () {
+    Storage::fake('public');
+    $user = createUser([
+        'name' => 'Maria da Silva',
+        'profile_image_path' => 'profile-images/1/perfil.png',
+    ]);
+    $device = Device::factory()->for($user)->create([
+        'connection_token' => 'token-do-simulador',
+    ]);
+    $headers = ['X-Device-Token' => 'token-do-simulador'];
+
+    $this->postJson('/api/kiosk/devices/' . $device->id . '/connect', [], $headers)
+        ->assertOk()
+        ->assertJsonPath('data.profile_name', 'Maria da Silva')
+        ->assertJsonPath('data.profile_image_url', fn ($url) => str_contains($url, '/storage/profile-images/1/perfil.png'));
+
+    $this->postJson('/api/kiosk/devices/' . $device->id . '/heartbeat', [], $headers)
+        ->assertOk()
+        ->assertJsonPath('data.profile_name', 'Maria da Silva')
+        ->assertJsonPath('data.profile_image_url', fn ($url) => str_contains($url, '/storage/profile-images/1/perfil.png'));
 });
 
 test('simulador kiosk autentica somente o proprio canal privado do Reverb', function () {

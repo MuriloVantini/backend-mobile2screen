@@ -9,6 +9,7 @@ use App\Services\WebhookDispatcher;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Endpoints consumidos pelo player de TV (Raspberry Pi real ou simulador).
@@ -26,6 +27,7 @@ class KioskDeviceController extends Controller
         }
 
         $this->markOnline($request, $device);
+        $device->loadMissing('user');
 
         return response()->json([
             'message' => 'Dispositivo conectado',
@@ -33,6 +35,10 @@ class KioskDeviceController extends Controller
                 'id' => $device->id,
                 'device_id' => $device->id,
                 'name' => $device->name,
+                'profile_name' => $device->user?->name,
+                'profile_image_url' => $device->user?->profile_image_path
+                    ? Storage::disk('public')->url($device->user->profile_image_path)
+                    : null,
                 'connected_at' => now(),
                 'websocket' => [
                     'key' => config('broadcasting.connections.reverb.key'),
@@ -90,7 +96,17 @@ class KioskDeviceController extends Controller
 
         $this->markOnline($request, $device, $validated['metadata'] ?? null);
 
-        return response()->json(['message' => 'Heartbeat registrado']);
+        $device->loadMissing('user');
+
+        return response()->json([
+            'message' => 'Heartbeat registrado',
+            'data' => [
+                'profile_name' => $device->user?->name,
+                'profile_image_url' => $device->user?->profile_image_path
+                    ? Storage::disk('public')->url($device->user->profile_image_path)
+                    : null,
+            ],
+        ]);
     }
 
     public function pendingDeliveries(Request $request, Device $device): JsonResponse

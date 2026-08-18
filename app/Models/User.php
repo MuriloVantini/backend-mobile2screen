@@ -28,6 +28,7 @@ class User extends Authenticatable
         'password',
         'company',
         'phone',
+        'profile_image_path',
         'plan_id',
         'status',
         'role',

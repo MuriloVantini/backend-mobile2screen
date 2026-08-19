@@ -12,8 +12,6 @@ use App\Models\StatisticDaily;
 use App\Models\Tag;
 use App\Models\User;
 use App\Models\UserSetting;
-use App\Models\Webhook;
-use App\Models\WebhookLog;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -187,25 +185,6 @@ class DemoUsersSeeder extends Seeder
                     'is_active' => $profile['status'] === 'active',
                 ]);
 
-                if ($profile['plan'] !== 'free') {
-                    $webhook = Webhook::factory()->create([
-                        'user_id' => $user->id,
-                        'name' => 'Endpoint demonstrativo',
-                        'url' => "https://example.invalid/mobile2screen/{$profileIndex}",
-                        'secret' => hash('sha256', "demo-webhook-secret-{$profileIndex}"),
-                        'events' => ['alert.sent', 'device.offline'],
-                        'is_active' => false,
-                        'last_triggered' => now()->subDays($profileIndex + 1),
-                    ]);
-                    WebhookLog::factory()->create([
-                        'webhook_id' => $webhook->id,
-                        'event_type' => 'alert.sent',
-                        'payload' => ['source' => 'demo-users-seeder'],
-                        'response_status' => 200,
-                        'response_body' => '{"demo":true}',
-                        'created_at' => now()->subDays($profileIndex + 1),
-                    ]);
-                }
             }
         });
 

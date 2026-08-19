@@ -7,7 +7,6 @@ use App\Models\Device;
 use App\Models\Plan;
 use App\Models\StatisticDaily;
 use App\Models\Tag;
-use App\Models\Webhook;
 
 function assertUserResourceContract(array $user): void
 {
@@ -153,28 +152,6 @@ test('contrato de resposta de api keys nao expoe key_hash', function () {
         'id', 'user_id', 'name', 'last_used', 'expires_at', 'is_active', 'created_at',
     ]);
     expect($keys[0])->not->toHaveKey('key_hash');
-});
-
-test('contrato de resposta de webhooks usa webhook resource', function () {
-    $user = actingAsUser();
-    $webhook = Webhook::factory()->for($user)->create();
-
-    $data = $this->getJson('/api/webhooks/' . $webhook->id)->assertOk()->json('data');
-
-    expect($data)->toHaveKeys([
-        'id',
-        'user_id',
-        'name',
-        'url',
-        'has_secret',
-        'events',
-        'is_active',
-        'last_triggered',
-        'created_at',
-        'updated_at',
-        'logs_count',
-    ]);
-    expect($data)->not->toHaveKey('secret');
 });
 
 test('contrato de resposta de estatisticas diarias usa statistic daily resource', function () {

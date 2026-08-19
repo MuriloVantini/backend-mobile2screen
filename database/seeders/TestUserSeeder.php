@@ -13,8 +13,6 @@ use App\Models\Tag;
 use App\Models\User;
 use App\Models\UserSession;
 use App\Models\UserSetting;
-use App\Models\Webhook;
-use App\Models\WebhookLog;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -47,8 +45,6 @@ class TestUserSeeder extends Seeder
             'alert_delivery' => 1,
             'api_key' => 1,
             'user_session' => 1,
-            'webhook' => 1,
-            'webhook_log' => 1,
             'activity_log' => 1,
             'statistic_daily' => 1,
         ];
@@ -169,23 +165,7 @@ class TestUserSeeder extends Seeder
         /** @var UserSession $userSession */
         $userSession = $upsertById(UserSession::class, $ids['user_session'], $userSessionPayload);
 
-        // 11. Webhook
-        $webhookPayload = Webhook::factory()->make([
-            'user_id' => $user->id,
-        ])->getAttributes();
-
-        /** @var Webhook $webhook */
-        $webhook = $upsertById(Webhook::class, $ids['webhook'], $webhookPayload);
-
-        // 12. Log do webhook
-        $webhookLogPayload = WebhookLog::factory()->make([
-            'webhook_id' => $webhook->id,
-        ])->getAttributes();
-
-        /** @var WebhookLog $webhookLog */
-        $webhookLog = $upsertById(WebhookLog::class, $ids['webhook_log'], $webhookLogPayload);
-
-        // 13. Log de atividade
+        // 11. Log de atividade
         $activityLogPayload = ActivityLog::factory()->make([
             'user_id' => $user->id,
             'resource_id' => $user->id,
@@ -194,7 +174,7 @@ class TestUserSeeder extends Seeder
         /** @var ActivityLog $activityLog */
         $activityLog = $upsertById(ActivityLog::class, $ids['activity_log'], $activityLogPayload);
 
-        // 14. Estatistica diaria
+        // 12. Estatistica diaria
         $statisticDailyPayload = StatisticDaily::factory()->make([
             'user_id' => $user->id,
             'date' => now()->toDateString(),
@@ -203,7 +183,7 @@ class TestUserSeeder extends Seeder
         /** @var StatisticDaily $statisticDaily */
         $statisticDaily = $upsertById(StatisticDaily::class, $ids['statistic_daily'], $statisticDailyPayload);
 
-        unset($alertDelivery, $apiKey, $userSession, $webhookLog, $activityLog, $statisticDaily);
+        unset($alertDelivery, $apiKey, $userSession, $activityLog, $statisticDaily);
 
         $this->command->info('Usuario teste@example.com criado com factories para todas as entidades.');
     }

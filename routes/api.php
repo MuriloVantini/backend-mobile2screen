@@ -12,7 +12,6 @@ use App\Http\Api\Controllers\StatisticsController;
 use App\Http\Api\Controllers\TagController;
 use App\Http\Api\Controllers\UserController;
 use App\Http\Api\Controllers\UserSettingController;
-use App\Http\Api\Controllers\WebhookController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -78,11 +77,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     // ========== API KEYS ==========
     Route::apiResource('api-keys', ApiKeyController::class)->except(['show']);
-
-    // ========== WEBHOOKS ==========
-    Route::apiResource('webhooks', WebhookController::class);
-    Route::get('/webhooks/{webhook}/logs', [WebhookController::class, 'logs']);
-    Route::post('/webhooks/{webhook}/test', [WebhookController::class, 'test']);
 
     // ========== ESTATÍSTICAS ==========
     Route::prefix('statistics')->group(function () {

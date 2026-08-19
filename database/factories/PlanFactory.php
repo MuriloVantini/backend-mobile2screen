@@ -25,7 +25,6 @@ class PlanFactory extends Factory
             'max_alerts_per_month' => fake()->optional()->numberBetween(100, 5000),
             'features' => [
                 'api_access' => fake()->boolean(),
-                'webhooks' => fake()->boolean(),
                 'support' => fake()->randomElement(['community', 'email', 'priority']),
             ],
             'price' => fake()->randomFloat(2, 0, 999),
@@ -40,7 +39,6 @@ class PlanFactory extends Factory
             'max_alerts_per_month' => 1000,
             'features' => [
                 'api_access' => true,
-                'webhooks' => true,
                 'support' => 'email',
                 'custom_branding' => false,
             ],

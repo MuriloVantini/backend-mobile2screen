@@ -30,7 +30,6 @@ return new class extends Migration
                 'price' => 0.00,
                 'features' => json_encode([
                     'api_access' => false,
-                    'webhooks' => false,
                     'support' => 'community'
                 ])
             ],
@@ -41,7 +40,6 @@ return new class extends Migration
                 'price' => 49.90,
                 'features' => json_encode([
                     'api_access' => true,
-                    'webhooks' => true,
                     'support' => 'email',
                     'custom_branding' => false
                 ])
@@ -53,7 +51,6 @@ return new class extends Migration
                 'price' => 199.90,
                 'features' => json_encode([
                     'api_access' => true,
-                    'webhooks' => true,
                     'support' => 'priority',
                     'custom_branding' => true,
                     'sla' => true

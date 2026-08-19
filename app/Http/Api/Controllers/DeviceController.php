@@ -6,7 +6,6 @@ use App\Http\Requests\DeviceHeartbeatRequest;
 use App\Http\Requests\StoreDeviceRequest;
 use App\Http\Requests\UpdateDeviceRequest;
 use App\Models\Device;
-use App\Services\WebhookDispatcher;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -14,8 +13,6 @@ use Illuminate\Support\Str;
 
 class DeviceController extends Controller
 {
-    public function __construct(private WebhookDispatcher $webhooks) {}
-
     /**
      * Lista todos os dispositivos do usuário autenticado
      */
@@ -67,12 +64,6 @@ class DeviceController extends Controller
         }
 
         $device->load('tags');
-
-        $this->webhooks->dispatch($device->user_id, 'device.added', [
-            'device_id' => $device->id,
-            'name' => $device->name,
-            'type' => $device->type,
-        ]);
 
         return response()->json([
             'message' => 'Dispositivo criado com sucesso',
@@ -153,22 +144,12 @@ class DeviceController extends Controller
     public function heartbeat(DeviceHeartbeatRequest $request, Device $device): JsonResponse
     {
         $validated = $request->validated();
-        $wasOffline = ! $device->is_online;
-
         $device->update([
             'is_online' => true,
             'last_seen' => now(),
             'ip_address' => $validated['ip_address'] ?? $device->ip_address,
             'metadata' => $validated['metadata'] ?? $device->metadata
         ]);
-
-        if ($wasOffline) {
-            $this->webhooks->dispatch($device->user_id, 'device.online', [
-                'device_id' => $device->id,
-                'name' => $device->name,
-                'online_at' => now()->toIso8601String(),
-            ]);
-        }
 
         return response()->json([
             'message' => 'Heartbeat registrado'

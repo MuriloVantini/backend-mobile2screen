@@ -5,7 +5,6 @@ namespace App\Http\Api\Controllers;
 use App\Http\Resources\AlertDeliveryResource;
 use App\Models\AlertDelivery;
 use App\Models\Device;
-use App\Services\WebhookDispatcher;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -18,8 +17,6 @@ use Illuminate\Support\Facades\Storage;
  */
 class KioskDeviceController extends Controller
 {
-    public function __construct(private WebhookDispatcher $webhooks) {}
-
     public function connect(Request $request, Device $device): JsonResponse
     {
         if (! $this->hasValidToken($request, $device)) {
@@ -151,8 +148,6 @@ class KioskDeviceController extends Controller
         $validated = $request->validate([
             'status' => ['required', 'in:delivered,acknowledged,dismissed'],
         ]);
-        $wasDelivered = $delivery->delivered_at !== null || $delivery->status === 'delivered';
-
         $now = now();
         $updates = ['status' => $validated['status']];
 
@@ -171,17 +166,6 @@ class KioskDeviceController extends Controller
         $delivery->update($updates);
         $this->markOnline($request, $device);
 
-        if ($validated['status'] === 'delivered' && ! $wasDelivered) {
-            $delivery->loadMissing('alert');
-            $this->webhooks->dispatch($delivery->alert->user_id, 'alert.delivered', [
-                'alert_id' => $delivery->alert_id,
-                'delivery_id' => $delivery->id,
-                'device_id' => $device->id,
-                'device_name' => $device->name,
-                'delivered_at' => $delivery->delivered_at?->toIso8601String(),
-            ]);
-        }
-
         return response()->json(['message' => 'Status da entrega atualizado']);
     }
 
@@ -197,7 +181,6 @@ class KioskDeviceController extends Controller
 
     private function markOnline(Request $request, Device $device, ?array $metadata = null): void
     {
-        $wasOffline = ! $device->is_online;
         $updates = [
             'is_online' => true,
             'last_seen' => now(),
@@ -209,14 +192,6 @@ class KioskDeviceController extends Controller
         }
 
         $device->update($updates);
-
-        if ($wasOffline) {
-            $this->webhooks->dispatch($device->user_id, 'device.online', [
-                'device_id' => $device->id,
-                'name' => $device->name,
-                'online_at' => now()->toIso8601String(),
-            ]);
-        }
     }
 
     private function unauthorized(): JsonResponse

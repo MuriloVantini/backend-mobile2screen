@@ -94,11 +94,6 @@ class User extends Authenticatable
         return $this->hasOne(UserSetting::class);
     }
 
-    public function webhooks()
-    {
-        return $this->hasMany(Webhook::class);
-    }
-
     public function activityLogs()
     {
         return $this->hasMany(ActivityLog::class);

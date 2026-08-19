@@ -1,7 +1,7 @@
 {
     "info": {
         "name": "mobile2screen",
-        "description": "API HTTP do projeto Mobile2Screen. Para testar o Laravel Reverb no Postman, importe também o arquivo reverb_websocket.asyncapi.json desta pasta.",
+        "description": "API para o projeto Mobile2Screen",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
     },
     "item": [
@@ -36,8 +36,103 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"Sra. Lara Benez Rezende\",\n    \"email\": \"yuri.espinoza@example.com\",\n    \"password\": \"(0w!~.#ca5\\\"I^HDy\",\n    \"company\": \"Rangel-Bezerra\",\n    \"phone\": \"(45) 96052-1442\",\n    \"plan_id\": 1,\n    \"status\": \"active\",\n    \"role\": \"user\",\n    \"last_active\": \"2026-08-11 09:13:00\"\n}",
+                            "raw": "{\n    \"name\": \"Kl\u00e9ber Cola\u00e7o Filho\",\n    \"email\": \"benites.franco@example.com\",\n    \"password\": \"pO]2BWEb_^t\",\n    \"company\": \"Padr\u00e3o-Salas\",\n    \"phone\": \"(62) 2477-3115\",\n    \"plan_id\": 1,\n    \"status\": \"active\",\n    \"role\": \"user\",\n    \"last_active\": \"2026-08-17 11:55:51\"\n}",
                             "options": []
+                        }
+                    }
+                },
+                {
+                    "name": "[updateProfileImage] api/users/{user}/profile-image",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/users/:user/profile-image",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "users",
+                                ":user",
+                                "profile-image"
+                            ],
+                            "variable": [
+                                {
+                                    "key": "user",
+                                    "value": 1
+                                }
+                            ]
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"image\": \"sample_text\"\n}",
+                            "options": []
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "[destroyProfileImage] api/users/{user}/profile-image",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/users/:user/profile-image",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "users",
+                                ":user",
+                                "profile-image"
+                            ],
+                            "variable": [
+                                {
+                                    "key": "user",
+                                    "value": 1
+                                }
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
                         }
                     }
                 },
@@ -106,7 +201,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"Sra. Lara Benez Rezende\",\n    \"email\": \"yuri.espinoza@example.com\",\n    \"password\": \"(0w!~.#ca5\\\"I^HDy\",\n    \"company\": \"Rangel-Bezerra\",\n    \"phone\": \"(45) 96052-1442\",\n    \"plan_id\": 1,\n    \"status\": \"active\",\n    \"role\": \"user\",\n    \"last_active\": \"2026-08-11 09:13:00\"\n}",
+                            "raw": "{\n    \"name\": \"Kl\u00e9ber Cola\u00e7o Filho\",\n    \"email\": \"benites.franco@example.com\",\n    \"password\": \"pO]2BWEb_^t\",\n    \"company\": \"Padr\u00e3o-Salas\",\n    \"phone\": \"(62) 2477-3115\",\n    \"plan_id\": 1,\n    \"status\": \"active\",\n    \"role\": \"user\",\n    \"last_active\": \"2026-08-17 11:55:51\"\n}",
                             "options": []
                         },
                         "auth": {
@@ -199,7 +294,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"Sra. Lara Benez Rezende\",\n    \"email\": \"yuri.espinoza@example.com\",\n    \"password\": \"(0w!~.#ca5\\\"I^HDy\",\n    \"company\": \"Rangel-Bezerra\",\n    \"phone\": \"(45) 96052-1442\",\n    \"plan_id\": 1,\n    \"status\": \"active\",\n    \"role\": \"user\",\n    \"last_active\": \"2026-08-11 09:13:00\"\n}",
+                            "raw": "{\n    \"name\": \"Kl\u00e9ber Cola\u00e7o Filho\",\n    \"email\": \"benites.franco@example.com\",\n    \"password\": \"pO]2BWEb_^t\",\n    \"company\": \"Padr\u00e3o-Salas\",\n    \"phone\": \"(62) 2477-3115\",\n    \"plan_id\": 1,\n    \"status\": \"active\",\n    \"role\": \"user\",\n    \"last_active\": \"2026-08-17 11:55:51\"\n}",
                             "options": []
                         },
                         "auth": {
@@ -290,7 +385,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"email\": \"yuri.espinoza@example.com\",\n    \"password\": \"(0w!~.#ca5\\\"I^HDy\"\n}",
+                            "raw": "{\n    \"email\": \"benites.franco@example.com\",\n    \"password\": \"pO]2BWEb_^t\"\n}",
                             "options": []
                         }
                     }
@@ -365,7 +460,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"email\": \"yuri.espinoza@example.com\"\n}",
+                            "raw": "{\n    \"email\": \"benites.franco@example.com\"\n}",
                             "options": []
                         }
                     }
@@ -403,7 +498,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"email\": \"yuri.espinoza@example.com\",\n    \"pin_code\": \"sample_text\"\n}",
+                            "raw": "{\n    \"email\": \"benites.franco@example.com\",\n    \"pin_code\": \"sample_text\"\n}",
                             "options": []
                         }
                     }
@@ -436,7 +531,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"pin_code\": \"sample_text\",\n    \"email\": \"yuri.espinoza@example.com\",\n    \"password\": \"(0w!~.#ca5\\\"I^HDy\"\n}",
+                            "raw": "{\n    \"pin_code\": \"sample_text\",\n    \"email\": \"benites.franco@example.com\",\n    \"password\": \"pO]2BWEb_^t\"\n}",
                             "options": []
                         }
                     }
@@ -486,7 +581,6 @@
                 {
                     "name": "[authorizeBroadcasting] api/kiosk/devices/{device}/broadcasting/auth",
                     "request": {
-                        "description": "Autoriza a assinatura do canal privado do dispositivo no Laravel Reverb. O canal deve seguir o formato private-device.{device} e a requisição usa X-Device-Token.",
                         "method": "POST",
                         "header": [
                             {
@@ -519,15 +613,6 @@
                                     "value": 1
                                 }
                             ]
-                        },
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\n    \"socket_id\": \"123456.789012\",\n    \"channel_name\": \"private-device.1\"\n}",
-                            "options": {
-                                "raw": {
-                                    "language": "json"
-                                }
-                            }
                         }
                     }
                 },
@@ -648,27 +733,7 @@
                         }
                     }
                 }
-            ],
-            "auth": {
-                "type": "apikey",
-                "apikey": [
-                    {
-                        "key": "key",
-                        "value": "X-Device-Token",
-                        "type": "string"
-                    },
-                    {
-                        "key": "value",
-                        "value": "{{device_token}}",
-                        "type": "string"
-                    },
-                    {
-                        "key": "in",
-                        "value": "header",
-                        "type": "string"
-                    }
-                ]
-            }
+            ]
         },
         {
             "name": "Plan",
@@ -848,7 +913,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"notify_alert_failed\": 0,\n    \"notify_device_offline\": 0,\n    \"notify_weekly_report\": 0,\n    \"notify_device_connected\": 1,\n    \"notify_limit_reached\": 0,\n    \"notification_email\": \"jpadilha@example.com\",\n    \"notification_phone\": \"(46) 97980-4169\",\n    \"timezone\": \"Asia/Thimphu\",\n    \"language\": \"pt-BR\",\n    \"theme\": \"dark\"\n}",
+                            "raw": "{\n    \"notify_alert_failed\": 0,\n    \"notify_device_offline\": 1,\n    \"notify_weekly_report\": 1,\n    \"notify_device_connected\": 0,\n    \"notify_limit_reached\": 0,\n    \"notification_email\": \"htamoio@example.com\",\n    \"notification_phone\": \"(89) 99358-4655\",\n    \"timezone\": \"Africa/Khartoum\",\n    \"language\": \"pt-BR\",\n    \"theme\": \"auto\"\n}",
                             "options": []
                         },
                         "auth": {
@@ -970,7 +1035,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"Sra. Lara Benez Rezende\",\n    \"type\": \"info\",\n    \"location\": \"71795-497, R. Stella, 1\\nS\u00e3o Norma - BA\",\n    \"ip_address\": \"34.130.243.117\",\n    \"mac_address\": \"HB:AV:ZE:JN:HK:VX\",\n    \"metadata\": {\n        \"source\": \"postman-doc\",\n        \"firmware\": \"1.1.7\"\n    },\n    \"tags\": [\n        1\n    ]\n}",
+                            "raw": "{\n    \"name\": \"Kl\u00e9ber Cola\u00e7o Filho\",\n    \"type\": \"info\",\n    \"location\": \"02755-540, R. Andres Oliveira, 8059. Apto 03\\nBranco do Leste - MG\",\n    \"ip_address\": \"29.132.38.181\",\n    \"mac_address\": \"ZZ:OG:XZ:GN:XV:OP\",\n    \"metadata\": {\n        \"source\": \"postman-doc\",\n        \"firmware\": \"1.0.9\"\n    },\n    \"tags\": [\n        1\n    ]\n}",
                             "options": []
                         },
                         "auth": {
@@ -1063,7 +1128,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"Sra. Lara Benez Rezende\",\n    \"type\": \"info\",\n    \"location\": \"71795-497, R. Stella, 1\\nS\u00e3o Norma - BA\",\n    \"ip_address\": \"34.130.243.117\",\n    \"mac_address\": \"HB:AV:ZE:JN:HK:VX\",\n    \"metadata\": {\n        \"source\": \"postman-doc\",\n        \"firmware\": \"1.1.7\"\n    },\n    \"tags\": [\n        1\n    ]\n}",
+                            "raw": "{\n    \"name\": \"Kl\u00e9ber Cola\u00e7o Filho\",\n    \"type\": \"info\",\n    \"location\": \"02755-540, R. Andres Oliveira, 8059. Apto 03\\nBranco do Leste - MG\",\n    \"ip_address\": \"29.132.38.181\",\n    \"mac_address\": \"ZZ:OG:XZ:GN:XV:OP\",\n    \"metadata\": {\n        \"source\": \"postman-doc\",\n        \"firmware\": \"1.0.9\"\n    },\n    \"tags\": [\n        1\n    ]\n}",
                             "options": []
                         },
                         "auth": {
@@ -1157,7 +1222,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"ip_address\": \"34.130.243.117\",\n    \"metadata\": {\n        \"source\": \"postman-doc\",\n        \"firmware\": \"1.1.7\"\n    }\n}",
+                            "raw": "{\n    \"ip_address\": \"29.132.38.181\",\n    \"metadata\": {\n        \"source\": \"postman-doc\",\n        \"firmware\": \"1.0.9\"\n    }\n}",
                             "options": []
                         },
                         "auth": {
@@ -1286,7 +1351,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"Sra. Lara Benez Rezende\",\n    \"color\": \"maroon\"\n}",
+                            "raw": "{\n    \"name\": \"Kl\u00e9ber Cola\u00e7o Filho\",\n    \"color\": \"yellow\"\n}",
                             "options": []
                         },
                         "auth": {
@@ -1379,7 +1444,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"Sra. Lara Benez Rezende\",\n    \"color\": \"maroon\"\n}",
+                            "raw": "{\n    \"name\": \"Kl\u00e9ber Cola\u00e7o Filho\",\n    \"color\": \"yellow\"\n}",
                             "options": []
                         },
                         "auth": {
@@ -1552,7 +1617,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"title\": \"Praesentium hic iste.\",\n    \"message\": \"Quidem laborum ducimus fugit eaque. Autem praesentium voluptatem libero et totam. Architecto accusantium placeat voluptas dolor ducimus alias. Perspiciatis est alias id.\",\n    \"type\": \"info\",\n    \"duration_seconds\": 106,\n    \"priority\": 1,\n    \"expires_at\": \"2026-08-28 17:53:00\",\n    \"tags\": [\n        1\n    ]\n}",
+                            "raw": "{\n    \"title\": \"Enim sunt blanditiis.\",\n    \"message\": \"Delectus totam mollitia delectus ullam harum aut qui. Voluptas eum ullam libero ut magnam. Facere animi molestiae omnis eveniet quibusdam nihil.\",\n    \"type\": \"info\",\n    \"duration_seconds\": 87,\n    \"priority\": 6,\n    \"expires_at\": \"2026-09-05 18:46:13\",\n    \"tags\": [\n        1\n    ]\n}",
                             "options": []
                         },
                         "auth": {
@@ -1658,7 +1723,6 @@
                 {
                     "name": "[retry] api/alerts/{alert}/retry",
                     "request": {
-                        "description": "Reenvia o alerta para todos os dispositivos originalmente associados que estejam online. As entregas voltam para pending e recebem uma nova notificação pelo Laravel Reverb. A resposta informa retried_devices e offline_devices.",
                         "method": "POST",
                         "header": [
                             {
@@ -1821,7 +1885,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"Sra. Lara Benez Rezende\",\n    \"expires_at\": \"2026-08-28 17:53:00\"\n}",
+                            "raw": "{\n    \"name\": \"Kl\u00e9ber Cola\u00e7o Filho\",\n    \"expires_at\": \"2026-09-05 18:46:13\"\n}",
                             "options": []
                         },
                         "auth": {
@@ -1870,7 +1934,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"Sra. Lara Benez Rezende\",\n    \"is_active\": true\n}",
+                            "raw": "{\n    \"name\": \"Kl\u00e9ber Cola\u00e7o Filho\",\n    \"is_active\": true\n}",
                             "options": []
                         },
                         "auth": {
@@ -1931,319 +1995,46 @@
             ]
         },
         {
-            "name": "Webhook",
-            "item": [
-                {
-                    "name": "[index] api/webhooks",
-                    "request": {
-                        "method": "GET",
-                        "header": [
-                            {
-                                "key": "Accept",
-                                "value": "application/json",
-                                "type": "text"
-                            },
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json",
-                                "type": "text"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{base_url}}/api/webhooks",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "webhooks"
-                            ]
-                        },
-                        "auth": {
-                            "type": "bearer",
-                            "bearer": [
-                                {
-                                    "key": "token",
-                                    "value": "{{auth_token}}"
-                                }
-                            ]
-                        }
-                    }
-                },
-                {
-                    "name": "[store] api/webhooks",
-                    "request": {
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Accept",
-                                "value": "application/json",
-                                "type": "text"
-                            },
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json",
-                                "type": "text"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{base_url}}/api/webhooks",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "webhooks"
-                            ]
-                        },
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\n    \"name\": \"Sra. Lara Benez Rezende\",\n    \"url\": \"http://www.lira.com.br/officiis-in-dolorum-ut-doloremque-quo\",\n    \"secret\": \"a4bb6e15a5348b57f4768d2a12de75e5051021797b3f4e4152664a1bb4f77795\",\n    \"events\": [\n        \"alert.sent\"\n    ],\n    \"is_active\": true\n}",
-                            "options": []
-                        },
-                        "auth": {
-                            "type": "bearer",
-                            "bearer": [
-                                {
-                                    "key": "token",
-                                    "value": "{{auth_token}}"
-                                }
-                            ]
-                        }
-                    }
-                },
-                {
-                    "name": "[show] api/webhooks/{webhook}",
-                    "request": {
-                        "method": "GET",
-                        "header": [
-                            {
-                                "key": "Accept",
-                                "value": "application/json",
-                                "type": "text"
-                            },
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json",
-                                "type": "text"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{base_url}}/api/webhooks/:webhook",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "webhooks",
-                                ":webhook"
-                            ],
-                            "variable": [
-                                {
-                                    "key": "webhook",
-                                    "value": 1
-                                }
-                            ]
-                        },
-                        "auth": {
-                            "type": "bearer",
-                            "bearer": [
-                                {
-                                    "key": "token",
-                                    "value": "{{auth_token}}"
-                                }
-                            ]
-                        }
-                    }
-                },
-                {
-                    "name": "[update] api/webhooks/{webhook}",
-                    "request": {
-                        "method": "PUT",
-                        "header": [
-                            {
-                                "key": "Accept",
-                                "value": "application/json",
-                                "type": "text"
-                            },
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json",
-                                "type": "text"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{base_url}}/api/webhooks/:webhook",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "webhooks",
-                                ":webhook"
-                            ],
-                            "variable": [
-                                {
-                                    "key": "webhook",
-                                    "value": 1
-                                }
-                            ]
-                        },
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\n    \"name\": \"Sra. Lara Benez Rezende\",\n    \"url\": \"http://www.lira.com.br/officiis-in-dolorum-ut-doloremque-quo\",\n    \"secret\": \"a4bb6e15a5348b57f4768d2a12de75e5051021797b3f4e4152664a1bb4f77795\",\n    \"events\": [\n        \"alert.sent\"\n    ],\n    \"is_active\": true\n}",
-                            "options": []
-                        },
-                        "auth": {
-                            "type": "bearer",
-                            "bearer": [
-                                {
-                                    "key": "token",
-                                    "value": "{{auth_token}}"
-                                }
-                            ]
-                        }
-                    }
-                },
-                {
-                    "name": "[destroy] api/webhooks/{webhook}",
-                    "request": {
-                        "method": "DELETE",
-                        "header": [
-                            {
-                                "key": "Accept",
-                                "value": "application/json",
-                                "type": "text"
-                            },
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json",
-                                "type": "text"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{base_url}}/api/webhooks/:webhook",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "webhooks",
-                                ":webhook"
-                            ],
-                            "variable": [
-                                {
-                                    "key": "webhook",
-                                    "value": 1
-                                }
-                            ]
-                        },
-                        "auth": {
-                            "type": "bearer",
-                            "bearer": [
-                                {
-                                    "key": "token",
-                                    "value": "{{auth_token}}"
-                                }
-                            ]
-                        }
-                    }
-                },
-                {
-                    "name": "[logs] api/webhooks/{webhook}/logs",
-                    "request": {
-                        "method": "GET",
-                        "header": [
-                            {
-                                "key": "Accept",
-                                "value": "application/json",
-                                "type": "text"
-                            },
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json",
-                                "type": "text"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{base_url}}/api/webhooks/:webhook/logs",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "webhooks",
-                                ":webhook",
-                                "logs"
-                            ],
-                            "variable": [
-                                {
-                                    "key": "webhook",
-                                    "value": 1
-                                }
-                            ]
-                        },
-                        "auth": {
-                            "type": "bearer",
-                            "bearer": [
-                                {
-                                    "key": "token",
-                                    "value": "{{auth_token}}"
-                                }
-                            ]
-                        }
-                    }
-                },
-                {
-                    "name": "[test] api/webhooks/{webhook}/test",
-                    "request": {
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Accept",
-                                "value": "application/json",
-                                "type": "text"
-                            },
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json",
-                                "type": "text"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{base_url}}/api/webhooks/:webhook/test",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "webhooks",
-                                ":webhook",
-                                "test"
-                            ],
-                            "variable": [
-                                {
-                                    "key": "webhook",
-                                    "value": 1
-                                }
-                            ]
-                        },
-                        "auth": {
-                            "type": "bearer",
-                            "bearer": [
-                                {
-                                    "key": "token",
-                                    "value": "{{auth_token}}"
-                                }
-                            ]
-                        }
-                    }
-                }
-            ]
-        },
-        {
             "name": "Statistics",
             "item": [
+                {
+                    "name": "[adminDashboard] api/statistics/admin-dashboard",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/statistics/admin-dashboard",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "statistics",
+                                "admin-dashboard"
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
+                        }
+                    }
+                },
                 {
                     "name": "[dashboard] api/statistics/dashboard",
                     "request": {
@@ -2311,7 +2102,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"from_date\": \"2026-07-16\",\n    \"to_date\": \"2026-08-07\",\n    \"days\": 5\n}",
+                            "raw": "{\n    \"from_date\": \"2026-08-05\",\n    \"to_date\": \"2026-08-10\",\n    \"days\": 2\n}",
                             "options": []
                         },
                         "auth": {
@@ -2414,12 +2205,6 @@
             "value": "your-access-token",
             "type": "string",
             "description": "Bearer token for API authentication"
-        },
-        {
-            "key": "device_token",
-            "value": "your-device-connection-token",
-            "type": "string",
-            "description": "Token de conexão enviado no cabeçalho X-Device-Token pelos players kiosk"
         }
     ],
     "auth": {

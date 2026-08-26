@@ -4,7 +4,6 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\Password;
 
 class UpdateUserRequest extends FormRequest
 {
@@ -26,7 +25,6 @@ class UpdateUserRequest extends FormRequest
                 'max:255',
                 Rule::unique('users', 'email')->ignore($userId),
             ],
-            'password' => ['sometimes', 'confirmed', Password::defaults()],
             'company' => 'nullable|string|max:255',
             'phone' => 'nullable|string|max:50',
             'plan_id' => 'nullable|integer|exists:plans,id',

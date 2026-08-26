@@ -3,12 +3,14 @@
 namespace App\Http\Api\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdatePasswordRequest;
 use App\Http\Requests\UpdateProfileImageRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
@@ -52,7 +54,7 @@ class UserController extends Controller
 
         $user = User::create($validated);
         $user->load('plan');
-        
+
         return response()->json([
             'message' => $isPublicRegistration
                 ? 'Usuário registrado com sucesso'
@@ -117,6 +119,32 @@ class UserController extends Controller
         return response()->json([
             'message' => 'Foto de perfil atualizada com sucesso',
             'data' => $user->load('plan')->toResource(),
+        ]);
+    }
+
+    public function updatePassword(UpdatePasswordRequest $request, User $user): JsonResponse
+    {
+        if ($request->user()->id !== $user->id) {
+            return response()->json([
+                'message' => 'Não autorizado',
+            ], 403);
+        }
+
+        $validated = $request->validated();
+
+        if (! Hash::check($validated['current_password'], $user->password)) {
+            return response()->json([
+                'message' => 'A senha atual está incorreta.',
+                'errors' => [
+                    'current_password' => ['A senha atual está incorreta.'],
+                ],
+            ], 422);
+        }
+
+        $user->update(['password' => $validated['password']]);
+
+        return response()->json([
+            'message' => 'Senha alterada com sucesso.',
         ]);
     }
 

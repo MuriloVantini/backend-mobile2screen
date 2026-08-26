@@ -59,6 +59,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     });
     Route::post('/users/{user}/profile-image', [UserController::class, 'updateProfileImage']);
     Route::delete('/users/{user}/profile-image', [UserController::class, 'destroyProfileImage']);
+    Route::patch('/users/{user}/password', [UserController::class, 'updatePassword']);
     Route::apiResource('users', UserController::class);
     Route::post('/logout', [AuthController::class, 'destroy']);
 

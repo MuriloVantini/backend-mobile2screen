@@ -2,6 +2,7 @@
 
 use App\Models\User;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 test('index de usuarios retorna dados paginados para admin', function () {
@@ -56,17 +57,17 @@ test('show de usuarios respeita propriedade do recurso', function () {
     $owner = actingAsUser();
     $other = createUser();
 
-    $this->getJson('/api/users/' . $owner->id)
+    $this->getJson('/api/users/'.$owner->id)
         ->assertOk()
         ->assertJsonPath('data.id', $owner->id);
 
-    $this->getJson('/api/users/' . $other->id)->assertForbidden();
+    $this->getJson('/api/users/'.$other->id)->assertForbidden();
 });
 
 test('update de usuarios permite autoedicao mas bloqueia troca de perfil para nao admin', function () {
     $user = actingAsUser(['role' => 'user']);
 
-    $this->putJson('/api/users/' . $user->id, [
+    $this->putJson('/api/users/'.$user->id, [
         'name' => 'Nome Atualizado',
         'role' => 'admin',
     ])
@@ -78,7 +79,7 @@ test('update de usuarios permite autoedicao mas bloqueia troca de perfil para na
 test('destroy de usuarios permite excluir a propria conta', function () {
     $user = actingAsUser();
 
-    $this->deleteJson('/api/users/' . $user->id)
+    $this->deleteJson('/api/users/'.$user->id)
         ->assertOk();
     expect(User::withTrashed()->find($user->id))->not->toBeNull();
 });
@@ -87,7 +88,7 @@ test('usuario pode enviar e remover a propria foto de perfil', function () {
     Storage::fake('public');
     $user = actingAsUser();
 
-    $response = $this->post('/api/users/' . $user->id . '/profile-image', [
+    $response = $this->post('/api/users/'.$user->id.'/profile-image', [
         'image' => UploadedFile::fake()->image('perfil.png', 320, 320),
     ], ['Accept' => 'application/json']);
 
@@ -100,7 +101,7 @@ test('usuario pode enviar e remover a propria foto de perfil', function () {
     expect($storedPath)->not->toBeNull();
     Storage::disk('public')->assertExists($storedPath);
 
-    $this->deleteJson('/api/users/' . $user->id . '/profile-image')
+    $this->deleteJson('/api/users/'.$user->id.'/profile-image')
         ->assertOk()
         ->assertJsonPath('data.profile_image_url', null);
 
@@ -112,7 +113,59 @@ test('usuario nao pode alterar a foto de perfil de outra conta', function () {
     actingAsUser();
     $other = createUser();
 
-    $this->post('/api/users/' . $other->id . '/profile-image', [
+    $this->post('/api/users/'.$other->id.'/profile-image', [
         'image' => UploadedFile::fake()->image('perfil.png'),
     ], ['Accept' => 'application/json'])->assertForbidden();
+});
+
+test('usuario altera a propria senha informando a senha atual', function () {
+    $user = actingAsUser(['password' => 'SenhaAtual123!']);
+
+    $this->patchJson('/api/users/'.$user->id.'/password', [
+        'current_password' => 'SenhaAtual123!',
+        'password' => 'NovaSenha123!',
+        'password_confirmation' => 'NovaSenha123!',
+    ])
+        ->assertOk()
+        ->assertJsonPath('message', 'Senha alterada com sucesso.');
+
+    expect(Hash::check('NovaSenha123!', $user->fresh()->password))->toBeTrue();
+});
+
+test('alteracao de senha rejeita a senha atual incorreta', function () {
+    $user = actingAsUser(['password' => 'SenhaAtual123!']);
+
+    $this->patchJson('/api/users/'.$user->id.'/password', [
+        'current_password' => 'SenhaIncorreta123!',
+        'password' => 'NovaSenha123!',
+        'password_confirmation' => 'NovaSenha123!',
+    ])
+        ->assertUnprocessable()
+        ->assertJsonPath('errors.current_password.0', 'A senha atual está incorreta.');
+
+    expect(Hash::check('SenhaAtual123!', $user->fresh()->password))->toBeTrue();
+});
+
+test('usuario nao pode alterar a senha de outra conta', function () {
+    actingAsUser(['password' => 'SenhaAtual123!']);
+    $other = createUser(['password' => 'SenhaDaOutraConta123!']);
+
+    $this->patchJson('/api/users/'.$other->id.'/password', [
+        'current_password' => 'SenhaAtual123!',
+        'password' => 'NovaSenha123!',
+        'password_confirmation' => 'NovaSenha123!',
+    ])->assertForbidden();
+
+    expect(Hash::check('SenhaDaOutraConta123!', $other->fresh()->password))->toBeTrue();
+});
+
+test('endpoint generico de usuario ignora tentativa de alterar senha', function () {
+    $user = actingAsUser(['password' => 'SenhaAtual123!']);
+
+    $this->putJson('/api/users/'.$user->id, [
+        'password' => 'SenhaSemVerificacao123!',
+        'password_confirmation' => 'SenhaSemVerificacao123!',
+    ])->assertOk();
+
+    expect(Hash::check('SenhaAtual123!', $user->fresh()->password))->toBeTrue();
 });

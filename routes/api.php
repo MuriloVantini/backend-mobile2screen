@@ -1,10 +1,10 @@
 <?php
 
+use App\Http\Api\Controllers\AlertController;
+use App\Http\Api\Controllers\ApiKeyController;
 use App\Http\Api\Controllers\Auth\AuthController;
 use App\Http\Api\Controllers\Auth\NewPasswordController;
 use App\Http\Api\Controllers\Auth\PasswordResetLinkController;
-use App\Http\Api\Controllers\AlertController;
-use App\Http\Api\Controllers\ApiKeyController;
 use App\Http\Api\Controllers\DeviceController;
 use App\Http\Api\Controllers\KioskDeviceController;
 use App\Http\Api\Controllers\PlanController;
@@ -12,6 +12,7 @@ use App\Http\Api\Controllers\StatisticsController;
 use App\Http\Api\Controllers\TagController;
 use App\Http\Api\Controllers\UserController;
 use App\Http\Api\Controllers\UserSettingController;
+use App\Http\Middleware\AuthenticateSanctumOrApiKey;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -43,11 +44,17 @@ Route::get('/plans/{plan}', [PlanController::class, 'show']);
 // ROTAS PROTEGIDAS (requer autenticação)
 // ============================================
 
+// Integrações externas podem criar alertas com uma API Key; tokens Sanctum
+// usados pelo painel continuam aceitos no mesmo endpoint.
+Route::post('/alerts', [AlertController::class, 'store'])
+    ->middleware(AuthenticateSanctumOrApiKey::class);
+
 Route::middleware(['auth:sanctum'])->group(function () {
-    
+
     // ========== USUÁRIO ==========
     Route::get('/user', function (Request $request) {
         $user = $request->user()->load('plan');
+
         return response()->json(['data' => $user->toResource()]);
     });
     Route::post('/users/{user}/profile-image', [UserController::class, 'updateProfileImage']);
@@ -70,7 +77,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/tags/{tag}/devices', [TagController::class, 'devices']);
 
     // ========== ALERTAS ==========
-    Route::apiResource('alerts', AlertController::class)->only(['index', 'store', 'show']);
+    Route::apiResource('alerts', AlertController::class)->only(['index', 'show']);
     Route::get('/alerts/{alert}/deliveries', [AlertController::class, 'deliveries']);
     Route::post('/alerts/{alert}/retry', [AlertController::class, 'retry']);
     Route::patch('/deliveries/{delivery}/status', [AlertController::class, 'updateDeliveryStatus']);

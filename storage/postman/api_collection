@@ -1590,7 +1590,7 @@
                     }
                 },
                 {
-                    "name": "[store] api/alerts",
+                    "name": "[store with API Key] api/alerts",
                     "request": {
                         "method": "POST",
                         "header": [
@@ -1617,7 +1617,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"title\": \"Enim sunt blanditiis.\",\n    \"message\": \"Delectus totam mollitia delectus ullam harum aut qui. Voluptas eum ullam libero ut magnam. Facere animi molestiae omnis eveniet quibusdam nihil.\",\n    \"type\": \"info\",\n    \"duration_seconds\": 87,\n    \"priority\": 6,\n    \"expires_at\": \"2026-09-05 18:46:13\",\n    \"tags\": [\n        1\n    ]\n}",
+                            "raw": "{\n    \"title\": \"Teste de integração\",\n    \"message\": \"Alerta enviado pelo Postman\",\n    \"type\": \"warning\",\n    \"duration_seconds\": 60,\n    \"tags\": [\n        1\n    ]\n}",
                             "options": []
                         },
                         "auth": {
@@ -1625,7 +1625,7 @@
                             "bearer": [
                                 {
                                     "key": "token",
-                                    "value": "{{auth_token}}"
+                                    "value": "{{api_key}}"
                                 }
                             ]
                         }
@@ -2205,6 +2205,12 @@
             "value": "your-access-token",
             "type": "string",
             "description": "Bearer token for API authentication"
+        },
+        {
+            "key": "api_key",
+            "value": "sk_replace_with_the_key_shown_after_creation",
+            "type": "string",
+            "description": "API Key used only to create alerts through POST /api/alerts"
         }
     ],
     "auth": {

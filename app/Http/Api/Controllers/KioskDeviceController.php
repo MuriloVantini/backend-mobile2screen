@@ -5,6 +5,7 @@ namespace App\Http\Api\Controllers;
 use App\Http\Resources\AlertDeliveryResource;
 use App\Models\AlertDelivery;
 use App\Models\Device;
+use App\Services\OperationalNotificationService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -17,6 +18,10 @@ use Illuminate\Support\Facades\Storage;
  */
 class KioskDeviceController extends Controller
 {
+    public function __construct(
+        private readonly OperationalNotificationService $notifications,
+    ) {}
+
     public function connect(Request $request, Device $device): JsonResponse
     {
         if (! $this->hasValidToken($request, $device)) {
@@ -181,6 +186,7 @@ class KioskDeviceController extends Controller
 
     private function markOnline(Request $request, Device $device, ?array $metadata = null): void
     {
+        $wasOffline = ! $device->is_online;
         $updates = [
             'is_online' => true,
             'last_seen' => now(),
@@ -192,6 +198,10 @@ class KioskDeviceController extends Controller
         }
 
         $device->update($updates);
+
+        if ($wasOffline) {
+            $this->notifications->deviceConnected($device);
+        }
     }
 
     private function unauthorized(): JsonResponse

@@ -11,3 +11,8 @@ Artisan::command('inspire', function () {
 Schedule::command('devices:mark-offline')
     ->everyMinute()
     ->withoutOverlapping();
+
+Schedule::command('notifications:weekly-report')
+    ->weeklyOn(1, '08:00')
+    ->timezone(config('app.timezone'))
+    ->withoutOverlapping();

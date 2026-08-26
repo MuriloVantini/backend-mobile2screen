@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateAlertDeliveryStatusRequest;
 use App\Models\Alert;
 use App\Models\AlertDelivery;
 use App\Models\Device;
+use App\Services\OperationalNotificationService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -16,6 +17,10 @@ use Illuminate\Support\Facades\Log;
 
 class AlertController extends Controller
 {
+    public function __construct(
+        private readonly OperationalNotificationService $notifications,
+    ) {}
+
     /**
      * Lista todos os alertas do usuário
      */
@@ -52,7 +57,7 @@ class AlertController extends Controller
         $alerts->setCollection($alerts->getCollection()->map(fn (Alert $alert) => $alert->toResource()));
 
         return response()->json([
-            'data' => $alerts
+            'data' => $alerts,
         ]);
     }
 
@@ -64,7 +69,7 @@ class AlertController extends Controller
         $validated = $request->validated();
 
         DB::beginTransaction();
-        
+
         try {
             // Criar o alerta
             $validated['user_id'] = $request->user()->id;
@@ -89,8 +94,9 @@ class AlertController extends Controller
 
             if ($devices->isEmpty()) {
                 DB::rollback();
+
                 return response()->json([
-                    'message' => 'Nenhum dispositivo encontrado com as tags fornecidas'
+                    'message' => 'Nenhum dispositivo encontrado com as tags fornecidas',
                 ], 422);
             }
 
@@ -101,7 +107,7 @@ class AlertController extends Controller
                     'alert_id' => $alert->id,
                     'device_id' => $device->id,
                     'status' => $device->is_online ? 'pending' : 'failed',
-                    'error_message' => !$device->is_online ? 'Dispositivo offline' : null,
+                    'error_message' => ! $device->is_online ? 'Dispositivo offline' : null,
                 ]);
 
                 if ($delivery->status === 'pending') {
@@ -117,19 +123,26 @@ class AlertController extends Controller
                 $this->broadcastDelivery($delivery);
             }
 
+            $failedDevices = $devices->where('is_online', false)->count();
+            if ($failedDevices > 0) {
+                $this->notifications->alertFailed($request->user(), $alert, $failedDevices);
+            }
+            $this->notifications->alertLimitReached($request->user());
+
             return response()->json([
                 'message' => 'Alerta enviado com sucesso',
                 'data' => [
                     'alert' => $alert->toResource(),
                     'devices_count' => $devices->count(),
                     'online_devices' => $devices->where('is_online', true)->count(),
-                ]
+                ],
             ], 201);
 
         } catch (\Exception $e) {
             DB::rollback();
+
             return response()->json([
-                'message' => 'Erro ao enviar alerta: ' . $e->getMessage()
+                'message' => 'Erro ao enviar alerta: '.$e->getMessage(),
             ], 500);
         }
     }
@@ -142,7 +155,7 @@ class AlertController extends Controller
         // Verifica se o alerta pertence ao usuário
         if ($alert->user_id !== $request->user()->id) {
             return response()->json([
-                'message' => 'Não autorizado'
+                'message' => 'Não autorizado',
             ], 403);
         }
 
@@ -164,8 +177,8 @@ class AlertController extends Controller
         return response()->json([
             'data' => [
                 'alert' => $alert->toResource(),
-                'stats' => $stats
-            ]
+                'stats' => $stats,
+            ],
         ]);
     }
 
@@ -177,7 +190,7 @@ class AlertController extends Controller
         // Verifica se o alerta pertence ao usuário
         if ($alert->user_id !== $request->user()->id) {
             return response()->json([
-                'message' => 'Não autorizado'
+                'message' => 'Não autorizado',
             ], 403);
         }
 
@@ -212,7 +225,7 @@ class AlertController extends Controller
         $delivery->update($updateData);
 
         return response()->json([
-            'message' => 'Status atualizado com sucesso'
+            'message' => 'Status atualizado com sucesso',
         ]);
     }
 
@@ -224,7 +237,7 @@ class AlertController extends Controller
         // Verifica se o alerta pertence ao usuário
         if ($alert->user_id !== $request->user()->id) {
             return response()->json([
-                'message' => 'Não autorizado'
+                'message' => 'Não autorizado',
             ], 403);
         }
 
@@ -256,6 +269,10 @@ class AlertController extends Controller
 
             $retried++;
             $this->broadcastDelivery($delivery);
+        }
+
+        if ($offline > 0) {
+            $this->notifications->alertFailed($request->user(), $alert, $offline);
         }
 
         return response()->json([

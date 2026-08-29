@@ -25,6 +25,8 @@ class Plan extends Model
     protected function casts(): array
     {
         return [
+            'max_devices' => 'integer',
+            'max_alerts_per_month' => 'integer',
             'features' => 'array',
             'price' => 'decimal:2',
             'created_at' => 'datetime',

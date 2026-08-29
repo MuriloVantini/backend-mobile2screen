@@ -1,20 +1,37 @@
 <?php
 
+use App\Models\ActivityLog;
+use App\Models\Alert;
+use App\Models\AlertDelivery;
+use App\Models\Device;
+use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 test('index de usuarios retorna dados paginados para admin', function () {
-    actingAsUser(['role' => 'admin']);
-
     foreach (range(1, 3) as $index) {
         createUser(['email' => "admin-list-{$index}@example.com"]);
     }
 
-    $this->getJson('/api/users')
+    $admin = actingAsUser(['role' => 'admin']);
+    $device = Device::factory()->for($admin)->create();
+    $alert = Alert::factory()->for($admin)->create();
+    AlertDelivery::factory()->for($alert)->for($device)->create(['status' => 'delivered', 'delivered_at' => now()]);
+    Tag::factory()->for($admin)->create(['name' => 'Operações']);
+    ActivityLog::factory()->for($admin)->create();
+
+    $response = $this->getJson('/api/users')
         ->assertOk()
         ->assertJsonStructure(['data' => ['data', 'current_page', 'total']]);
+
+    $adminData = collect($response->json('data.data'))->firstWhere('id', $admin->id);
+    expect($adminData['devices_count'])->toBe(1)
+        ->and($adminData['alerts_count'])->toBe(1)
+        ->and($adminData['activity_logs_count'])->toBe(1)
+        ->and($adminData['delivery_rate'])->toEqual(100)
+        ->and($adminData['tags'][0]['name'])->toBe('Operações');
 });
 
 test('index de usuarios retorna apenas o usuario atual para nao admin', function () {

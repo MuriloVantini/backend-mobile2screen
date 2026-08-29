@@ -173,15 +173,15 @@ class StatisticsController extends Controller
             ->where('alerts.sent_at', '>=', $thirtyDaysAgo)
             ->select(
                 DB::raw('COUNT(*) as total'),
-                DB::raw('SUM(CASE WHEN status = "delivered" THEN 1 ELSE 0 END) as delivered'),
+                DB::raw('SUM(CASE WHEN delivered_at IS NOT NULL OR status IN ("delivered", "acknowledged", "dismissed") THEN 1 ELSE 0 END) as delivered'),
                 DB::raw('SUM(CASE WHEN status = "failed" THEN 1 ELSE 0 END) as failed'),
                 DB::raw('SUM(CASE WHEN status = "pending" THEN 1 ELSE 0 END) as pending')
             )
             ->first();
 
         // Taxa de entrega
-        $deliveryRate = $deliveryStats->total > 0 
-            ? round(($deliveryStats->delivered / $deliveryStats->total) * 100, 2) 
+        $deliveryRate = $deliveryStats->total > 0
+            ? round(($deliveryStats->delivered / $deliveryStats->total) * 100, 2)
             : 0;
 
         // Alertas hoje
@@ -207,7 +207,7 @@ class StatisticsController extends Controller
                     'total' => $totalDevices,
                     'online' => $onlineDevices,
                     'offline' => $offlineDevices,
-                    'online_percentage' => $totalDevices > 0 ? round(($onlineDevices / $totalDevices) * 100, 1) : 0
+                    'online_percentage' => $totalDevices > 0 ? round(($onlineDevices / $totalDevices) * 100, 1) : 0,
                 ],
                 'alerts' => [
                     'today' => $alertsToday,
@@ -218,10 +218,10 @@ class StatisticsController extends Controller
                     'delivered' => $deliveryStats->delivered,
                     'failed' => $deliveryStats->failed,
                     'pending' => $deliveryStats->pending,
-                    'delivery_rate' => $deliveryRate
+                    'delivery_rate' => $deliveryRate,
                 ],
-                'top_tags' => $topTags
-            ]
+                'top_tags' => $topTags,
+            ],
         ]);
     }
 
@@ -262,7 +262,7 @@ class StatisticsController extends Controller
             ->get();
 
         return response()->json([
-            'data' => $stats
+            'data' => $stats,
         ]);
     }
 
@@ -295,7 +295,7 @@ class StatisticsController extends Controller
             ->get();
 
         return response()->json([
-            'data' => $topDevices
+            'data' => $topDevices,
         ]);
     }
 }

@@ -32,16 +32,20 @@ test('endpoints de alertas: index store show entregas retry e update de status d
 
     $alertId = $storeResponse->json('data.alert.id');
 
-    Event::assertDispatched(AlertAvailable::class, fn (AlertAvailable $event) =>
-        $event->delivery->alert_id === $alertId
+    expect(AlertDelivery::query()
+        ->where('alert_id', $alertId)
+        ->where('device_id', $offlineDevice->id)
+        ->value('status'))->toBe('pending');
+
+    Event::assertDispatched(AlertAvailable::class, fn (AlertAvailable $event) => $event->delivery->alert_id === $alertId
         && $event->delivery->device_id === $onlineDevice->id
     );
 
-    $this->getJson('/api/alerts/' . $alertId)
+    $this->getJson('/api/alerts/'.$alertId)
         ->assertOk()
         ->assertJsonPath('data.alert.id', $alertId);
 
-    $this->getJson('/api/alerts/' . $alertId . '/deliveries')
+    $this->getJson('/api/alerts/'.$alertId.'/deliveries')
         ->assertOk()
         ->assertJsonCount(2, 'data');
 
@@ -50,7 +54,7 @@ test('endpoints de alertas: index store show entregas retry e update de status d
         ->where('device_id', $onlineDevice->id)
         ->firstOrFail();
 
-    $this->patchJson('/api/deliveries/' . $delivery->id . '/status', [
+    $this->patchJson('/api/deliveries/'.$delivery->id.'/status', [
         'status' => 'delivered',
     ])
         ->assertOk();
@@ -61,14 +65,17 @@ test('endpoints de alertas: index store show entregas retry e update de status d
 
     Event::fake([AlertAvailable::class]);
 
-    $this->postJson('/api/alerts/' . $alertId . '/retry')
+    $this->postJson('/api/alerts/'.$alertId.'/retry')
         ->assertOk()
         ->assertJsonPath('data.retried_devices', 1)
         ->assertJsonPath('data.offline_devices', 1);
 
     expect($delivery->fresh()->status)->toBe('pending');
-    Event::assertDispatched(AlertAvailable::class, fn (AlertAvailable $event) =>
-        $event->delivery->id === $delivery->id
+    expect(AlertDelivery::query()
+        ->where('alert_id', $alertId)
+        ->where('device_id', $offlineDevice->id)
+        ->value('status'))->toBe('pending');
+    Event::assertDispatched(AlertAvailable::class, fn (AlertAvailable $event) => $event->delivery->id === $delivery->id
         && $event->delivery->device_id === $onlineDevice->id
     );
 });
@@ -86,7 +93,7 @@ test('retry reenvia alerta ja recebido para o dispositivo online', function () {
         'retry_count' => 0,
     ]);
 
-    $this->postJson('/api/alerts/' . $alert->id . '/retry')
+    $this->postJson('/api/alerts/'.$alert->id.'/retry')
         ->assertOk()
         ->assertJsonPath('data.retried_devices', 1)
         ->assertJsonPath('data.offline_devices', 0);
@@ -98,8 +105,7 @@ test('retry reenvia alerta ja recebido para o dispositivo online', function () {
         ->and($delivery->dismissed_at)->toBeNull()
         ->and($delivery->delivered_at)->not->toBeNull();
 
-    Event::assertDispatched(AlertAvailable::class, fn (AlertAvailable $event) =>
-        $event->delivery->id === $delivery->id
+    Event::assertDispatched(AlertAvailable::class, fn (AlertAvailable $event) => $event->delivery->id === $delivery->id
     );
 });
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Api\Controllers\ActivityLogController;
 use App\Http\Api\Controllers\AlertController;
 use App\Http\Api\Controllers\ApiKeyController;
 use App\Http\Api\Controllers\Auth\AuthController;
@@ -8,11 +9,13 @@ use App\Http\Api\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Api\Controllers\DeviceController;
 use App\Http\Api\Controllers\KioskDeviceController;
 use App\Http\Api\Controllers\PlanController;
+use App\Http\Api\Controllers\RealtimeController;
 use App\Http\Api\Controllers\StatisticsController;
 use App\Http\Api\Controllers\TagController;
 use App\Http\Api\Controllers\UserController;
 use App\Http\Api\Controllers\UserSettingController;
 use App\Http\Middleware\AuthenticateSanctumOrApiKey;
+use App\Http\Middleware\LogUserActivity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -47,9 +50,9 @@ Route::get('/plans/{plan}', [PlanController::class, 'show']);
 // Integrações externas podem criar alertas com uma API Key; tokens Sanctum
 // usados pelo painel continuam aceitos no mesmo endpoint.
 Route::post('/alerts', [AlertController::class, 'store'])
-    ->middleware(AuthenticateSanctumOrApiKey::class);
+    ->middleware([AuthenticateSanctumOrApiKey::class, LogUserActivity::class]);
 
-Route::middleware(['auth:sanctum'])->group(function () {
+Route::middleware(['auth:sanctum', LogUserActivity::class])->group(function () {
 
     // ========== USUÁRIO ==========
     Route::get('/user', function (Request $request) {
@@ -62,6 +65,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::patch('/users/{user}/password', [UserController::class, 'updatePassword']);
     Route::apiResource('users', UserController::class);
     Route::post('/logout', [AuthController::class, 'destroy']);
+
+    // ========== TEMPO REAL ==========
+    Route::get('/realtime/config', [RealtimeController::class, 'config']);
+    Route::post('/realtime/authorize', [RealtimeController::class, 'authorizeChannel']);
 
     // ========== CONFIGURAÇÕES DO USUÁRIO ==========
     Route::get('/settings', [UserSettingController::class, 'show']);
@@ -85,6 +92,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     // ========== API KEYS ==========
     Route::apiResource('api-keys', ApiKeyController::class)->except(['show']);
+
+    // ========== AUDITORIA ==========
+    Route::get('/activity-logs', [ActivityLogController::class, 'index']);
 
     // ========== ESTATÍSTICAS ==========
     Route::prefix('statistics')->group(function () {

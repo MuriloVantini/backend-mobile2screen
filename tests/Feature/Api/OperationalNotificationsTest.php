@@ -12,7 +12,7 @@ use App\Notifications\OperationalNotification;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Notification;
 
-test('falha de alerta envia email para o endereco configurado', function () {
+test('status de falha de entrega envia email para o endereco configurado', function () {
     Notification::fake();
     Event::fake([AlertAvailable::class]);
     $user = actingAsUser();
@@ -21,16 +21,11 @@ test('falha de alerta envia email para o endereco configurado', function () {
         'notify_limit_reached' => false,
         'notification_email' => 'operacoes@example.com',
     ]);
-    $tag = Tag::factory()->for($user)->create();
-    $device = Device::factory()->for($user)->create(['is_online' => false]);
-    $device->tags()->attach($tag->id);
+    $alert = Alert::factory()->for($user)->create();
+    $device = Device::factory()->for($user)->create(['is_online' => true]);
+    $delivery = AlertDelivery::factory()->for($alert)->for($device)->create(['status' => 'pending']);
 
-    $this->postJson('/api/alerts', [
-        'title' => 'Teste com falha',
-        'message' => 'Dispositivo offline',
-        'type' => 'warning',
-        'tags' => [$tag->id],
-    ])->assertCreated();
+    $this->patchJson('/api/deliveries/'.$delivery->id.'/status', ['status' => 'failed'])->assertOk();
 
     Notification::assertSentOnDemand(
         OperationalNotification::class,
@@ -47,16 +42,11 @@ test('preferencia desabilitada impede email de falha de alerta', function () {
         'notify_alert_failed' => false,
         'notify_limit_reached' => false,
     ]);
-    $tag = Tag::factory()->for($user)->create();
-    $device = Device::factory()->for($user)->create(['is_online' => false]);
-    $device->tags()->attach($tag->id);
+    $alert = Alert::factory()->for($user)->create();
+    $device = Device::factory()->for($user)->create(['is_online' => true]);
+    $delivery = AlertDelivery::factory()->for($alert)->for($device)->create(['status' => 'pending']);
 
-    $this->postJson('/api/alerts', [
-        'title' => 'Teste sem email',
-        'message' => 'A preferência está desabilitada',
-        'type' => 'warning',
-        'tags' => [$tag->id],
-    ])->assertCreated();
+    $this->patchJson('/api/deliveries/'.$delivery->id.'/status', ['status' => 'failed'])->assertOk();
 
     Notification::assertNothingSent();
 });
@@ -158,7 +148,9 @@ test('aviso de limite e enviado uma vez por mes ao atingir oitenta por cento', f
     ];
 
     $this->postJson('/api/alerts', $payload)->assertCreated();
-    $this->postJson('/api/alerts', $payload)->assertCreated();
+    $this->postJson('/api/alerts', $payload)
+        ->assertStatus(429)
+        ->assertJsonPath('code', 'plan_limit_reached');
 
     Notification::assertSentOnDemandTimes(OperationalNotification::class, 1);
     Notification::assertSentOnDemand(

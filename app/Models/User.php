@@ -15,7 +15,7 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasApiTokens, SoftDeletes;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -72,6 +72,11 @@ class User extends Authenticatable
     public function alerts()
     {
         return $this->hasMany(Alert::class);
+    }
+
+    public function deliveries()
+    {
+        return $this->hasManyThrough(AlertDelivery::class, Alert::class);
     }
 
     public function tags()

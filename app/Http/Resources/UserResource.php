@@ -34,6 +34,16 @@ class UserResource extends JsonResource
             'deleted_at' => $this->deleted_at,
             'plan' => new PlanResource($this->whenLoaded('plan')),
             'settings' => new UserSettingResource($this->whenLoaded('settings')),
+            'devices_count' => $this->whenCounted('devices'),
+            'alerts_count' => $this->whenCounted('alerts'),
+            'activity_logs_count' => $this->whenCounted('activityLogs'),
+            'delivery_rate' => $this->when(
+                isset($this->deliveries_count, $this->received_deliveries_count),
+                fn () => $this->deliveries_count > 0
+                    ? round(($this->received_deliveries_count / $this->deliveries_count) * 100, 2)
+                    : 0,
+            ),
+            'tags' => TagResource::collection($this->whenLoaded('tags')),
         ];
     }
 }

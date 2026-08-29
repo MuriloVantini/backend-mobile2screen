@@ -6,6 +6,8 @@ use App\Http\Requests\DeviceHeartbeatRequest;
 use App\Http\Requests\StoreDeviceRequest;
 use App\Http\Requests\UpdateDeviceRequest;
 use App\Models\Device;
+use App\Services\PlanLimitService;
+use App\Services\RealtimeUpdateService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -13,6 +15,11 @@ use Illuminate\Support\Str;
 
 class DeviceController extends Controller
 {
+    public function __construct(
+        private readonly PlanLimitService $limits,
+        private readonly RealtimeUpdateService $realtime,
+    ) {}
+
     /**
      * Lista todos os dispositivos do usuário autenticado
      */
@@ -22,7 +29,7 @@ class DeviceController extends Controller
             ->devices()
             ->with('tags')
             ->get();
-        
+
         return response()->json([
             'data' => $devices->map(fn (Device $device) => $device->toResource()),
         ]);
@@ -51,6 +58,8 @@ class DeviceController extends Controller
     public function store(StoreDeviceRequest $request): JsonResponse
     {
         $validated = $request->validated();
+        $request->user()->loadMissing('plan');
+        $this->limits->ensureCanCreateDevice($request->user());
 
         // Gerar token único de conexão
         $validated['connection_token'] = Str::random(64);
@@ -64,6 +73,7 @@ class DeviceController extends Controller
         }
 
         $device->load('tags');
+        $this->realtime->publish($request->user()->id, 'devices');
 
         return response()->json([
             'message' => 'Dispositivo criado com sucesso',
@@ -79,11 +89,12 @@ class DeviceController extends Controller
         // Verifica se o dispositivo pertence ao usuário
         if ($device->user_id !== $request->user()->id) {
             return response()->json([
-                'message' => 'Não autorizado'
+                'message' => 'Não autorizado',
             ], 403);
         }
 
         $device->load('tags');
+        $this->realtime->publish($request->user()->id, 'devices');
 
         return response()->json([
             'data' => $device->toResource(),
@@ -98,7 +109,7 @@ class DeviceController extends Controller
         // Verifica se o dispositivo pertence ao usuário
         if ($device->user_id !== $request->user()->id) {
             return response()->json([
-                'message' => 'Não autorizado'
+                'message' => 'Não autorizado',
             ], 403);
         }
 
@@ -127,14 +138,15 @@ class DeviceController extends Controller
         // Verifica se o dispositivo pertence ao usuário
         if ($device->user_id !== $request->user()->id) {
             return response()->json([
-                'message' => 'Não autorizado'
+                'message' => 'Não autorizado',
             ], 403);
         }
 
         $device->delete();
+        $this->realtime->publish($request->user()->id, 'devices');
 
         return response()->json([
-            'message' => 'Dispositivo removido com sucesso'
+            'message' => 'Dispositivo removido com sucesso',
         ]);
     }
 
@@ -148,11 +160,12 @@ class DeviceController extends Controller
             'is_online' => true,
             'last_seen' => now(),
             'ip_address' => $validated['ip_address'] ?? $device->ip_address,
-            'metadata' => $validated['metadata'] ?? $device->metadata
+            'metadata' => $validated['metadata'] ?? $device->metadata,
         ]);
+        $this->realtime->publish($device->user_id, 'devices');
 
         return response()->json([
-            'message' => 'Heartbeat registrado'
+            'message' => 'Heartbeat registrado',
         ]);
     }
 
@@ -164,19 +177,19 @@ class DeviceController extends Controller
         // Verifica se o dispositivo pertence ao usuário
         if ($device->user_id !== $request->user()->id) {
             return response()->json([
-                'message' => 'Não autorizado'
+                'message' => 'Não autorizado',
             ], 403);
         }
 
         $device->update([
-            'connection_token' => Str::random(64)
+            'connection_token' => Str::random(64),
         ]);
 
         return response()->json([
             'message' => 'Token regenerado com sucesso',
             'data' => [
-                'connection_token' => $device->connection_token
-            ]
+                'connection_token' => $device->connection_token,
+            ],
         ]);
     }
 }

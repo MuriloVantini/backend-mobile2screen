@@ -9,6 +9,8 @@ use App\Models\Alert;
 use App\Models\AlertDelivery;
 use App\Models\Device;
 use App\Services\OperationalNotificationService;
+use App\Services\PlanLimitService;
+use App\Services\RealtimeUpdateService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -19,6 +21,8 @@ class AlertController extends Controller
 {
     public function __construct(
         private readonly OperationalNotificationService $notifications,
+        private readonly PlanLimitService $limits,
+        private readonly RealtimeUpdateService $realtime,
     ) {}
 
     /**
@@ -67,6 +71,8 @@ class AlertController extends Controller
     public function store(StoreAlertRequest $request): JsonResponse
     {
         $validated = $request->validated();
+        $request->user()->loadMissing('plan');
+        $this->limits->ensureCanCreateAlert($request->user());
 
         DB::beginTransaction();
 
@@ -106,8 +112,8 @@ class AlertController extends Controller
                 $delivery = AlertDelivery::create([
                     'alert_id' => $alert->id,
                     'device_id' => $device->id,
-                    'status' => $device->is_online ? 'pending' : 'failed',
-                    'error_message' => ! $device->is_online ? 'Dispositivo offline' : null,
+                    'status' => 'pending',
+                    'error_message' => null,
                 ]);
 
                 if ($delivery->status === 'pending') {
@@ -123,11 +129,8 @@ class AlertController extends Controller
                 $this->broadcastDelivery($delivery);
             }
 
-            $failedDevices = $devices->where('is_online', false)->count();
-            if ($failedDevices > 0) {
-                $this->notifications->alertFailed($request->user(), $alert, $failedDevices);
-            }
             $this->notifications->alertLimitReached($request->user());
+            $this->realtime->publish($request->user()->id, 'alerts');
 
             return response()->json([
                 'message' => 'Alerta enviado com sucesso',
@@ -223,6 +226,11 @@ class AlertController extends Controller
         }
 
         $delivery->update($updateData);
+        if ($validated['status'] === 'failed') {
+            $delivery->loadMissing('alert.user');
+            $this->notifications->alertFailed($delivery->alert->user, $delivery->alert, 1);
+        }
+        $this->realtime->publish($delivery->alert()->value('user_id'), 'deliveries');
 
         return response()->json([
             'message' => 'Status atualizado com sucesso',
@@ -251,8 +259,8 @@ class AlertController extends Controller
         foreach ($deliveries as $delivery) {
             if (! $delivery->device?->is_online) {
                 $delivery->update([
-                    'status' => 'failed',
-                    'error_message' => 'Dispositivo offline',
+                    'status' => 'pending',
+                    'error_message' => null,
                 ]);
                 $offline++;
 
@@ -271,9 +279,7 @@ class AlertController extends Controller
             $this->broadcastDelivery($delivery);
         }
 
-        if ($offline > 0) {
-            $this->notifications->alertFailed($request->user(), $alert, $offline);
-        }
+        $this->realtime->publish($request->user()->id, 'deliveries');
 
         return response()->json([
             'message' => "Reenvio iniciado para {$retried} dispositivos",

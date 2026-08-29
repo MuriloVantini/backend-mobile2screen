@@ -7,6 +7,7 @@ use App\Http\Requests\UpdatePasswordRequest;
 use App\Http\Requests\UpdateProfileImageRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
+use App\Services\RealtimeUpdateService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -15,10 +16,21 @@ use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
+    public function __construct(private readonly RealtimeUpdateService $realtime) {}
+
     public function index(Request $request): JsonResponse
     {
         if ($request->user()->role === 'admin') {
-            $users = User::with('plan')->orderByDesc('created_at')->paginate(20);
+            $users = User::query()
+                ->with(['plan', 'tags'])
+                ->withCount(['devices', 'alerts', 'activityLogs', 'deliveries'])
+                ->withCount(['deliveries as received_deliveries_count' => fn ($query) => $query
+                    ->where(function ($receivedQuery) {
+                        $receivedQuery->whereNotNull('delivered_at')
+                            ->orWhereIn('status', ['delivered', 'acknowledged', 'dismissed']);
+                    })])
+                ->orderByDesc('created_at')
+                ->paginate(20);
             $users->setCollection($users->getCollection()->map(fn (User $user) => $user->toResource()));
 
             return response()->json([
@@ -94,6 +106,7 @@ class UserController extends Controller
 
         $user->update($validated);
         $user->load('plan');
+        $this->realtime->publish($user->id, 'users');
 
         return response()->json([
             'message' => 'Usuario atualizado com sucesso',
@@ -178,6 +191,7 @@ class UserController extends Controller
         }
 
         $user->delete();
+        $this->realtime->publish($user->id, 'users');
 
         return response()->json([
             'message' => 'Usuário removido com sucesso',

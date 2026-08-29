@@ -6,6 +6,7 @@ use App\Http\Resources\AlertDeliveryResource;
 use App\Models\AlertDelivery;
 use App\Models\Device;
 use App\Services\OperationalNotificationService;
+use App\Services\RealtimeUpdateService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -20,6 +21,7 @@ class KioskDeviceController extends Controller
 {
     public function __construct(
         private readonly OperationalNotificationService $notifications,
+        private readonly RealtimeUpdateService $realtime,
     ) {}
 
     public function connect(Request $request, Device $device): JsonResponse
@@ -170,6 +172,7 @@ class KioskDeviceController extends Controller
 
         $delivery->update($updates);
         $this->markOnline($request, $device);
+        $this->realtime->publish($device->user_id, 'deliveries');
 
         return response()->json(['message' => 'Status da entrega atualizado']);
     }
@@ -201,6 +204,7 @@ class KioskDeviceController extends Controller
 
         if ($wasOffline) {
             $this->notifications->deviceConnected($device);
+            $this->realtime->publish($device->user_id, 'devices');
         }
     }
 

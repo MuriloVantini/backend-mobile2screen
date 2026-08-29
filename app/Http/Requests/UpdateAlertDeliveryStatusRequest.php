@@ -15,7 +15,7 @@ class UpdateAlertDeliveryStatusRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'status' => ['required', Rule::in(['delivered', 'acknowledged', 'dismissed'])],
+            'status' => ['required', Rule::in(['delivered', 'acknowledged', 'dismissed', 'failed'])],
         ];
     }
 }

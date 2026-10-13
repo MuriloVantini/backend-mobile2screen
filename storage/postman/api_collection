@@ -1,7 +1,7 @@
 {
     "info": {
-        "name": "mobile2screen",
-        "description": "API para o projeto Mobile2Screen",
+        "name": "Mobile2Screen",
+        "description": "API do Mobile2Screen para gerenciamento de alertas, dispositivos e kiosks em tempo real.",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
     },
     "item": [
@@ -36,7 +36,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"Kl\u00e9ber Cola\u00e7o Filho\",\n    \"email\": \"benites.franco@example.com\",\n    \"password\": \"pO]2BWEb_^t\",\n    \"company\": \"Padr\u00e3o-Salas\",\n    \"phone\": \"(62) 2477-3115\",\n    \"plan_id\": 1,\n    \"status\": \"active\",\n    \"role\": \"user\",\n    \"last_active\": \"2026-08-17 11:55:51\"\n}",
+                            "raw": "{\n    \"name\": \"Nasir Purdy MD\",\n    \"email\": \"lesly.donnelly@example.org\",\n    \"password\": \"j)HYk)C}3?\\\"~r?Pu\",\n    \"company\": \"Reinger, Purdy and Kertzmann\",\n    \"phone\": \"914.803.4040\",\n    \"plan_id\": 1,\n    \"status\": \"active\",\n    \"role\": \"user\",\n    \"last_active\": \"2026-10-09 13:02:05\"\n}",
                             "options": []
                         }
                     }
@@ -137,6 +137,56 @@
                     }
                 },
                 {
+                    "name": "[updatePassword] api/users/{user}/password",
+                    "request": {
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/users/:user/password",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "users",
+                                ":user",
+                                "password"
+                            ],
+                            "variable": [
+                                {
+                                    "key": "user",
+                                    "value": 1
+                                }
+                            ]
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"current_password\": \"sample_text\",\n    \"password\": \"j)HYk)C}3?\\\"~r?Pu\"\n}",
+                            "options": []
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
                     "name": "[index] api/users",
                     "request": {
                         "method": "GET",
@@ -201,7 +251,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"Kl\u00e9ber Cola\u00e7o Filho\",\n    \"email\": \"benites.franco@example.com\",\n    \"password\": \"pO]2BWEb_^t\",\n    \"company\": \"Padr\u00e3o-Salas\",\n    \"phone\": \"(62) 2477-3115\",\n    \"plan_id\": 1,\n    \"status\": \"active\",\n    \"role\": \"user\",\n    \"last_active\": \"2026-08-17 11:55:51\"\n}",
+                            "raw": "{\n    \"name\": \"Nasir Purdy MD\",\n    \"email\": \"lesly.donnelly@example.org\",\n    \"password\": \"j)HYk)C}3?\\\"~r?Pu\",\n    \"company\": \"Reinger, Purdy and Kertzmann\",\n    \"phone\": \"914.803.4040\",\n    \"plan_id\": 1,\n    \"status\": \"active\",\n    \"role\": \"user\",\n    \"last_active\": \"2026-10-09 13:02:05\"\n}",
                             "options": []
                         },
                         "auth": {
@@ -294,7 +344,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"Kl\u00e9ber Cola\u00e7o Filho\",\n    \"email\": \"benites.franco@example.com\",\n    \"password\": \"pO]2BWEb_^t\",\n    \"company\": \"Padr\u00e3o-Salas\",\n    \"phone\": \"(62) 2477-3115\",\n    \"plan_id\": 1,\n    \"status\": \"active\",\n    \"role\": \"user\",\n    \"last_active\": \"2026-08-17 11:55:51\"\n}",
+                            "raw": "{\n    \"name\": \"Nasir Purdy MD\",\n    \"email\": \"lesly.donnelly@example.org\",\n    \"company\": \"Reinger, Purdy and Kertzmann\",\n    \"phone\": \"914.803.4040\",\n    \"plan_id\": 1,\n    \"status\": \"active\",\n    \"role\": \"user\",\n    \"last_active\": \"2026-10-09 13:02:05\"\n}",
                             "options": []
                         },
                         "auth": {
@@ -385,7 +435,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"email\": \"benites.franco@example.com\",\n    \"password\": \"pO]2BWEb_^t\"\n}",
+                            "raw": "{\n    \"email\": \"lesly.donnelly@example.org\",\n    \"password\": \"j)HYk)C}3?\\\"~r?Pu\"\n}",
                             "options": []
                         }
                     }
@@ -460,7 +510,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"email\": \"benites.franco@example.com\"\n}",
+                            "raw": "{\n    \"email\": \"lesly.donnelly@example.org\"\n}",
                             "options": []
                         }
                     }
@@ -498,7 +548,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"email\": \"benites.franco@example.com\",\n    \"pin_code\": \"sample_text\"\n}",
+                            "raw": "{\n    \"email\": \"lesly.donnelly@example.org\",\n    \"pin_code\": \"sample_text\"\n}",
                             "options": []
                         }
                     }
@@ -531,7 +581,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"pin_code\": \"sample_text\",\n    \"email\": \"benites.franco@example.com\",\n    \"password\": \"pO]2BWEb_^t\"\n}",
+                            "raw": "{\n    \"pin_code\": \"sample_text\",\n    \"email\": \"lesly.donnelly@example.org\",\n    \"password\": \"j)HYk)C}3?\\\"~r?Pu\"\n}",
                             "options": []
                         }
                     }
@@ -804,754 +854,41 @@
             ]
         },
         {
-            "name": "Undefined",
-            "item": [
-                {
-                    "name": "[Closure] api/user",
-                    "request": {
-                        "method": "GET",
-                        "header": [
-                            {
-                                "key": "Accept",
-                                "value": "application/json",
-                                "type": "text"
-                            },
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json",
-                                "type": "text"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{base_url}}/api/user",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "user"
-                            ]
-                        },
-                        "auth": {
-                            "type": "bearer",
-                            "bearer": [
-                                {
-                                    "key": "token",
-                                    "value": "{{auth_token}}"
-                                }
-                            ]
-                        }
-                    }
-                }
-            ]
-        },
-        {
-            "name": "UserSetting",
-            "item": [
-                {
-                    "name": "[show] api/settings",
-                    "request": {
-                        "method": "GET",
-                        "header": [
-                            {
-                                "key": "Accept",
-                                "value": "application/json",
-                                "type": "text"
-                            },
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json",
-                                "type": "text"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{base_url}}/api/settings",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "settings"
-                            ]
-                        },
-                        "auth": {
-                            "type": "bearer",
-                            "bearer": [
-                                {
-                                    "key": "token",
-                                    "value": "{{auth_token}}"
-                                }
-                            ]
-                        }
-                    }
-                },
-                {
-                    "name": "[update] api/settings",
-                    "request": {
-                        "method": "PUT",
-                        "header": [
-                            {
-                                "key": "Accept",
-                                "value": "application/json",
-                                "type": "text"
-                            },
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json",
-                                "type": "text"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{base_url}}/api/settings",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "settings"
-                            ]
-                        },
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\n    \"notify_alert_failed\": 0,\n    \"notify_device_offline\": 1,\n    \"notify_weekly_report\": 1,\n    \"notify_device_connected\": 0,\n    \"notify_limit_reached\": 0,\n    \"notification_email\": \"htamoio@example.com\",\n    \"notification_phone\": \"(89) 99358-4655\",\n    \"timezone\": \"Africa/Khartoum\",\n    \"language\": \"pt-BR\",\n    \"theme\": \"auto\"\n}",
-                            "options": []
-                        },
-                        "auth": {
-                            "type": "bearer",
-                            "bearer": [
-                                {
-                                    "key": "token",
-                                    "value": "{{auth_token}}"
-                                }
-                            ]
-                        }
-                    }
-                }
-            ]
-        },
-        {
-            "name": "Device",
-            "item": [
-                {
-                    "name": "[latest] api/devices/latest",
-                    "request": {
-                        "method": "GET",
-                        "header": [
-                            {
-                                "key": "Accept",
-                                "value": "application/json",
-                                "type": "text"
-                            },
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json",
-                                "type": "text"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{base_url}}/api/devices/latest",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "devices",
-                                "latest"
-                            ]
-                        },
-                        "auth": {
-                            "type": "bearer",
-                            "bearer": [
-                                {
-                                    "key": "token",
-                                    "value": "{{auth_token}}"
-                                }
-                            ]
-                        }
-                    }
-                },
-                {
-                    "name": "[index] api/devices",
-                    "request": {
-                        "method": "GET",
-                        "header": [
-                            {
-                                "key": "Accept",
-                                "value": "application/json",
-                                "type": "text"
-                            },
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json",
-                                "type": "text"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{base_url}}/api/devices",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "devices"
-                            ]
-                        },
-                        "auth": {
-                            "type": "bearer",
-                            "bearer": [
-                                {
-                                    "key": "token",
-                                    "value": "{{auth_token}}"
-                                }
-                            ]
-                        }
-                    }
-                },
-                {
-                    "name": "[store] api/devices",
-                    "request": {
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Accept",
-                                "value": "application/json",
-                                "type": "text"
-                            },
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json",
-                                "type": "text"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{base_url}}/api/devices",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "devices"
-                            ]
-                        },
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\n    \"name\": \"Kl\u00e9ber Cola\u00e7o Filho\",\n    \"type\": \"info\",\n    \"location\": \"02755-540, R. Andres Oliveira, 8059. Apto 03\\nBranco do Leste - MG\",\n    \"ip_address\": \"29.132.38.181\",\n    \"mac_address\": \"ZZ:OG:XZ:GN:XV:OP\",\n    \"metadata\": {\n        \"source\": \"postman-doc\",\n        \"firmware\": \"1.0.9\"\n    },\n    \"tags\": [\n        1\n    ]\n}",
-                            "options": []
-                        },
-                        "auth": {
-                            "type": "bearer",
-                            "bearer": [
-                                {
-                                    "key": "token",
-                                    "value": "{{auth_token}}"
-                                }
-                            ]
-                        }
-                    }
-                },
-                {
-                    "name": "[show] api/devices/{device}",
-                    "request": {
-                        "method": "GET",
-                        "header": [
-                            {
-                                "key": "Accept",
-                                "value": "application/json",
-                                "type": "text"
-                            },
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json",
-                                "type": "text"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{base_url}}/api/devices/:device",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "devices",
-                                ":device"
-                            ],
-                            "variable": [
-                                {
-                                    "key": "device",
-                                    "value": 1
-                                }
-                            ]
-                        },
-                        "auth": {
-                            "type": "bearer",
-                            "bearer": [
-                                {
-                                    "key": "token",
-                                    "value": "{{auth_token}}"
-                                }
-                            ]
-                        }
-                    }
-                },
-                {
-                    "name": "[update] api/devices/{device}",
-                    "request": {
-                        "method": "PUT",
-                        "header": [
-                            {
-                                "key": "Accept",
-                                "value": "application/json",
-                                "type": "text"
-                            },
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json",
-                                "type": "text"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{base_url}}/api/devices/:device",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "devices",
-                                ":device"
-                            ],
-                            "variable": [
-                                {
-                                    "key": "device",
-                                    "value": 1
-                                }
-                            ]
-                        },
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\n    \"name\": \"Kl\u00e9ber Cola\u00e7o Filho\",\n    \"type\": \"info\",\n    \"location\": \"02755-540, R. Andres Oliveira, 8059. Apto 03\\nBranco do Leste - MG\",\n    \"ip_address\": \"29.132.38.181\",\n    \"mac_address\": \"ZZ:OG:XZ:GN:XV:OP\",\n    \"metadata\": {\n        \"source\": \"postman-doc\",\n        \"firmware\": \"1.0.9\"\n    },\n    \"tags\": [\n        1\n    ]\n}",
-                            "options": []
-                        },
-                        "auth": {
-                            "type": "bearer",
-                            "bearer": [
-                                {
-                                    "key": "token",
-                                    "value": "{{auth_token}}"
-                                }
-                            ]
-                        }
-                    }
-                },
-                {
-                    "name": "[destroy] api/devices/{device}",
-                    "request": {
-                        "method": "DELETE",
-                        "header": [
-                            {
-                                "key": "Accept",
-                                "value": "application/json",
-                                "type": "text"
-                            },
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json",
-                                "type": "text"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{base_url}}/api/devices/:device",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "devices",
-                                ":device"
-                            ],
-                            "variable": [
-                                {
-                                    "key": "device",
-                                    "value": 1
-                                }
-                            ]
-                        },
-                        "auth": {
-                            "type": "bearer",
-                            "bearer": [
-                                {
-                                    "key": "token",
-                                    "value": "{{auth_token}}"
-                                }
-                            ]
-                        }
-                    }
-                },
-                {
-                    "name": "[heartbeat] api/devices/{device}/heartbeat",
-                    "request": {
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Accept",
-                                "value": "application/json",
-                                "type": "text"
-                            },
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json",
-                                "type": "text"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{base_url}}/api/devices/:device/heartbeat",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "devices",
-                                ":device",
-                                "heartbeat"
-                            ],
-                            "variable": [
-                                {
-                                    "key": "device",
-                                    "value": 1
-                                }
-                            ]
-                        },
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\n    \"ip_address\": \"29.132.38.181\",\n    \"metadata\": {\n        \"source\": \"postman-doc\",\n        \"firmware\": \"1.0.9\"\n    }\n}",
-                            "options": []
-                        },
-                        "auth": {
-                            "type": "bearer",
-                            "bearer": [
-                                {
-                                    "key": "token",
-                                    "value": "{{auth_token}}"
-                                }
-                            ]
-                        }
-                    }
-                },
-                {
-                    "name": "[regenerateToken] api/devices/{device}/regenerate-token",
-                    "request": {
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Accept",
-                                "value": "application/json",
-                                "type": "text"
-                            },
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json",
-                                "type": "text"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{base_url}}/api/devices/:device/regenerate-token",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "devices",
-                                ":device",
-                                "regenerate-token"
-                            ],
-                            "variable": [
-                                {
-                                    "key": "device",
-                                    "value": 1
-                                }
-                            ]
-                        },
-                        "auth": {
-                            "type": "bearer",
-                            "bearer": [
-                                {
-                                    "key": "token",
-                                    "value": "{{auth_token}}"
-                                }
-                            ]
-                        }
-                    }
-                }
-            ]
-        },
-        {
-            "name": "Tag",
-            "item": [
-                {
-                    "name": "[index] api/tags",
-                    "request": {
-                        "method": "GET",
-                        "header": [
-                            {
-                                "key": "Accept",
-                                "value": "application/json",
-                                "type": "text"
-                            },
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json",
-                                "type": "text"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{base_url}}/api/tags",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "tags"
-                            ]
-                        },
-                        "auth": {
-                            "type": "bearer",
-                            "bearer": [
-                                {
-                                    "key": "token",
-                                    "value": "{{auth_token}}"
-                                }
-                            ]
-                        }
-                    }
-                },
-                {
-                    "name": "[store] api/tags",
-                    "request": {
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Accept",
-                                "value": "application/json",
-                                "type": "text"
-                            },
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json",
-                                "type": "text"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{base_url}}/api/tags",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "tags"
-                            ]
-                        },
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\n    \"name\": \"Kl\u00e9ber Cola\u00e7o Filho\",\n    \"color\": \"yellow\"\n}",
-                            "options": []
-                        },
-                        "auth": {
-                            "type": "bearer",
-                            "bearer": [
-                                {
-                                    "key": "token",
-                                    "value": "{{auth_token}}"
-                                }
-                            ]
-                        }
-                    }
-                },
-                {
-                    "name": "[show] api/tags/{tag}",
-                    "request": {
-                        "method": "GET",
-                        "header": [
-                            {
-                                "key": "Accept",
-                                "value": "application/json",
-                                "type": "text"
-                            },
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json",
-                                "type": "text"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{base_url}}/api/tags/:tag",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "tags",
-                                ":tag"
-                            ],
-                            "variable": [
-                                {
-                                    "key": "tag",
-                                    "value": 1
-                                }
-                            ]
-                        },
-                        "auth": {
-                            "type": "bearer",
-                            "bearer": [
-                                {
-                                    "key": "token",
-                                    "value": "{{auth_token}}"
-                                }
-                            ]
-                        }
-                    }
-                },
-                {
-                    "name": "[update] api/tags/{tag}",
-                    "request": {
-                        "method": "PUT",
-                        "header": [
-                            {
-                                "key": "Accept",
-                                "value": "application/json",
-                                "type": "text"
-                            },
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json",
-                                "type": "text"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{base_url}}/api/tags/:tag",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "tags",
-                                ":tag"
-                            ],
-                            "variable": [
-                                {
-                                    "key": "tag",
-                                    "value": 1
-                                }
-                            ]
-                        },
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\n    \"name\": \"Kl\u00e9ber Cola\u00e7o Filho\",\n    \"color\": \"yellow\"\n}",
-                            "options": []
-                        },
-                        "auth": {
-                            "type": "bearer",
-                            "bearer": [
-                                {
-                                    "key": "token",
-                                    "value": "{{auth_token}}"
-                                }
-                            ]
-                        }
-                    }
-                },
-                {
-                    "name": "[destroy] api/tags/{tag}",
-                    "request": {
-                        "method": "DELETE",
-                        "header": [
-                            {
-                                "key": "Accept",
-                                "value": "application/json",
-                                "type": "text"
-                            },
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json",
-                                "type": "text"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{base_url}}/api/tags/:tag",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "tags",
-                                ":tag"
-                            ],
-                            "variable": [
-                                {
-                                    "key": "tag",
-                                    "value": 1
-                                }
-                            ]
-                        },
-                        "auth": {
-                            "type": "bearer",
-                            "bearer": [
-                                {
-                                    "key": "token",
-                                    "value": "{{auth_token}}"
-                                }
-                            ]
-                        }
-                    }
-                },
-                {
-                    "name": "[devices] api/tags/{tag}/devices",
-                    "request": {
-                        "method": "GET",
-                        "header": [
-                            {
-                                "key": "Accept",
-                                "value": "application/json",
-                                "type": "text"
-                            },
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json",
-                                "type": "text"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{base_url}}/api/tags/:tag/devices",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "tags",
-                                ":tag",
-                                "devices"
-                            ],
-                            "variable": [
-                                {
-                                    "key": "tag",
-                                    "value": 1
-                                }
-                            ]
-                        },
-                        "auth": {
-                            "type": "bearer",
-                            "bearer": [
-                                {
-                                    "key": "token",
-                                    "value": "{{auth_token}}"
-                                }
-                            ]
-                        }
-                    }
-                }
-            ]
-        },
-        {
             "name": "Alert",
             "item": [
+                {
+                    "name": "[store] api/alerts",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/alerts",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "alerts"
+                            ]
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"title\": \"Eos ut cumque.\",\n    \"message\": \"Ullam quod doloremque possimus sed voluptatem asperiores iure. Iusto eveniet non architecto. Ea quis quia in quia tenetur.\",\n    \"type\": \"info\",\n    \"duration_seconds\": 56,\n    \"priority\": 9,\n    \"expires_at\": \"2026-10-18 02:16:40\",\n    \"tags\": [\n        1\n    ]\n}",
+                            "options": []
+                        }
+                    }
+                },
                 {
                     "name": "[index] api/alerts",
                     "request": {
@@ -1584,48 +921,6 @@
                                 {
                                     "key": "token",
                                     "value": "{{auth_token}}"
-                                }
-                            ]
-                        }
-                    }
-                },
-                {
-                    "name": "[store with API Key] api/alerts",
-                    "request": {
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Accept",
-                                "value": "application/json",
-                                "type": "text"
-                            },
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json",
-                                "type": "text"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{base_url}}/api/alerts",
-                            "host": [
-                                "{{base_url}}"
-                            ],
-                            "path": [
-                                "api",
-                                "alerts"
-                            ]
-                        },
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\n    \"title\": \"Teste de integração\",\n    \"message\": \"Alerta enviado pelo Postman\",\n    \"type\": \"warning\",\n    \"duration_seconds\": 60,\n    \"tags\": [\n        1\n    ]\n}",
-                            "options": []
-                        },
-                        "auth": {
-                            "type": "bearer",
-                            "bearer": [
-                                {
-                                    "key": "token",
-                                    "value": "{{api_key}}"
                                 }
                             ]
                         }
@@ -1818,6 +1113,833 @@
             ]
         },
         {
+            "name": "Undefined",
+            "item": [
+                {
+                    "name": "[Closure] api/user",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/user",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "user"
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Realtime",
+            "item": [
+                {
+                    "name": "[config] api/realtime/config",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/realtime/config",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "realtime",
+                                "config"
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "[authorizeChannel] api/realtime/authorize",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/realtime/authorize",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "realtime",
+                                "authorize"
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "UserSetting",
+            "item": [
+                {
+                    "name": "[show] api/settings",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/settings",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "settings"
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "[update] api/settings",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/settings",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "settings"
+                            ]
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"notify_alert_failed\": 0,\n    \"notify_device_offline\": 0,\n    \"notify_weekly_report\": 1,\n    \"notify_device_connected\": 0,\n    \"notify_limit_reached\": 1,\n    \"notification_email\": \"cary.feest@example.com\",\n    \"notification_phone\": \"754-917-7934\",\n    \"timezone\": \"America/Tortola\",\n    \"language\": \"pt-BR\",\n    \"theme\": \"light\"\n}",
+                            "options": []
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Device",
+            "item": [
+                {
+                    "name": "[latest] api/devices/latest",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/devices/latest",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "devices",
+                                "latest"
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "[index] api/devices",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/devices",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "devices"
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "[store] api/devices",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/devices",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "devices"
+                            ]
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"name\": \"Nasir Purdy MD\",\n    \"type\": \"info\",\n    \"location\": \"213 Fay Loop Suite 707\\nSouth Zoe, ND 66811-9371\",\n    \"ip_address\": \"93.165.152.65\",\n    \"mac_address\": \"UH:VU:AO:XI:RY:BF\",\n    \"metadata\": {\n        \"source\": \"postman-doc\",\n        \"firmware\": \"1.5.8\"\n    },\n    \"tags\": [\n        1\n    ]\n}",
+                            "options": []
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "[show] api/devices/{device}",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/devices/:device",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "devices",
+                                ":device"
+                            ],
+                            "variable": [
+                                {
+                                    "key": "device",
+                                    "value": 1
+                                }
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "[update] api/devices/{device}",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/devices/:device",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "devices",
+                                ":device"
+                            ],
+                            "variable": [
+                                {
+                                    "key": "device",
+                                    "value": 1
+                                }
+                            ]
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"name\": \"Nasir Purdy MD\",\n    \"type\": \"info\",\n    \"location\": \"213 Fay Loop Suite 707\\nSouth Zoe, ND 66811-9371\",\n    \"ip_address\": \"93.165.152.65\",\n    \"mac_address\": \"UH:VU:AO:XI:RY:BF\",\n    \"metadata\": {\n        \"source\": \"postman-doc\",\n        \"firmware\": \"1.5.8\"\n    },\n    \"tags\": [\n        1\n    ]\n}",
+                            "options": []
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "[destroy] api/devices/{device}",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/devices/:device",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "devices",
+                                ":device"
+                            ],
+                            "variable": [
+                                {
+                                    "key": "device",
+                                    "value": 1
+                                }
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "[heartbeat] api/devices/{device}/heartbeat",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/devices/:device/heartbeat",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "devices",
+                                ":device",
+                                "heartbeat"
+                            ],
+                            "variable": [
+                                {
+                                    "key": "device",
+                                    "value": 1
+                                }
+                            ]
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"ip_address\": \"93.165.152.65\",\n    \"metadata\": {\n        \"source\": \"postman-doc\",\n        \"firmware\": \"1.5.8\"\n    }\n}",
+                            "options": []
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "[regenerateToken] api/devices/{device}/regenerate-token",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/devices/:device/regenerate-token",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "devices",
+                                ":device",
+                                "regenerate-token"
+                            ],
+                            "variable": [
+                                {
+                                    "key": "device",
+                                    "value": 1
+                                }
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Tag",
+            "item": [
+                {
+                    "name": "[index] api/tags",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/tags",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "tags"
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "[store] api/tags",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/tags",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "tags"
+                            ]
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"name\": \"Nasir Purdy MD\",\n    \"color\": \"lime\"\n}",
+                            "options": []
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "[show] api/tags/{tag}",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/tags/:tag",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "tags",
+                                ":tag"
+                            ],
+                            "variable": [
+                                {
+                                    "key": "tag",
+                                    "value": 1
+                                }
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "[update] api/tags/{tag}",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/tags/:tag",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "tags",
+                                ":tag"
+                            ],
+                            "variable": [
+                                {
+                                    "key": "tag",
+                                    "value": 1
+                                }
+                            ]
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"name\": \"Nasir Purdy MD\",\n    \"color\": \"lime\"\n}",
+                            "options": []
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "[destroy] api/tags/{tag}",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/tags/:tag",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "tags",
+                                ":tag"
+                            ],
+                            "variable": [
+                                {
+                                    "key": "tag",
+                                    "value": 1
+                                }
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "[devices] api/tags/{tag}/devices",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/tags/:tag/devices",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "tags",
+                                ":tag",
+                                "devices"
+                            ],
+                            "variable": [
+                                {
+                                    "key": "tag",
+                                    "value": 1
+                                }
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
             "name": "ApiKey",
             "item": [
                 {
@@ -1885,7 +2007,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"Kl\u00e9ber Cola\u00e7o Filho\",\n    \"expires_at\": \"2026-09-05 18:46:13\"\n}",
+                            "raw": "{\n    \"name\": \"Nasir Purdy MD\",\n    \"expires_at\": \"2026-10-18 02:16:40\"\n}",
                             "options": []
                         },
                         "auth": {
@@ -1934,7 +2056,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"Kl\u00e9ber Cola\u00e7o Filho\",\n    \"is_active\": true\n}",
+                            "raw": "{\n    \"name\": \"Nasir Purdy MD\",\n    \"is_active\": true\n}",
                             "options": []
                         },
                         "auth": {
@@ -1979,6 +2101,48 @@
                                     "key": "api_key",
                                     "value": 1
                                 }
+                            ]
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{auth_token}}"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "ActivityLog",
+            "item": [
+                {
+                    "name": "[index] api/activity-logs",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/api/activity-logs",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "activity-logs"
                             ]
                         },
                         "auth": {
@@ -2102,7 +2266,7 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"from_date\": \"2026-08-05\",\n    \"to_date\": \"2026-08-10\",\n    \"days\": 2\n}",
+                            "raw": "{\n    \"from_date\": \"2026-09-26\",\n    \"to_date\": \"2026-10-13\",\n    \"days\": 18\n}",
                             "options": []
                         },
                         "auth": {
@@ -2205,12 +2369,6 @@
             "value": "your-access-token",
             "type": "string",
             "description": "Bearer token for API authentication"
-        },
-        {
-            "key": "api_key",
-            "value": "sk_replace_with_the_key_shown_after_creation",
-            "type": "string",
-            "description": "API Key used only to create alerts through POST /api/alerts"
         }
     ],
     "auth": {

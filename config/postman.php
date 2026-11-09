@@ -1,5 +1,11 @@
 <?php
 
+// A geração da coleção usa Faker e existe somente no ambiente de desenvolvimento.
+// O padrão seguro também a desativa durante builds sem APP_ENV definido.
+if (env('APP_ENV', 'production') === 'production') {
+    return [];
+}
+
 return [
     /*
     |--------------------------------------------------------------------------

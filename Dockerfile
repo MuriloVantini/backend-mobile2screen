@@ -73,9 +73,9 @@ RUN mkdir -p \
 
 USER www-data
 
-EXPOSE 8000
+EXPOSE 9187
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
-    CMD wget -qO- "http://127.0.0.1:${PORT:-8000}/up" >/dev/null || exit 1
+    CMD wget -qO- "http://127.0.0.1:${PORT:-9187}/up" >/dev/null || exit 1
 
-CMD ["sh", "-c", "php artisan serve --host=0.0.0.0 --port=${PORT:-8000}"]
+CMD ["sh", "-c", "php artisan serve --host=0.0.0.0 --port=${PORT:-9187}"]

@@ -33,6 +33,7 @@ RUN apk add --no-cache \
         libpq \
         libzip \
         sqlite-libs \
+        supervisor \
     && apk add --no-cache --virtual .build-deps \
         $PHPIZE_DEPS \
         curl-dev \
@@ -69,13 +70,14 @@ RUN mkdir -p \
         storage/logs \
         bootstrap/cache \
     && ln -s ../storage/app/public public/storage \
+    && chmod +x docker/entrypoint.sh \
     && chown -R www-data:www-data storage bootstrap/cache database
 
 USER www-data
 
-EXPOSE 8000
+EXPOSE 9187 8080
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
-    CMD wget -qO- "http://127.0.0.1:${PORT:-8000}/up" >/dev/null || exit 1
+    CMD wget -qO- "http://127.0.0.1:${PORT:-9187}/up" >/dev/null || exit 1
 
-CMD ["sh", "-c", "php artisan serve --host=0.0.0.0 --port=${PORT:-8000}"]
+ENTRYPOINT ["/app/docker/entrypoint.sh"]

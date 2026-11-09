@@ -75,7 +75,7 @@ RUN mkdir -p \
 
 USER www-data
 
-EXPOSE 9187 8080
+EXPOSE 9187 9188
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
     CMD wget -qO- "http://127.0.0.1:9187/up" >/dev/null || exit 1
